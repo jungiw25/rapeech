@@ -1,0 +1,26 @@
+{
+  "_설명": "check.py가 쓰는 금지 목록. 새 금지어가 생기면 여기에 추가한다. 대소문자 구분 없음.",
+  "negative_phrases": [
+    "콜봇은 필요 없", "콜봇이 필요 없", "AI 상담은 불편", "AI 상담이 불편", "일자리를 없", "일자리를 빼앗", "일자리를 위협",
+    "상담사 100%", "상담사를 대체", "상담사 대체", "AI로 교체", "사람을 대체", "콜봇의 한계", "음성인증은 위험", "음성인증이 뚫"
+  ],
+  "excluded_topics": [
+    "지분 감소", "지분율 감소", "상폐", "상장폐지", "코넥스행", "세계일보"
+  ],
+  "customer_names": [
+    "삼성화재", "법무부", "KT", "케이티"
+  ],
+  "competitor_names": [
+    "OpenAI", "오픈AI", "ChatGPT", "챗GPT", "GPT-", "Google", "구글", "Gemini", "제미나이", "Meta", "메타", "Microsoft",
+    "마이크로소프트", "Amazon", "아마존", "AWS", "Nvidia", "엔비디아", "Anthropic", "앤트로픽", "Claude", "클로드",
+    "ElevenLabs", "일레븐랩스", "xAI", "Grok", "그록", "네이버", "NAVER", "카카오", "Kakao", "LG유플러스", "LG U+",
+    "SK텔레콤", "SKT", "에이닷", "클로바", "CLOVA", "Genesys", "제네시스", "Twilio", "삼성SDS", "LG CNS", "브리지텍",
+    "솔트룩스", "마음AI", "셀바스", "포티투마루", "Hume", "Sesame", "Deepgram", "PolyAI", "Sierra", "Decagon"
+  ],
+  "allow_in_sources": true,
+  "blog_chars": [1500, 2500],
+  "shorts_seconds": [45, 60],
+  "shorts_slides": [8, 10],
+  "cards_slides": [6, 8],
+  "rapeech_ratio": [0.3, 0.5]
+}
