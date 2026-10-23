@@ -12,6 +12,14 @@
   - `--cards`: 카드뉴스와 검수 이미지만 만든다(약 20초).
   - `--check`: 문구 검사만 한다.
 
+## 영상·그래픽 스킬 (외부 설치, `skills-lock.json`에 출처 기록)
+- `/hyperframes` (+ `hyperframes-cli`, `hyperframes-registry`, `media-use`): HTML로 모션그래픽 영상 제작. 회사 소개 영상 등 긴 모션그래픽에 우선 사용. Node 22+, FFmpeg 필요
+- `/remotion-best-practices` 외 remotion-*: React 기반 영상 제작. 하이퍼프레임과 같은 용도이므로 한 작업에는 하나만 쓴다
+- `/algorithmic-art`: p5.js 생성형 그래픽(배경, 패턴)
+- 주간 숏츠·카드뉴스는 계속 `engine/`(파이썬 렌더러)를 쓴다. 디자인 규칙이 거기에 맞춰져 있다
+- 외부 스킬의 사용 통계 전송은 `.claude/settings.json`에서 꺼 두었다. 유료 API(HeyGen 등)는 사용자 승인 없이 쓰지 않는다
+- 업데이트: `npx skills update -p`
+
 ## 사람 검수 (필수, 건너뛰지 말 것)
 - 게시는 사용자가 직접 한다. Claude는 업로드나 예약 게시를 하지 않는다.
 - `/make`의 끝은 항상 검수 요청이다. 사용자에게 다음을 보여 준다.
