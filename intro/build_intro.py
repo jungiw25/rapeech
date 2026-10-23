@@ -85,6 +85,10 @@ def mix(c0, c1, t):
     return tuple(int(lerp(a, b, t)) for a, b in zip(c0, c1))
 
 
+G_RGB = [tuple(int(h[i:i + 2], 16) for i in (1, 3, 5)) for h in
+         ["#FF03C8", "#EE06C1", "#DE0ABA", "#CD0EB4", "#BD12AD", "#AD16A7", "#9B19AB", "#881BB9", "#751DC7", "#621FD6", "#4F21E4", "#3C24F3"]]
+
+
 def grad3(t):
     """브랜드 그라데이션 마젠타 → 퍼플 → 블루바이올렛."""
     return mix(MAG, MID, t * 2) if t < 0.5 else mix(MID, BV, (t - 0.5) * 2)
@@ -388,20 +392,8 @@ class Scene:
             a[:, :max(0, clip_x)] = 0
             layer.putalpha(Image.fromarray(a))
             canvas.alpha_composite(layer)
-        # 태그라인
-        tp = seg(t, 9.75, 10.3)
-        if tp > 0:
-            e = out_cubic(tp)
-            f = self.ftag
-            sp = 3 * u
-            w = sum(f.getlength(c) for c in TAGLINE) + sp * (len(TAGLINE) - 1)
-            x = self.cx - w / 2
-            y = o_fin[1] + 90 * s + (70 if not self.portrait else 90) * u + (1 - e) * 18 * u
-            d = ImageDraw.Draw(canvas)
-            col = mix(LIGHT, (92, 84, 112), e)
-            for c in TAGLINE:
-                d.text((x, y), c, font=f, fill=col, anchor="ls")
-                x += f.getlength(c) + sp
+        # 태그라인(흐림에서 부드럽게)
+        self.tagline(canvas, in_out(seg(t, 9.7, 10.8)), o_fin)
         # 마지막 빛 스윕(사선 위를 지나가는 하이라이트)
         sp_t = seg(t, 10.5, 11.2)
         if 0 < sp_t < 1:
@@ -419,6 +411,152 @@ class Scene:
             white.putalpha(m)
             canvas.alpha_composite(white)
 
+    def tagline(self, canvas, e, o_fin):
+        """로고 아래 한 줄. e=1이면 인트로·아웃트로가 같은 픽셀로 그린다."""
+        if e <= 0:
+            return
+        s, u = self.s, self.u
+        f = self.ftag
+        sp = 3 * u
+        w = sum(f.getlength(c) for c in TAGLINE) + sp * (len(TAGLINE) - 1)
+        x = self.cx - w / 2
+        y = o_fin[1] + 90 * s + (70 if not self.portrait else 90) * u
+        col = (92, 84, 112)
+        if e >= 1:
+            d = ImageDraw.Draw(canvas)
+            for c in TAGLINE:
+                d.text((x, y), c, font=f, fill=col, anchor="ls")
+                x += f.getlength(c) + sp
+            return
+        layer = Image.new("RGBA", canvas.size, (*col, 0))
+        d = ImageDraw.Draw(layer)
+        y += (1 - e) * 12 * u
+        for c in TAGLINE:
+            d.text((x, y), c, font=f, fill=(*col, 255), anchor="ls")
+            x += f.getlength(c) + sp
+        r = (1 - e) * 10 * u
+        if r > 0.3:
+            layer = layer.filter(ImageFilter.GaussianBlur(r))
+        layer.putalpha(layer.getchannel("A").point(lambda v: int(v * e)))
+        canvas.alpha_composite(layer)
+
+    # ---- 아웃트로(인트로와 같은 마지막 화면, 다른 움직임)
+    def outro_logo(self, canvas, t):
+        s, u = self.s, self.u
+        o_sym = (self.cx - 43 * s, self.cy - 50 * s)
+        lift = (40 if not self.portrait else 60) * u
+        o_fin = (self.cx - LG.LOGO_W / 2 * s, self.cy - 45 * s - lift)
+        k = in_out(seg(t, 2.6, 3.25))
+        ox, oy = lerp(o_sym[0], o_fin[0], k), lerp(o_sym[1], o_fin[1], k)
+        # 삼각형: 살짝 돌며 커짐
+        p = seg(t, 2.0, 2.65)
+        if p > 0:
+            im, (lx, ly) = self.P["tri"]
+            if p >= 1:
+                comp(canvas, im, ox + lx * s, oy + ly * s)
+            else:
+                sc = 0.55 + 0.45 * out_back(p, 1.4)
+                ang = -28 * (1 - out_cubic(p))
+                sim = im.resize((max(1, int(im.size[0] * sc)), max(1, int(im.size[1] * sc))), Image.BICUBIC).rotate(ang, Image.BICUBIC, expand=True)
+                sim.putalpha(sim.getchannel("A").point(lambda v, a=min(1, p / 0.35): int(v * a)))
+                cx, cy = ox + (lx + im.size[0] / s / 2) * s, oy + (ly + im.size[1] / s / 2) * s
+                comp(canvas, sim, cx - sim.size[0] / 2, cy - sim.size[1] / 2)
+        # 사선: 아래(왼쪽)에서 위(오른쪽)로 그려지듯 차례로
+        cache = self.__dict__.setdefault("_proj", {})
+        for i, (im, (lx, ly)) in enumerate(self.P["stripes"]):
+            f = out_cubic(seg(t, 1.6 + i * 0.035, 2.15 + i * 0.035))
+            if f <= 0:
+                continue
+            if f >= 1:
+                comp(canvas, im, ox + lx * s, oy + ly * s)
+                continue
+            if i not in cache:
+                hh, ww = im.size[1], im.size[0]
+                yy, xx = np.mgrid[0:hh, 0:ww]
+                pr = xx * DIR[0] + yy * DIR[1]
+                a0 = np.array(im.getchannel("A")) > 8
+                lo, hi = (pr[a0].min(), pr[a0].max()) if a0.any() else (pr.min(), pr.max())
+                cache[i] = ((pr - lo) / max(1e-6, hi - lo), np.array(im.getchannel("A"), np.float32))
+            pr, al = cache[i]
+            soft = 0.08
+            m = np.clip((f * (1 + soft) - pr) / soft, 0, 1)
+            sim = im.copy()
+            sim.putalpha(Image.fromarray((al * m).astype(np.uint8)))
+            comp(canvas, sim, ox + lx * s, oy + ly * s)
+        # 글자: 아래에서 차례로 떠오름
+        for i, (im, (lx, ly)) in enumerate(self.P["letters"]):
+            e = out_expo(seg(t, 2.85 + i * 0.08, 3.6 + i * 0.08))
+            if e <= 0:
+                continue
+            if e >= 1:
+                comp(canvas, im, ox + lx * s, oy + ly * s)
+                continue
+            sim = im.copy()
+            sim.putalpha(sim.getchannel("A").point(lambda v, a=min(1, e * 1.4): int(v * a)))
+            comp(canvas, sim, ox + lx * s, oy + ly * s + (1 - e) * 16 * u)
+        self.tagline(canvas, in_out(seg(t, 3.5, 4.7)), o_fin)
+
+    def outro_frame(self, t):
+        S, u = SS, self.u
+        iris = seg(t, 1.45, 2.05)
+        canvas = Image.new("RGBA", (self.CW, self.CH), (*DARK, 255))
+        if iris < 1:
+            glow = Image.new("RGB", (self.CW, self.CH), (0, 0, 0))
+            d, g = ImageDraw.Draw(canvas), ImageDraw.Draw(glow)
+            # 가운데에서 가로 빛줄기(앞 영상의 막대 12개에서 이어짐)
+            lp = out_expo(seg(t, 0.05, 0.6)) * (1 - seg(t, 0.55, 0.8))
+            if lp > 0:
+                half = 700 * S * out_expo(seg(t, 0.05, 0.6))
+                n = 28
+                for j in range(n):
+                    x0 = self.cx - half + 2 * half * j / n
+                    x1 = self.cx - half + 2 * half * (j + 1) / n
+                    c = mix(DARK, grad3(j / (n - 1)), lp)
+                    d.line([(x0, self.cy), (x1, self.cy)], fill=c, width=int(6 * S))
+            amps = [0.55, 0.92, 0.38, 0.78, 0.5]
+            env = lambda k: math.sin(math.pi * (k + 0.5) / 12) ** 0.7
+            tilt = in_out(seg(t, 1.3, 1.8))
+            ang0, ang1 = -math.pi / 2, math.atan2(DIR[1], DIR[0])
+            for k in range(12):
+                cx = (960 + (k - 5.5) * 46) * S
+                # 높이: 점선 → 말하듯 → 기울며 짧아짐
+                h = 8.4
+                if t > 0.55:
+                    q = (t - 0.55) / 0.15
+                    i0 = min(len(amps) - 1, int(q))
+                    i1 = min(len(amps) - 1, i0 + 1)
+                    fr = in_out(q - int(q)) if q < len(amps) - 1 else 1
+                    a = lerp(amps[i0], amps[i1], fr) * (0.75 + 0.25 * ((k * 7) % 5) / 4)
+                    rise = out_cubic(seg(t, 0.55, 0.8))
+                    h = lerp(8.4, max(8.4, a * env(k) * 420), rise)
+                h = lerp(h, 420 * 0.22, tilt)
+                col = G_RGB[k]
+                if tilt <= 0 and h <= 8.5:
+                    d.rounded_rectangle([cx - 9 * S, self.cy - 4.2 * S, cx + 9 * S, self.cy + 4.2 * S], radius=int(4.2 * S), fill=col)
+                    continue
+                ang = lerp(ang0, ang1, tilt)
+                ccx = cx + (k - 5.5) * -34 * S * tilt
+                ccy = self.cy - 75 * S * tilt
+                dx, dy = math.cos(ang) * (h - 18) / 2 * S, math.sin(ang) * (h - 18) / 2 * S
+                fade = 1 - seg(t, 1.75, 2.0)
+                c = mix(DARK, col, fade)
+                self.line(d, (ccx - dx, ccy - dy), (ccx + dx, ccy + dy), 18 * S, c)
+                self.line(g, (ccx - dx, ccy - dy), (ccx + dx, ccy + dy), 18 * S * 2.4, mix((0, 0, 0), c, 0.45 * min(1, (h - 8.4) / 60)))
+            gs = glow.resize((self.CW // 8, self.CH // 8), Image.BILINEAR).filter(ImageFilter.GaussianBlur(3))
+            canvas = ImageChops.add(canvas.convert("RGB"), gs.resize((self.CW, self.CH), Image.BILINEAR)).convert("RGBA")
+        if iris > 0:
+            light = Image.new("RGBA", canvas.size, (*LIGHT, 255))
+            self.outro_logo(light, t)
+            if iris >= 1:
+                canvas = light
+            else:
+                R = in_out(iris) * self.diag * 0.62
+                m = Image.new("L", canvas.size, 0)
+                cyy = self.cy * 0.86
+                ImageDraw.Draw(m).ellipse([self.cx - R, cyy - R, self.cx + R, cyy + R], fill=255)
+                canvas.paste(light, (0, 0), m)
+        return canvas.convert("RGB").reduce(SS)
+
     # ---- 프레임
     def frame(self, t):
         u = self.u
@@ -428,8 +566,8 @@ class Scene:
             glow = Image.new("RGB", (self.CW, self.CH), (0, 0, 0))
             d, g = ImageDraw.Draw(canvas), ImageDraw.Draw(glow)
             self.bars(d, g, t)
-            self.bubble(canvas, g, t, "보험금 청구하고 싶어요", 4.05, False)
-            self.bubble(canvas, g, t, "네, 바로 도와드릴게요", 4.45, True, typing_until=4.78)
+            self.bubble(canvas, g, t, "카드를 잃어버렸어요", 4.05, False)
+            self.bubble(canvas, g, t, "분실 신고, 바로 도와드릴게요", 4.45, True, typing_until=4.78)
             self.caption(d, "02  CONVERSATIONAL AI", t, 4.15, 5.4)
             self.network(d, g, t)
             gs = glow.resize((self.CW // 8, self.CH // 8), Image.BILINEAR).filter(ImageFilter.GaussianBlur(3))
@@ -471,21 +609,27 @@ _S = {}
 
 
 def _render(i):
-    return _S["scene"].frame(i / FPS).tobytes()
+    sc = _S["scene"]
+    return (sc.outro_frame(i / FPS) if _S.get("kind") == "outro" else sc.frame(i / FPS)).tobytes()
 
 
-def render(fmt):
+OUTRO_DUR = 7.5
+
+
+def render(fmt, kind="intro"):
     W, H = (1920, 1080) if fmt == "16x9" else (1080, 1920)
     OUT.mkdir(exist_ok=True)
-    wav = OUT / "intro_sfx.wav"
-    sfx.write(wav, DUR)
+    dur = DUR if kind == "intro" else OUTRO_DUR
+    wav = OUT / f"{kind}_sfx.wav"
+    (sfx.write if kind == "intro" else sfx.write_outro)(wav, dur)
     _S["scene"] = Scene(W, H)
-    path = OUT / f"rapeech_intro_{fmt}.mp4"
+    _S["kind"] = kind
+    path = OUT / f"rapeech_{kind}_{fmt}.mp4"
     cmd = ["ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS),
            "-i", "-", "-i", str(wav), "-c:v", "libx264", "-preset", "slow", "-crf", "16", "-pix_fmt", "yuv420p",
            "-c:a", "aac", "-b:a", "256k", "-shortest", "-movflags", "+faststart", str(path)]
     p = subprocess.Popen(cmd, stdin=subprocess.PIPE)
-    n = int(DUR * FPS)
+    n = int(dur * FPS)
     with mp.get_context("fork").Pool(mp.cpu_count()) as pool:
         for buf in pool.imap(_render, range(n), chunksize=4):
             p.stdin.write(buf)
@@ -495,10 +639,10 @@ def render(fmt):
     return path
 
 
-def stills(fmt, times):
+def stills(fmt, times, kind="intro"):
     W, H = (1920, 1080) if fmt == "16x9" else (1080, 1920)
     sc = Scene(W, H)
-    ims = [sc.frame(t) for t in times]
+    ims = [(sc.outro_frame(t) if kind == "outro" else sc.frame(t)) for t in times]
     tw = 480 if fmt == "16x9" else 270
     th = int(tw * H / W)
     cols = min(4 if fmt == "16x9" else 6, len(ims))
@@ -507,7 +651,7 @@ def stills(fmt, times):
     for k, im in enumerate(ims):
         sheet.paste(im.resize((tw, th), Image.LANCZOS), (8 + (k % cols) * (tw + 8), 8 + (k // cols) * (th + 8)))
     OUT.mkdir(exist_ok=True)
-    path = OUT / f"stills_{fmt}.jpg"
+    path = OUT / f"stills_{kind}_{fmt}.jpg"
     sheet.save(path, quality=90)
     return path
 
@@ -515,11 +659,12 @@ def stills(fmt, times):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--fmt", default="all", choices=["all", "16x9", "9x16"])
+    ap.add_argument("--kind", default="intro", choices=["intro", "outro"])
     ap.add_argument("--stills")
     a = ap.parse_args()
     fmts = ["16x9", "9x16"] if a.fmt == "all" else [a.fmt]
     for f in fmts:
         if a.stills:
-            print(stills(f, [float(x) for x in a.stills.split(",")]))
+            print(stills(f, [float(x) for x in a.stills.split(",")], a.kind))
         else:
-            print(render(f))
+            print(render(f, a.kind))

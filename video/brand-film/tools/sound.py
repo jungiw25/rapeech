@@ -13,9 +13,11 @@ sys.path.insert(0, str(ROOT.parent.parent))
 from engine.bgm import SR, add, env, hz, lowpass, noise_report, synth, tone, write_wav  # noqa: E402
 from intro.sfx import bell, pop, sweep  # noqa: E402
 
-BODY = 66.5          # 본편 + 아웃트로 길이(배경음악)
+SHOW_US = False      # scenes.py 의 SHOW_US 와 같게
+BODY = 66.5 if SHOW_US else 62.5   # 본편 + 아웃트로 길이(배경음악)
 FLOW = 0.0           # flow 장면 시작(본편 기준)
-S08, S09, S10, S11, S12 = 35.0, 40.0, 49.0, 53.0, 57.0
+S08, S09, S10 = 35.0, 40.0, 49.0
+S11, S12 = (53.0, 57.0) if SHOW_US else (49.0, 53.0)
 ARR = [9.7, 13.6, 17.2, 20.8, 24.4]
 TRV = [12.2, 15.8, 19.4, 23.0]
 RET = 30.0
@@ -70,10 +72,11 @@ def build_sfx():
     for f, t in enumerate([0.5, 1.75, 3.0, 4.25, 5.5, 6.6]):
         add(buf, tone(hz(43 + f), 0.5, ((1, 1), (2, 0.4), (3, 0.12)), a=0.005, r=0.1, decay=0.2), S09 + t + 0.85, 0.16)
         add(buf, bell(79 + f * 2, 0.6, 0.18), S09 + t + 0.9, 0.035)
-    # 지도: 한국 → 미국
-    whoosh(buf, S10 + 0.9, up=True, gain=0.04, dur=1.2)
-    for i in range(5):
-        add(buf, pop(1000 + i * 60, 450), S10 + 1.9 + i * 0.08, 0.06, 0.4)
+    # 지도: 한국 → 미국(장면을 켰을 때만)
+    if SHOW_US:
+        whoosh(buf, S10 + 0.9, up=True, gain=0.04, dur=1.2)
+        for i in range(5):
+            add(buf, pop(1000 + i * 60, 450), S10 + 1.9 + i * 0.08, 0.06, 0.4)
     # 한 팀: 클라이맥스(영상에서 한 번)
     add(buf, sweep(160, 1300, 1.2, partials=((1, 1), (2, 0.3), (3, 0.1))), S11 + 0.2, 0.07)
     add(buf, tone(hz(36), 1.4, ((1, 1), (2, 0.3)), a=0.005, r=0.5, decay=0.5), S11 + 1.35, 0.32)

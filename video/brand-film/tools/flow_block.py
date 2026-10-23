@@ -1,7 +1,7 @@
 # scenes.py 안으로 들어가는 AI 원테이크 장면 블록(이 파일은 scenes.py가 exec 한다)
 # ================================================================ flow: AI 콜봇 원테이크 (35 s)
 LY = 540
-CUST = 200
+CUST = 170
 ST = [960, 1860, 2760, 3660, 4560]
 FLOW_DUR = 35
 # 단계별 도착 시각(장면 기준 초). 띠링 효과음도 이 값을 쓴다
@@ -28,20 +28,31 @@ for i, (lab, val, ok) in enumerate(cards):
         </div>'''
 
 # 고객(사람 + 스마트폰)
+PHX, PHY = CUST + 97, LY - 66   # 휴대폰 중심(머리에서 떨어뜨려 손에 든 모습)
 cust = f'''
   <g id="f-cust">
-    <circle class="f-cs" cx="{CUST}" cy="{LY - 62}" r="40" fill="none" stroke="#fff" stroke-width="5"/>
-    <path class="f-cs" d="M{CUST - 66} {LY + 76} C {CUST - 66} {LY + 6}, {CUST + 66} {LY + 6}, {CUST + 66} {LY + 76}" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
-    <g id="f-phone"><rect x="{CUST + 34}" y="{LY - 104}" width="42" height="76" rx="9" fill="url(#flow-g)"/><rect x="{CUST + 40}" y="{LY - 96}" width="30" height="54" rx="4" fill="#0c0916" opacity=".55"/><circle cx="{CUST + 55}" cy="{LY - 36}" r="3" fill="#fff"/></g>
-    <g id="f-rings">{"".join(f'<path class="f-ring" d="M{CUST + 96 + j * 22} {LY - 98 - j * 10} q {18 + j * 6} {32 + j * 8} 0 {64 + j * 20}" fill="none" stroke="#ff4fd8" stroke-width="4" stroke-linecap="round"/>' for j in range(3))}</g>
-    <g id="f-ok" class="o"><circle cx="{CUST + 70}" cy="{LY - 130}" r="22" fill="url(#flow-g)"/><path d="M{CUST + 60} {LY - 130} l7 7 l12 -14" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="f-av">
+      <circle cx="{CUST}" cy="{LY - 10}" r="118" fill="#1c1730" stroke="#3a3158" stroke-width="1.5"/>
+      <g clip-path="url(#f-avclip)">
+        <circle cx="{CUST - 14}" cy="{LY - 58}" r="36" fill="url(#f-skin)"/>
+        <path d="M{CUST - 92} {LY + 130} C {CUST - 92} {LY - 2}, {CUST + 64} {LY - 2}, {CUST + 64} {LY + 130} Z" fill="url(#f-skin)"/>
+      </g>
+    </g>
+    <g id="f-phone">
+      <rect x="{PHX - 25}" y="{PHY - 46}" width="50" height="92" rx="11" fill="url(#flow-g)" filter="url(#flow-glows)"/>
+      <rect x="{PHX - 19}" y="{PHY - 38}" width="38" height="70" rx="6" fill="#0c0916" opacity=".5"/>
+      {"".join(f'<rect x="{PHX - 11 + j * 8}" y="{PHY - 8 - (6, 12, 8)[j]}" width="5" height="{2 * (6, 12, 8)[j]}" rx="2.5" fill="#fff"/>' for j in range(3))}
+      <rect x="{PHX - 7}" y="{PHY + 36}" width="14" height="3" rx="1.5" fill="#fff" opacity=".7"/>
+    </g>
+    <g id="f-rings">{"".join(f'<path class="f-ring" d="M{PHX + 40 + j * 20} {PHY - 26 - j * 10} q {16 + j * 6} {26 + j * 10} 0 {52 + j * 20}" fill="none" stroke="#ff4fd8" stroke-width="4" stroke-linecap="round"/>' for j in range(3))}</g>
+    <g id="f-ok" class="o"><circle cx="{CUST + 70}" cy="{LY - 150}" r="22" fill="url(#flow-g)"/><path d="M{CUST + 60} {LY - 150} l7 7 l12 -14" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
   </g>'''
 
 nodes = "".join(
     f'''<g class="f-node" id="f-n{i}">
       <circle class="f-npulse o" id="f-np{i}" cx="{x}" cy="{LY}" r="36" fill="none" stroke="#ff4fd8" stroke-width="3"/>
       <circle cx="{x}" cy="{LY}" r="30" fill="#1c1730" stroke="#4a4166" stroke-width="3"/>
-      <circle class="f-nfill o" id="f-nf{i}" cx="{x}" cy="{LY}" r="30" fill="url(#flow-g)"/>
+      <circle class="f-nfill o" id="f-nf{i}" cx="{x}" cy="{LY}" r="30" fill="url(#flow-g)" filter="url(#flow-glow)"/>
       <circle class="f-ncore o" id="f-nc{i}" cx="{x}" cy="{LY}" r="11" fill="#fff"/>
     </g>''' for i, x in enumerate(ST[:4]))
 
@@ -50,7 +61,7 @@ bx = ST[4]
 bot = f'''<g id="f-bot">
     <circle class="f-npulse o" id="f-np4" cx="{bx}" cy="{LY}" r="74" fill="none" stroke="#ff4fd8" stroke-width="3"/>
     <circle cx="{bx}" cy="{LY}" r="66" fill="#1c1730" stroke="#4a4166" stroke-width="3"/>
-    <circle class="o" id="f-nf4" cx="{bx}" cy="{LY}" r="66" fill="url(#flow-g)"/>
+    <circle class="o" id="f-nf4" cx="{bx}" cy="{LY}" r="66" fill="url(#flow-g)" filter="url(#flow-glow)"/>
     <path d="M{bx - 40} {LY + 4} a40 40 0 0 1 80 0" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
     <rect x="{bx - 50}" y="{LY - 6}" width="16" height="30" rx="7" fill="#fff"/><rect x="{bx + 34}" y="{LY - 6}" width="16" height="30" rx="7" fill="#fff"/>
     <path d="M{bx + 42} {LY + 24} q 0 22 -28 24" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
@@ -69,7 +80,7 @@ agent = f'''<g id="f-agent">
   </g>'''
 
 # 목소리 묶음(선을 타고 이동)
-packet = f'''<g id="f-pk"><rect x="-56" y="-24" width="112" height="48" rx="24" fill="url(#flow-g)" filter="url(#flow-glow)"/>
+packet = f'''<g id="f-pk"><rect id="f-pkr" x="-56" y="-24" width="112" height="48" rx="24" fill="url(#flow-g)" filter="url(#flow-glow)"/>
     {"".join(f'<rect class="f-pb o" x="{-30 + j * 13}" y="-15" width="6" height="30" rx="3" fill="#fff"/>' for j in range(5))}</g>'''
 
 ret = f'<path id="f-ret" d="M{bx - 60} {LY - 70} C {bx - 900} {LY - 640}, {CUST + 900} {LY - 640}, {CUST + 90} {LY - 150}" fill="none" stroke="url(#flow-g)" stroke-width="5" stroke-linecap="round" filter="url(#flow-glows)"/>'
@@ -77,6 +88,8 @@ retpk = '<g id="f-rpk"><circle r="16" fill="#fff" filter="url(#flow-glows)"/></g
 
 world_svg = (f'<svg width="5200" height="1400" viewBox="0 0 5200 1400" style="position:absolute;left:0;top:0;overflow:visible">'
              f'<defs><linearGradient id="flow-g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient>'
+             f'<linearGradient id="f-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f1ff"/><stop offset="1" stop-color="#b3a2f0"/></linearGradient>'
+             f'<clipPath id="f-avclip"><circle cx="{CUST}" cy="{LY - 10}" r="117"/></clipPath>'
              f'<linearGradient id="flow-rail" x1="300" y1="0" x2="4600" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient>'
              f'<filter id="flow-glow" filterUnits="userSpaceOnUse" x="-500" y="-500" width="6400" height="2400"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'
              f'<filter id="flow-glows" filterUnits="userSpaceOnUse" x="-500" y="-500" width="6400" height="2400"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
@@ -152,8 +165,8 @@ flow_js = """
       tl.fromTo(["#f-n1", "#f-n2", "#f-n3", "#f-bot"], { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "sine.inOut" }, 3.4);
       CAP("fcA", 3.3, 5.9);
       // 고객 등장(선의 시작점)
-      DRAW(".f-cs", 3.7, 1.1, "power2.inOut", 0.15);
-      tl.fromTo("#f-phone", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 4.2);
+      tl.fromTo("#f-av", { opacity: 0, scale: 0.85, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 1.1, ease: "power3.out" }, 3.7);
+      tl.fromTo("#f-phone", { opacity: 0, x: -24 }, { opacity: 1, x: 0, duration: 1.0, ease: "power3.out" }, 4.2);
 
       // ── B. 고객이 전화를 걺: 휴대폰 진동 + 울림
       CAP("fcB", 6.3, 9.5);
@@ -171,18 +184,30 @@ flow_js = """
 
       // 목소리 묶음: 휴대폰에서 나와 선을 타고 단계마다 이동
       const wig = (t0, t1) => { gsap.utils.toArray(".f-pb").forEach((el, j) => { let t = t0, s = j * 977 + 7; while (t < t1) { s = (s * 1664525 + 1013904223) % 4294967296; tl.to(el, { scaleY: 0.35 + 0.65 * s / 4294967296, duration: 0.16, ease: "sine.inOut" }, t); t += 0.16; } }); };
-      tl.fromTo("#f-pk", { x: 300, scale: 0.4, opacity: 0 }, { x: 330, scale: 1, opacity: 1, duration: 0.5, ease: "power3.out" }, 8.4);
-      tl.to("#f-pk", { x: ST[0], duration: 0.8, ease: "power2.inOut" }, 8.9);
-      wig(8.4, ARR[0]);
-      // 도착: 노드가 켜지고(띠링) 카드가 펼쳐짐
+      const CAPS = { x: -56, y: -24, width: 112, height: 48, rx: 24 };
+      const CIRC = (R) => ({ x: -R, y: -R, width: 2 * R, height: 2 * R, rx: R });
+      tl.fromTo("#f-pk", { x: __PX__, y: __PY__, scale: 0.3, opacity: 0 }, { x: 340, y: LY, scale: 1, opacity: 1, duration: 0.7, ease: "power3.inOut" }, 8.3);
+      tl.to("#f-pk", { x: ST[0], duration: 0.75, ease: "power2.inOut" }, 9.0 - 0.05);
+      wig(8.4, ARR[0] - 0.85);
+      // 도착: 캡슐이 노드 크기의 원으로 줄어들며 겹치고, 노드가 그 빛을 이어받아 켜짐(띠링)
       const arrive = (i, t) => {
-        tl.to("#f-pk", { scale: 0.55, duration: 0.25, ease: "power2.in" }, t - 0.05);
-        tl.fromTo("#f-nf" + i, { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.6)" }, t);
-        if (i < 4) tl.fromTo("#f-nc" + i, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.8)" }, t + 0.08);
+        const R = i < 4 ? 30 : 66;
+        tl.to("#f-pkr", { attr: CIRC(R), duration: 0.55, ease: "power2.inOut" }, t - 0.8);
+        tl.to(".f-pb", { opacity: 0, duration: 0.25, ease: "sine.in" }, t - 0.8);
+        tl.fromTo("#f-nf" + i, { opacity: 0 }, { opacity: 1, duration: 0.2, ease: "sine.out" }, t);
+        tl.to("#f-pk", { opacity: 0, duration: 0.18, ease: "sine.inOut" }, t + 0.04);
+        tl.fromTo("#f-nf" + i, { scale: 1 }, { scale: 1.14, duration: 0.22, ease: "power2.out", yoyo: true, repeat: 1 }, t + 0.02);
+        if (i < 4) tl.fromTo("#f-nc" + i, { opacity: 0, scale: 0 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.8)" }, t + 0.12);
         tl.fromTo("#f-np" + i, { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 2.4, duration: 1.1, ease: "power2.out" }, t);
         tl.fromTo("#f-card" + i, { opacity: 0, y: 26, filter: "blur(12px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, ease: "power3.out" }, t + 0.15);
         tl.fromTo(".f-c" + i, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power2.out", stagger: 0.045 }, t + 0.45);
-        tl.to("#f-pk", { scale: 1, duration: 0.4, ease: "power2.out" }, t + 0.9);
+      };
+      // 출발: 노드에서 같은 원으로 다시 나와 캡슐로 늘어나며 이동
+      const depart = (i, t) => {
+        tl.set("#f-pk", { x: ST[i - 1], opacity: 1 }, t);
+        tl.set("#f-pkr", { attr: CIRC(30) }, t);
+        tl.to("#f-pkr", { attr: CAPS, duration: 0.5, ease: "power2.out" }, t + 0.05);
+        tl.to(".f-pb", { opacity: 1, duration: 0.3, ease: "sine.out" }, t + 0.3);
       };
       arrive(0, ARR[0]);
       CAP("fc1", 10.1, 12.0);
@@ -191,14 +216,14 @@ flow_js = """
       for (let i = 1; i < 5; i++) {
         const t = TRV[i];
         tl.to("#f-card" + (i - 1), { opacity: 0.45, duration: 0.8, ease: "sine.inOut" }, t);
-        tl.to("#f-pk", { x: i < 4 ? ST[i] : ST[i] - 66, duration: 1.4, ease: "power2.inOut" }, t);
+        depart(i, t);
+        tl.to("#f-pk", { x: ST[i], duration: 1.4, ease: "power2.inOut" }, t);
         tl.to("#f-world", { x: -(ST[i] - 960), duration: 1.55, ease: "power2.inOut" }, t - 0.05);
-        wig(t, ARR[i]);
+        wig(t + 0.3, ARR[i] - 0.85);
         arrive(i, ARR[i]);
         CAP("fc" + (i + 1), t + 0.95, caps[i][1]);
       }
       // AI 콜봇이 목소리로 답함
-      tl.to("#f-pk", { opacity: 0, scale: 0.3, duration: 0.5, ease: "power2.in" }, ARR[4] + 0.2);
       tl.fromTo("#f-bbub", { opacity: 0, y: 20, scale: 0.9, filter: "blur(10px)" }, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.9, ease: "power3.out" }, 24.8);
       gsap.utils.toArray(".f-bw").forEach((el, j) => { tl.fromTo(el, { scaleY: 0.1, opacity: 0 }, { scaleY: 0.5, opacity: 1, duration: 0.4, ease: "power2.out" }, 24.8 + j * 0.04); let t = 25.2, s = j * 311 + 5; while (t < 26.8) { s = (s * 1664525 + 1013904223) % 4294967296; tl.to(el, { scaleY: 0.2 + 0.8 * s / 4294967296, duration: 0.18, ease: "sine.inOut" }, t); t += 0.18; } tl.to(el, { scaleY: 0.1, opacity: 0, duration: 0.4, ease: "power2.in" }, 26.8); });
 
@@ -240,7 +265,7 @@ for k in range(25):
     RET.append([round(x), round(y)])
 flow_js = (flow_js.replace("__ST__", json.dumps(ST)).replace("__ARR__", json.dumps(ARR)).replace("__TRV__", json.dumps(TRV)).replace("__LY__", str(LY))
            .replace("__DX__", f"{960 - SYM_CX:.1f}").replace("__DY__", f"{540 - SYM_CY:.1f}")
-           .replace("__PX__", str(CUST + 55)).replace("__PY__", str(LY - 30))
+           .replace("__PX__", str(PHX)).replace("__PY__", str(PHY))
            .replace("__PBX__", f"{PBX:.1f}").replace("__PBY__", f"{PBY:.1f}").replace("__PBS__", str(PBS))
            .replace("__PBX2__", f"{PBX2:.1f}").replace("__PBY2__", f"{PBY2:.1f}").replace("__PBS2__", str(PBS2))
            .replace("__RETPTS__", json.dumps(RET)).replace("__RETARR__", str(RET_ARR)))

@@ -17,8 +17,11 @@ DARK, LIGHT, INK, SUB = "#0c0916", "#faf9fd", "#1b1530", "#a69cc8"
 G = ["#FF03C8", "#EE06C1", "#DE0ABA", "#CD0EB4", "#BD12AD", "#AD16A7", "#9B19AB", "#881BB9", "#751DC7", "#621FD6", "#4F21E4", "#3C24F3"]
 
 # 본편 장면 길이(초). 합계 72
-SCENES = [("flow", 35), ("s08", 5), ("s09", 9), ("s10", 4), ("s11", 4), ("s12", 2)]
+# 미국 현장 장면(s10)은 꺼 둠. 다시 넣으려면 SHOW_US = True
+SHOW_US = False
+SCENES = [("flow", 35), ("s08", 5), ("s09", 9)] + ([("s10", 4)] if SHOW_US else []) + [("s11", 4), ("s12", 2)]
 DUR = {k: v for k, v in SCENES}
+DUR.setdefault("s10", 4)
 INTRO, OUTRO = 12.0, 7.5
 
 FONTS = "".join(
@@ -169,11 +172,17 @@ HX, HY = iso(3 * 1.05 + 0.45, 3.2 + 1.1, 0.3 + 4 * 0.33, ox, oy, k)
 s08 = f"""
       <div class="vig"></div>
       <div id="s08-cam" style="position:absolute;inset:0">
-        {svg(''.join(els) + f'<circle id="s08-ring" class="o" cx="{HX:.0f}" cy="{HY:.0f}" r="60" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>', gdef("s08-g", HX - 40, HX + 40), "s08")}
+        {svg(''.join(els) + f'''<g id="s08-mark">
+          <circle id="s08-r1" cx="{HX:.0f}" cy="{HY:.0f}" r="48" fill="none" stroke="#fff" stroke-width="2.5" filter="url(#s08-glows)"/>
+          <circle id="s08-r2" class="o" cx="{HX:.0f}" cy="{HY:.0f}" r="66" fill="none" stroke="url(#s08-g2)" stroke-width="1.6" stroke-dasharray="3 9"/>
+          {"".join(f'<path class="s08-tick" d="M{HX + 76 * math.cos(a):.1f} {HY + 76 * math.sin(a):.1f} L{HX + 88 * math.cos(a):.1f} {HY + 88 * math.sin(a):.1f}" stroke="#fff" stroke-opacity=".8" stroke-width="2" stroke-linecap="round"/>' for a in [i * math.pi / 2 + math.pi / 4 for i in range(4)])}
+          <path id="s08-lead" d="M{HX + 48 * 0.7071:.1f} {HY + 48 * 0.7071:.1f} L{HX + 120:.0f} {HY + 110:.0f} L{HX + 210:.0f} {HY + 110:.0f}" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.6"/>
+          <circle id="s08-dot" cx="{HX + 210:.0f}" cy="{HY + 110:.0f}" r="4" fill="#fff"/>
+        </g>''', gdef("s08-g", HX - 40, HX + 40) + gdef("s08-g2", HX - 66, HX + 66), "s08")}
       </div>
       <div id="s08-barwrap" style="position:absolute;inset:0">{BAR.replace("__ID__", "s08-bar")}</div>
       {say("끊김 없는 대화 뒤에는,|[단단한 인프라]가 있습니다", 68, 120, 150, "s08")}
-      <div class="lab" id="s08-lab" style="left:{HX + 80:.0f}px;top:{HY + 40:.0f}px;color:#fff">방금 그 통화</div>
+      <div class="lab" id="s08-lab" style="left:{HX + 228:.0f}px;top:{HY + 90:.0f}px;color:#fff">AI 콜봇이 일하는 곳</div>
 """
 s08_js = f"""
       // 연속 줌 아웃: 화면을 채우던 빛이 서버 랙 LED 한 칸이었음
@@ -182,10 +191,15 @@ s08_js = f"""
       tl.fromTo("#s08-cam", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.6, ease: "sine.inOut" }}, 0.05);
       tl.to("#s08-barwrap", {{ opacity: 0, duration: 0.6, ease: "sine.inOut" }}, 0.25);
       tl.fromTo(".s08-led", {{ opacity: 0.2 }}, {{ opacity: 1, duration: 1.0, ease: "sine.inOut", stagger: 0.02 }}, 1.4);
-      tl.fromTo("#s08-ring", {{ scale: 0.4, opacity: 0 }}, {{ scale: 1, opacity: 1, duration: 1.0, ease: "expo.out" }}, 2.6);
+      DRAW("#s08-r1", 2.5, 0.9, "power2.inOut");
+      tl.fromTo("#s08-r2", {{ opacity: 0, scale: 0.8 }}, {{ opacity: 1, scale: 1, duration: 0.9, ease: "power3.out" }}, 2.6);
+      tl.fromTo("#s08-r2", {{ rotation: 0 }}, {{ rotation: 60, duration: 2.4, ease: "none" }}, 2.6);
+      tl.fromTo(".s08-tick", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.5, ease: "sine.out", stagger: 0.06 }}, 2.8);
+      DRAW("#s08-lead", 2.95, 0.6, "power2.inOut");
+      tl.fromTo("#s08-dot", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.3 }}, 3.45);
       IN(".s08-w", 2.0);
-      IN("#s08-lab", 2.9, {{ y: 10 }});
-      OUT([".s08-w", "#s08-lab", "#s08-ring"], 4.3);
+      IN("#s08-lab", 3.35, {{ y: 0, b: 10 }});
+      OUT([".s08-w", "#s08-lab", "#s08-mark"], 4.3);
       tl.to("#s08-cam", {{ opacity: 0, scale: 0.92, duration: 0.7, ease: "power2.inOut" }}, 4.3);
 """
 scene("s08", DUR["s08"], s08, s08_js)
