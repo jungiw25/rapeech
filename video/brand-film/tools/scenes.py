@@ -17,7 +17,8 @@ DARK, LIGHT, INK, SUB = "#0c0916", "#faf9fd", "#1b1530", "#a69cc8"
 G = ["#FF03C8", "#EE06C1", "#DE0ABA", "#CD0EB4", "#BD12AD", "#AD16A7", "#9B19AB", "#881BB9", "#751DC7", "#621FD6", "#4F21E4", "#3C24F3"]
 
 # 본편 장면 길이(초). 합계 72
-DUR = [5, 7, 8, 8, 6, 7, 7, 5, 9, 4, 4, 2]
+SCENES = [("flow", 35), ("s08", 5), ("s09", 9), ("s10", 4), ("s11", 4), ("s12", 2)]
+DUR = {k: v for k, v in SCENES}
 INTRO, OUTRO = 12.0, 7.5
 
 FONTS = "".join(
@@ -142,260 +143,7 @@ SYM_S = 1920 * 0.5 / 314
 SYM_X, SYM_Y = 960 - 122 * SYM_S, 540 - 45 * SYM_S - 40
 STRIPE_ANG = math.degrees(math.atan2(4.045 - 73.183, 83.967 - 55.374))  # 로고 사선 각도(약 -67.5°)
 
-# ================================================================ s01 로고에서 신호로 (5 s)
-lx, ly = SYM_X + 56 * SYM_S, SYM_Y + 40 * SYM_S
-s01 = f"""
-      <div id="s01-dark" style="position:absolute;inset:0;background:{DARK}"></div>
-      <div class="vig" id="s01-vig"></div>
-      <div id="s01-light" style="position:absolute;inset:0;background:{LIGHT}"></div>
-      <img id="s01-last" src="assets/intro_last.png" style="position:absolute;left:0;top:0;width:1920px;height:1080px" />
-      <img id="s01-sym" src="assets/brand/symbol_purple.svg" style="position:absolute;left:{SYM_X:.1f}px;top:{SYM_Y:.1f}px;width:{84 * SYM_S:.1f}px;height:{90 * SYM_S:.1f}px" />
-      {svg(f'''<g id="s01-beam"><path id="s01-line" d="M{lx:.0f} {ly:.0f} L3200 {ly:.0f}" stroke="url(#s01-g)" stroke-width="10" stroke-linecap="round" filter="url(#s01-glow)"/></g>
-        {''.join(f'<path class="s01-st" d="M{700 + i * 160} {ly + ((i * 53) % 7 - 3) * 60:.0f} l{220 + i * 15} 0" stroke="#fff" stroke-opacity="{0.10 + 0.03 * (i % 3)}" stroke-width="2"/>' for i in range(9))}''',
-        gdef("s01-g", lx, 2200), "s01")}
-"""
-s01_js = f"""
-      // 인트로 마지막 화면 → 워드마크만 서서히 사라지고 심볼만 남음
-      tl.to("#s01-last", {{ opacity: 0, duration: 0.9, ease: "sine.inOut" }}, 0.15);
-      // 심볼에서 신호선이 오른쪽으로 뻗어 나감
-      tl.fromTo("#s01-line", {{ attr: {{ d: "M{lx:.0f} {ly:.0f} L{lx + 1:.0f} {ly:.0f}" }} }}, {{ attr: {{ d: "M{lx:.0f} {ly:.0f} L3200 {ly:.0f}" }}, duration: 1.5, ease: "power3.inOut" }}, 0.7);
-      // 밝은 면이 오른쪽에서부터 걷히며 어두운 공간이 드러남
-      tl.fromTo("#s01-light", {{ clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" }},
-        {{ clipPath: "polygon(0% 0%, 0% 0%, -10% 100%, 0% 100%)", duration: 1.8, ease: "power2.inOut" }}, 1.1);
-      // 심볼은 왼쪽으로 물러나며 흐려지고, 카메라가 선을 따라 가운데로
-      tl.to("#s01-sym", {{ x: -420, opacity: 0, filter: "blur(10px)", duration: 1.6, ease: "power2.inOut" }}, 1.9);
-      tl.to("#s01-beam", {{ y: {540 - ly:.0f}, duration: 2.0, ease: "power2.inOut" }}, 2.0);
-      tl.to("#s01-line", {{ attr: {{ d: "M-200 {ly:.0f} L3200 {ly:.0f}" }}, duration: 1.8, ease: "power2.inOut" }}, 2.2);
-      tl.fromTo(".s01-st", {{ opacity: 0, x: 200 }}, {{ opacity: 1, x: -600, duration: 2.2, ease: "sine.inOut", stagger: 0.05 }}, 1.8);
-      tl.to(".s01-st", {{ opacity: 0, duration: 0.5, ease: "sine.inOut" }}, 4.42);
-"""
-scene("s01", DUR[0], s01, s01_js)
-
-# ================================================================ s02 목소리의 시작 (7 s)
-N2 = 36
-layers, idx = [], 0
-for li, (op, blur, sc, seed) in enumerate([(0.25, 6, 0.75, 3), (0.5, 2, 0.9, 7), (1, 0, 1.0, 11)]):
-    bars = "".join(
-        f'<rect class="s02-b s02-l{li} o" x="{1000 + k * 22 + li * 6}" y="240" width="9" height="600" rx="4.5" fill="{G[min(11, k // 3)]}" opacity="{op}"/>'
-        for k in range(N2))
-    layers.append(f'<g style="filter:blur({blur}px)">{bars}</g>')
-H2 = [wave_heights(N2, s, a) for s, a in [(3, 0.75), (7, 0.9), (11, 1.0)]]
-s02 = f"""
-      <div class="vig"></div>
-      {svg(f'<path id="s02-line" d="M-200 540 L2120 540" stroke="url(#s02-g)" stroke-width="10" stroke-linecap="round" filter="url(#s02-glow)"/>' + ''.join(layers), gdef("s02-g", 0, 1920), "s02")}
-      {say("모든 대화는,|[목소리]에서|시작합니다", 96, 150, 380, "s02")}
-"""
-s02_js = f"""
-      const H = {json.dumps([[round(h, 3) for h in hs] for hs in H2])};
-      // 선이 파형 자리로 모이며 막대가 솟음(가운데부터)
-      tl.to("#s02-line", {{ attr: {{ d: "M1000 540 L1790 540" }}, duration: 1.2, ease: "power3.inOut" }}, 0);
-      tl.to("#s02-line", {{ opacity: 0, duration: 0.6, ease: "sine.inOut" }}, 1.0);
-      for (let li = 0; li < 3; li++) {{
-        gsap.utils.toArray(".s02-l" + li).forEach((el, k) => {{
-          const d = Math.abs(k - {N2 / 2}) * 0.018;
-          tl.fromTo(el, {{ scaleY: 0.012 }}, {{ scaleY: Math.max(0.02, H[li][k]), duration: 1.2, ease: "power3.out" }}, 0.55 + d + li * 0.06);
-          // 말하는 듯 부드럽게 오르내림(사인 이징, 끊김 없이 이어짐)
-          let t = 1.9 + d + li * 0.06, s = (k + 1) * 9301 + li * 49297;
-          while (t < 5.6) {{
-            s = (s * 1664525 + 1013904223) % 4294967296;
-            const amp = (0.25 + 0.75 * s / 4294967296) * H[li][k] * 1.15 + 0.02;
-            tl.to(el, {{ scaleY: amp, duration: 0.42, ease: "sine.inOut" }}, t);
-            t += 0.42;
-          }}
-          tl.to(el, {{ scaleY: 0.012, duration: 0.9, ease: "power2.inOut" }}, 5.7 + d * 0.5);
-        }});
-      }}
-      IN(".s02-w", 1.2);
-      OUT(".s02-w", 6.0);
-      // 끝: 다시 한 줄의 신호선(다음 장면의 전화망 선과 같은 높이)
-      tl.to("#s02-line", {{ attr: {{ d: "M-200 548 L2120 548" }}, opacity: 1, duration: 1.0, ease: "power3.inOut" }}, 5.95);
-"""
-scene("s02", DUR[1], s02, s02_js)
-
-# ================================================================ s03 전화망 → AI 게이트웨이 (8 s)
-gate = "".join(
-    f'<rect class="s03-gate o" x="{900 + i * 28}" y="{300 + i * 14}" width="{120 - i * 4}" height="{480 - i * 28}" rx="18" fill="none" stroke="url(#s03-g)" stroke-opacity="{1 - i * 0.18:.2f}" stroke-width="{4 - i * 0.5}"/>'
-    for i in range(5))
-s03 = f"""
-      <div class="vig"></div>
-      {svg(f'''
-        <path id="s03-grey" d="M-200 548 L960 540" stroke="#8a8399" stroke-opacity=".55" stroke-width="3"/>
-        <path id="s03-dots" d="M-200 548 L960 540" stroke="#6b6380" stroke-width="8" stroke-linecap="round" stroke-dasharray="2 22"/>
-        <path id="s03-in" d="M-200 548 L2120 540" stroke="url(#s03-g)" stroke-width="10" stroke-linecap="round" filter="url(#s03-glow)"/>
-        {gate}
-        <path id="s03-out" d="M960 540 L2120 520" stroke="url(#s03-g)" stroke-width="10" stroke-linecap="round" filter="url(#s03-glow)"/>
-        <circle id="s03-pulse" cx="-40" cy="546" r="9" fill="#fff" filter="url(#s03-glows)"/>
-        {''.join(f'<path class="s03-st" d="M{1060 + i * 95} {528 - i * 2 + ((i * 37) % 5 - 2) * 26} l{90 + i * 8} -2" stroke="#fff" stroke-opacity=".18" stroke-width="2"/>' for i in range(9))}
-      ''', gdef("s03-g", 900, 1980), "s03")}
-      <div class="lab" id="s03-l1" style="left:120px;top:610px">전화망</div>
-      <div class="lab" id="s03-l2" style="left:870px;top:830px;color:#fff">AI 봇 게이트웨이</div>
-      {say("전화가 걸려 오는 순간,|AI가 [함께 듣습니다]", 72, 120, 150, "s03")}
-"""
-s03_js = """
-      // 앞 장면의 그라데이션 선이 관문 앞에서 회색 전화망으로 식어 감
-      tl.to("#s03-in", { opacity: 0, duration: 1.0, ease: "sine.inOut" }, 0.1);
-      FADE(["#s03-grey", "#s03-dots"], 0.1, 1.0);
-      // 관문이 겹겹이 떠오름
-      tl.fromTo(".s03-gate", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 1.3, ease: "expo.out", stagger: 0.09 }, 0.5);
-      DRAW("#s03-out", 1.4, 1.4, "power2.inOut");
-      // 신호 하나가 관문을 통과(통과 순간 색이 바뀜)
-      tl.fromTo("#s03-pulse", { attr: { cx: -40, cy: 547 }, fill: "#9a94aa" }, { attr: { cx: 940, cy: 541 }, duration: 1.6, ease: "power2.in" }, 2.2);
-      tl.to("#s03-pulse", { fill: "#ff3fd6", duration: 0.2, ease: "none" }, 3.75);
-      tl.to("#s03-pulse", { attr: { cx: 2050, cy: 522 }, duration: 1.4, ease: "power2.out" }, 3.8);
-      tl.to(".s03-gate", { scale: 1.06, duration: 0.25, ease: "power2.out", stagger: 0.03 }, 3.75);
-      tl.to(".s03-gate", { scale: 1, duration: 0.6, ease: "power2.inOut", stagger: 0.03 }, 4.0);
-      tl.fromTo(".s03-st", { opacity: 0, x: 150 }, { opacity: 1, x: -450, duration: 3.6, ease: "sine.inOut", stagger: 0.06 }, 3.6);
-      IN(".s03-w", 0.5);
-      IN(["#s03-l1", "#s03-l2"], 1.6, { s: 0.3, y: 10 });
-      OUT([".s03-w", "#s03-l1", "#s03-l2", ".s03-gate", "#s03-grey", "#s03-dots", ".s03-st"], 7.15, { s: 0.015 });
-      tl.to("#s03-out", { opacity: 0, duration: 0.6, ease: "sine.inOut" }, 7.3);
-"""
-scene("s03", DUR[2], s03, s03_js)
-
-# ================================================================ s04 말을 글로, 뜻으로 (8 s)
-rnd = random.Random(4)
-NP = 260
-sx, sy, tx, ty, op = [], [], [], [], []
-for i in range(NP):
-    sx.append(round(200 + rnd.gauss(0, 50)))
-    sy.append(round(560 + rnd.gauss(0, 90)))
-    tx.append(round(1130 + rnd.random() * 560))
-    ty.append(round(520 + rnd.gauss(0, 22)))
-    op.append(round(0.4 + 0.5 * rnd.random(), 2))
-parts = "".join(f'<circle class="s04-p" cx="{sx[i]}" cy="{sy[i]}" r="{rnd.uniform(1.6, 4.2):.1f}" fill="{G[min(11, int(i / NP * 12))]}" opacity="0"/>' for i in range(NP))
-hs = wave_heights(14, 5)
-wbars = "".join(f'<rect class="s04-b o" x="{120 + k * 18}" y="360" width="8" height="400" rx="4" fill="{G[k * 11 // 13]}"/>' for k in range(14))
-chars = "".join(f'<b class="s04-c" style="display:inline-block;font-weight:700">{"&nbsp;" if c == " " else c}</b>' for c in "보험금 청구")
-chars2 = "".join(f'<b class="s04-c" style="display:inline-block;font-weight:700">{"&nbsp;" if c == " " else c}</b>' for c in "하고 싶어요")
-s04 = f"""
-      <div class="vig"></div>
-      {svg(wbars + parts, "", "s04")}
-      <div id="s04-text" style="position:absolute;left:1120px;top:500px;font-size:66px;font-weight:700;color:#fff;letter-spacing:-0.02em;white-space:nowrap">
-        <span style="position:relative;display:inline-block">{chars}<i id="s04-ul" style="position:absolute;left:0;right:0;bottom:-14px;height:10px;border-radius:5px;background:linear-gradient(90deg,#ff03c8,#3c24f3)"></i></span>{chars2}
-      </div>
-      <div id="s04-intent" style="position:absolute;left:1120px;top:620px;font-size:34px;font-weight:600;color:{SUB}">의도 <span style="color:#fff;margin-left:14px">보험금 청구</span></div>
-      {say("말을 글로, 글을 [뜻]으로", 72, 120, 150, "s04")}
-"""
-s04_js = f"""
-      const H = {json.dumps([round(h, 3) for h in hs])};
-      const SX = {sx}, SY = {sy}, TX = {tx}, TY = {ty}, OP = {op};
-      // 왼쪽에서 파형이 말하듯 움직임
-      gsap.utils.toArray(".s04-b").forEach((el, k) => {{
-        tl.fromTo(el, {{ scaleY: 0.02 }}, {{ scaleY: H[k], duration: 1.0, ease: "power3.out" }}, 0.2 + Math.abs(k - 7) * 0.03);
-        let t = 1.2, s = k * 7919 + 13;
-        while (t < 3.0) {{ s = (s * 1664525 + 1013904223) % 4294967296; tl.to(el, {{ scaleY: (0.3 + 0.7 * s / 4294967296) * H[k] + 0.03, duration: 0.4, ease: "sine.inOut" }}, t); t += 0.4; }}
-        tl.to(el, {{ scaleY: 0.02, opacity: 0.25, duration: 1.0, ease: "power2.inOut" }}, 3.0 + k * 0.02);
-      }});
-      // 목소리가 입자로 풀려 오른쪽으로 흘러가 글자가 됨
-      tl.fromTo(".s04-p", {{ attr: {{ cx: i => SX[i], cy: i => SY[i] }}, opacity: 0 }},
-        {{ attr: {{ cx: i => TX[i], cy: i => TY[i] }}, opacity: i => OP[i], duration: 2.0, ease: "power2.inOut", stagger: {{ each: 0.006 }} }}, 1.3);
-      tl.to(".s04-p", {{ opacity: 0, duration: 0.6, ease: "sine.inOut", stagger: {{ each: 0.006 }} }}, 3.3);
-      tl.fromTo(".s04-c", {{ opacity: 0, filter: "blur(12px)", y: 8 }}, {{ opacity: 1, filter: "blur(0px)", y: 0, duration: 0.9, ease: "power2.out", stagger: 0.07 }}, 2.6);
-      tl.fromTo("#s04-ul", {{ scaleX: 0, transformOrigin: "0% 50%" }}, {{ scaleX: 1, duration: 1.0, ease: "power3.inOut" }}, 3.9);
-      IN("#s04-intent", 4.4, {{ y: 12 }});
-      IN(".s04-w", 0.4);
-      OUT([".s04-w", "#s04-text", "#s04-intent", ".s04-b"], 7.1);
-"""
-scene("s04", DUR[3], s04, s04_js)
-
-# ================================================================ s05 알맞은 AI로 (6 s)
-nodes = [(1320, 330), (1420, 560), (1320, 790)]
-branches = "".join(f'<path class="s05-br" d="M760 560 C 1000 560, 1060 {y}, {x - 60} {y}" fill="none" stroke="#3a3350" stroke-width="4" stroke-linecap="round"/>' for x, y in nodes)
-hot = f'<path id="s05-hot" d="M760 560 C 1000 560, 1060 560, 1360 560" fill="none" stroke="url(#s05-g)" stroke-width="9" stroke-linecap="round" filter="url(#s05-glow)"/>'
-nd = "".join(f'<circle class="s05-n o" cx="{x}" cy="{y}" r="46" fill="#1c1730" stroke="#3a3350" stroke-width="3"/>' for x, y in nodes)
-lit = '<circle id="s05-r" class="o" cx="1420" cy="560" r="74" fill="none" stroke="url(#s05-g)" stroke-width="3"/><circle id="s05-w" class="o" cx="1420" cy="560" r="52" fill="#faf9fd"/><circle id="s05-c" class="o" cx="1420" cy="560" r="24" fill="url(#s05-g)"/>'
-s05 = f"""
-      <div class="vig"></div>
-      {svg(f'<path id="s05-main" d="M-200 560 L760 560" stroke="url(#s05-g)" stroke-width="9" stroke-linecap="round" filter="url(#s05-glow)"/>' + branches + hot + nd + lit, gdef("s05-g", 0, 1500), "s05")}
-      <div class="lab" id="s05-lab" style="left:1520px;top:540px;color:#fff;font-size:34px">가장 알맞은 AI</div>
-      {say("질문에 [가장 알맞은 AI]로", 72, 120, 150, "s05")}
-"""
-s05_js = """
-      DRAW("#s05-main", 0.0, 1.0, "power2.out");
-      DRAW(".s05-br", 0.7, 1.1, "power2.inOut", 0.08);
-      tl.fromTo(".s05-n", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9, ease: "back.out(1.3)", stagger: 0.1 }, 1.4);
-      // 질문이 셋 중 하나를 골라 흘러감
-      DRAW("#s05-hot", 2.3, 1.0, "power2.inOut");
-      tl.fromTo("#s05-w", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.4)" }, 3.1);
-      tl.fromTo("#s05-c", { scale: 0 }, { scale: 1, duration: 0.7, ease: "back.out(1.6)" }, 3.25);
-      tl.fromTo("#s05-r", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 0.6, duration: 1.1, ease: "expo.out" }, 3.3);
-      tl.to(".s05-n", { opacity: 0.45, duration: 0.8, ease: "sine.inOut" }, 3.2);
-      IN("#s05-lab", 3.6, { y: 10 });
-      IN(".s05-w", 0.4);
-      OUT([".s05-w", "#s05-lab", ".s05-br", ".s05-n", "#s05-hot", "#s05-main", "#s05-r", "#s05-c"], 5.2, { s: 0.015 });
-      tl.to("#s05-w", { scale: 0.5, opacity: 0, duration: 0.7, ease: "power2.inOut" }, 5.25);
-"""
-scene("s05", DUR[4], s05, s05_js)
-
-# ================================================================ s06 목소리가 열쇠 (7 s)
-rings = []
-for i in range(9):
-    R = 90 + i * 34
-    pts = []
-    for a in range(0, 361, 4):
-        th = math.radians(a - 90)
-        wob = 1 + 0.05 * math.sin(th * (3 + i % 4) + i) * (i / 8)
-        pts.append(f"{960 + R * wob * math.cos(th):.1f},{560 + R * wob * math.sin(th):.1f}")
-    rings.append(f'<polyline class="s06-r" points="{" ".join(pts)}" fill="none" stroke="{G[11 - i]}" stroke-width="{3 if i % 2 else 5}" stroke-linecap="round" opacity="{1 - i * 0.07:.2f}"/>')
-lock = f'''<g id="s06-lock" class="o"><g transform="translate(960 560)">
-  <path id="s06-sh" d="M-34 -10 V-44 a34 34 0 0 1 68 0 V-10" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round"/>
-  <rect x="-50" y="-12" width="100" height="78" rx="14" fill="#fff"/><circle cx="0" cy="22" r="10" fill="{DARK}"/><rect x="-4" y="22" width="8" height="22" rx="4" fill="{DARK}"/></g></g>'''
-s06 = f"""
-      <div class="vig"></div>
-      {svg(f'<g id="s06-rings">{"".join(rings)}</g><circle id="s06-pulse" class="o" cx="960" cy="560" r="400" fill="none" stroke="url(#s06-g)" stroke-width="2" filter="url(#s06-glows)"/>' + lock, gdef("s06-g", 560, 1360), "s06")}
-      {say("목소리 하나로,|[본인 확인]까지", 72, 120, 150, "s06")}
-      <div class="lab" id="s06-lab" style="left:1420px;top:880px;color:#fff">화자인증</div>
-"""
-s06_js = """
-      // 목소리 지문이 안쪽부터 그려짐
-      DRAW(".s06-r", 0.2, 1.5, "power2.inOut", 0.11);
-      tl.fromTo("#s06-rings", { rotation: -14, transformOrigin: "960px 560px" }, { rotation: 6, duration: 7, ease: "sine.inOut" }, 0);
-      tl.fromTo("#s06-lock", { scale: 0.8, opacity: 0, filter: "blur(10px)" }, { scale: 1, opacity: 1, filter: "blur(0px)", duration: 1.0, ease: "power3.out" }, 1.5);
-      // 열림: 고리가 부드럽게 들리며 회전, 빛의 파동이 퍼짐
-      tl.to("#s06-sh", { rotation: -24, y: -10, svgOrigin: "34 -10", duration: 0.9, ease: "back.out(1.4)" }, 3.2);
-      tl.fromTo("#s06-pulse", { scale: 0.3, opacity: 0.9 }, { scale: 1.15, opacity: 0, duration: 1.6, ease: "power2.out" }, 3.25);
-      tl.to(".s06-r", { opacity: 1, duration: 0.5, ease: "sine.out" }, 3.25);
-      IN(".s06-w", 0.5);
-      IN("#s06-lab", 3.6, { y: 10 });
-      OUT([".s06-w", "#s06-lab", "#s06-lock"], 6.2);
-      tl.to("#s06-rings", { scale: 0.2, opacity: 0, duration: 0.9, ease: "power2.inOut" }, 6.0);
-"""
-scene("s06", DUR[5], s06, s06_js)
-
-# ================================================================ s07 답, 그리고 역할 분담 (7 s)
-s07 = f"""
-      <div id="s07-low" style="position:absolute;left:0;top:540px;width:1920px;height:540px;background:{LIGHT}"></div>
-      <div id="s07-seam" style="position:absolute;left:0;top:536px;width:1920px;height:8px;background:linear-gradient(90deg,#ff03c8,#a518a4 50%,#3c24f3)"></div>
-      <div class="lab" id="s07-l1" style="left:120px;top:110px">고객에게</div>
-      <div id="s07-bub" style="position:absolute;left:120px;top:190px;padding:0 64px;height:140px;border-radius:70px;background:linear-gradient(100deg,#ff03c8,#a518a4 50%,#3c24f3);color:#fff;font-size:52px;font-weight:700;display:flex;align-items:center;white-space:nowrap"><span id="s07-bt">네, 청구 접수를 도와드릴게요.</span></div>
-      {say("단순 문의는|[AI]가 바로", 60, 1180, 200, "s07a")}
-      <div class="lab" id="s07-l2" style="left:120px;top:620px;color:#6b6380">상담사에게</div>
-      <div id="s07-card" style="position:absolute;left:120px;top:690px;width:760px;height:280px;border-radius:24px;background:#fff;box-shadow:0 18px 40px rgba(27,21,48,.12);padding:40px 48px">
-        <div style="font-size:30px;font-weight:700;color:{INK}">상담 요약</div>
-        <div style="margin-top:22px;font-size:30px;font-weight:500;color:#5d5672;line-height:1.6">
-          <div class="s07-row">· 보험금 청구 문의</div><div class="s07-row">· 목소리로 본인 확인 완료</div><div class="s07-row">· 청구 접수 안내</div></div>
-      </div>
-      {say("깊은 상담은|[사람]이 더 깊게", 60, 1180, 730, "s07b", color=INK)}
-"""
-s07_js = """
-      // 아래 절반이 밝게 차오르고 경계선이 그어짐
-      tl.fromTo("#s07-low", { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 1.2, ease: "power3.inOut" }, 0.1);
-      tl.fromTo("#s07-seam", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 1.3, ease: "power3.inOut" }, 0.6);
-      // 답변 말풍선이 왼쪽에서 펼쳐짐
-      tl.fromTo("#s07-bub", { clipPath: "inset(0% 100% 0% 0% round 70px)", opacity: 0 }, { clipPath: "inset(0% 0% 0% 0% round 70px)", opacity: 1, duration: 1.1, ease: "power3.inOut" }, 1.0);
-      IN("#s07-bt", 1.55, { y: 0, b: 10 });
-      IN("#s07-l1", 0.8, { y: 10 });
-      IN(".s07a-w", 1.4);
-      // 상담 요약 카드가 떠오르고 줄마다 채워짐
-      tl.fromTo("#s07-card", { y: 60, opacity: 0, filter: "blur(10px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "power3.out" }, 2.6);
-      IN(".s07-row", 3.2, { y: 10, s: 0.22, d: 0.9 });
-      IN("#s07-l2", 2.5, { y: 10 });
-      IN(".s07b-w", 3.0);
-      OUT([".s07a-w", ".s07b-w", "#s07-l1", "#s07-l2", "#s07-bub", "#s07-card"], 5.9, { s: 0.02 });
-      tl.to("#s07-seam", { scaleX: 0, transformOrigin: "100% 50%", duration: 0.8, ease: "power2.inOut" }, 6.1);
-      tl.to("#s07-low", { scaleY: 0, duration: 0.9, ease: "power3.inOut" }, 6.05);
-"""
-scene("s07", DUR[6], s07, s07_js)
+exec((ROOT / "tools" / "flow_block.py").read_text(encoding="utf-8"))
 
 # ================================================================ s08 카메라 후퇴: 서버 랙 (5 s)
 k, ox, oy = 62, 900, 330
@@ -423,14 +171,16 @@ s08 = f"""
       <div id="s08-cam" style="position:absolute;inset:0">
         {svg(''.join(els) + f'<circle id="s08-ring" class="o" cx="{HX:.0f}" cy="{HY:.0f}" r="60" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>', gdef("s08-g", HX - 40, HX + 40), "s08")}
       </div>
-      {say("이 모든 대화가|[달리는 곳]", 72, 120, 150, "s08")}
+      <div id="s08-barwrap" style="position:absolute;inset:0">{BAR.replace("__ID__", "s08-bar")}</div>
+      {say("끊김 없는 대화 뒤에는,|[단단한 인프라]가 있습니다", 68, 120, 150, "s08")}
       <div class="lab" id="s08-lab" style="left:{HX + 80:.0f}px;top:{HY + 40:.0f}px;color:#fff">방금 그 통화</div>
 """
 s08_js = f"""
       // 연속 줌 아웃: 화면을 채우던 빛이 서버 랙 LED 한 칸이었음
       tl.fromTo("#s08-cam", {{ scale: 9, x: {960 - HX:.0f} * 9 / 9, y: {540 - HY:.0f}, transformOrigin: "{HX:.0f}px {HY:.0f}px" }},
         {{ scale: 1, x: 0, y: 0, duration: 2.8, ease: "power3.inOut" }}, 0);
-      tl.fromTo("#s08-cam", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.5, ease: "sine.out" }}, 0);
+      tl.fromTo("#s08-cam", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.6, ease: "sine.inOut" }}, 0.05);
+      tl.to("#s08-barwrap", {{ opacity: 0, duration: 0.6, ease: "sine.inOut" }}, 0.25);
       tl.fromTo(".s08-led", {{ opacity: 0.2 }}, {{ opacity: 1, duration: 1.0, ease: "sine.inOut", stagger: 0.02 }}, 1.4);
       tl.fromTo("#s08-ring", {{ scale: 0.4, opacity: 0 }}, {{ scale: 1, opacity: 1, duration: 1.0, ease: "expo.out" }}, 2.6);
       IN(".s08-w", 2.0);
@@ -438,7 +188,7 @@ s08_js = f"""
       OUT([".s08-w", "#s08-lab", "#s08-ring"], 4.3);
       tl.to("#s08-cam", {{ opacity: 0, scale: 0.92, duration: 0.7, ease: "power2.inOut" }}, 4.3);
 """
-scene("s08", DUR[7], s08, s08_js)
+scene("s08", DUR["s08"], s08, s08_js)
 
 # ================================================================ s09 AI 인프라를 짓다 (9 s)
 k, ox, oy = 60, 800, 420
@@ -474,7 +224,7 @@ for f in range(6):
 s09 = f"""
       <div class="vig"></div>
       <div id="s09-cam" style="position:absolute;inset:0">{svg(''.join(fl), gdef("s09-g", 700, 1300), "s09")}{''.join(labs)}</div>
-      {say("[AI 인프라]를|짓습니다", 72, 120, 120, "s09")}
+      {say("데이터센터,|[설계부터 운영까지]", 72, 120, 120, "s09")}
       <div class="lab" id="s09-sub" style="left:120px;top:900px">데이터센터 · 전산센터 · ESS · 스마트공장</div>
 """
 s09_js = """
@@ -499,7 +249,7 @@ s09_js = """
       OUT([".s09-w", "#s09-sub", ".s09-lab"], 8.2, { s: 0.02 });
       tl.to("#s09-cam", { y: 260, opacity: 0, duration: 0.8, ease: "power2.in" }, 8.2);
 """
-scene("s09", DUR[8], s09, s09_js)
+scene("s09", DUR["s09"], s09, s09_js)
 
 # ================================================================ s10 미국 현장까지 (4 s)
 dots = json.loads((ROOT / "assets/data/pacific_dots.json").read_text())["dots"]
@@ -535,7 +285,7 @@ s10_js = """
       IN(".s10-w", 0.3);
       OUT([".s10-w", "#s10-cam"], 3.4, { s: 0.05, d: 0.6 });
 """
-scene("s10", DUR[9], s10, s10_js)
+scene("s10", DUR["s10"], s10, s10_js)
 
 # ================================================================ s11 한 팀 (4 s)
 k, ox, oy = 66, 980, 560
@@ -571,7 +321,7 @@ s11_js = f"""
       OUT([".s11-w", "#s11-proof", "#s11-la", "#s11-li"], 3.3, {{ s: 0.02, d: 0.55 }});
       tl.to(["#s11-up", "#s11-dn", "#s11-beam"], {{ scale: 0.6, y: {540 - oy:.0f}, opacity: 0, transformOrigin: "{ox:.0f}px {oy:.0f}px", duration: 0.7, ease: "power2.in" }}, 3.3);
 """
-scene("s11", DUR[10], s11, s11_js)
+scene("s11", DUR["s11"], s11, s11_js)
 
 # ================================================================ s12 아웃트로로 (2 s)
 OB = [960 + (k - 5.5) * 46 for k in range(12)]  # 아웃트로 첫 프레임의 막대 중심
@@ -590,13 +340,12 @@ s12_js = """
       tl.to("#s12-line", { scaleX: 0.36, opacity: 0, duration: 0.8, ease: "power2.inOut" }, 1.05);
       tl.fromTo(".s12-d", { opacity: 0, scaleX: 2.4, transformOrigin: "50% 50%" }, { opacity: 1, scaleX: 1, duration: 0.75, ease: "power2.out", stagger: 0.01 }, 1.15);
 """
-scene("s12", DUR[11], s12, s12_js)
+scene("s12", DUR["s12"], s12, s12_js)
 
 # ================================================================ index.html
 t = INTRO
 hosts = []
-for i, d in enumerate(DUR):
-    sid = f"s{i + 1:02d}"
+for i, (sid, d) in enumerate(SCENES):
     hosts.append(f'''      <div id="{sid}" data-composition-id="{sid}" data-composition-src="compositions/{sid}.html" data-start="{t:.2f}" data-duration="{d}"
         data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080" style="z-index: {i + 2}"></div>''')
     t += d
@@ -620,7 +369,8 @@ TOTAL = t + OUTRO
       <video id="intro-video" class="clip full" src="assets/intro.mp4" data-start="0" data-duration="{INTRO}" data-track-index="0" data-has-audio="true" data-volume="1" playsinline style="z-index: 1"></video>
 {chr(10).join(hosts)}
       <video id="outro-video" class="clip full" src="assets/outro.mp4" data-start="{OUT_START:.2f}" data-duration="{OUTRO}" data-track-index="0" muted playsinline style="z-index: 20"></video>
-      <audio id="bed" class="clip" src="assets/bed.wav" data-start="{INTRO}" data-duration="{TOTAL - INTRO:.2f}" data-track-index="2" data-volume="0.6" data-fade-in="1.5" data-fade-out="2.5"></audio>
+      <audio id="bed" class="clip" src="assets/bed.wav" data-start="{INTRO}" data-duration="{TOTAL - INTRO:.2f}" data-track-index="2" data-volume="0.45" data-fade-in="1.5" data-fade-out="2.5"></audio>
+      <audio id="sfx" class="clip" src="assets/sfx.wav" data-start="{INTRO}" data-duration="{TOTAL - INTRO:.2f}" data-track-index="3" data-volume="1"></audio>
     </div>
     <script>
       window.__timelines = window.__timelines || {{}};
