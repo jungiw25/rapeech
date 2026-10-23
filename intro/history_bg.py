@@ -24,6 +24,13 @@ LIL = (157, 121, 255)
 PURP = (86, 0, 207)
 
 
+LIGHT = True
+
+
+def mix2(a, b, t):
+    return tuple(int(x + (y - x) * t) for x, y in zip(a, b))
+
+
 def grad3(t):
     t = min(1, max(0, t))
     if t < 0.5:
@@ -52,7 +59,32 @@ def path_pts(n=400):
     return pts
 
 
-def build():
+def lerp_blob(img, cx, cy, r, color, k):
+    """밝은 배경용: 색 쪽으로 부드럽게 섞는다."""
+    hh, ww, _ = img.shape
+    ys, xs = np.ogrid[:hh, :ww]
+    m = np.exp(-((xs - cx) ** 2 + (ys - cy) ** 2) / (r * r) * 2.2)[..., None] * k
+    img += (np.array(color, float) - img) * m
+
+
+def light_base(w, h):
+    """연보라: 제목 자리(왼쪽 위)는 흰 글씨가 보이게 진하게, 오른쪽 아래로 갈수록 밝게."""
+    ys = np.linspace(0, 1, h)[:, None, None]
+    xs = np.linspace(0, 1, w)[None, :, None]
+    t = np.clip(0.62 * xs + 0.38 * ys, 0, 1)
+    c0, c1, c2 = np.array((116, 88, 255.)), np.array((160, 140, 255.)), np.array((218, 210, 255.))
+    base = np.where(t < 0.5, c0 + (c1 - c0) * (t / 0.5), c1 + (c2 - c1) * ((t - 0.5) / 0.5))
+    base = base * np.ones((h, w, 3))
+    lerp_blob(base, w * 0.06, h * 0.08, w * 0.25, (196, 92, 255), 0.45)
+    lerp_blob(base, w * 0.62, h * 0.40, w * 0.30, (236, 230, 255), 0.35)
+    lerp_blob(base, w * 0.95, h * 0.95, w * 0.35, (238, 220, 255), 0.45)
+    lerp_blob(base, w * 0.30, h * 0.92, w * 0.28, (200, 170, 255), 0.30)
+    return base
+
+
+def build(theme="light"):
+    global LIGHT
+    LIGHT = theme == "light"
     w, h = W // 4, H // 4  # 배경 빛은 저해상도로 만들고 확대(매끈하게)
     base = np.zeros((h, w, 3)) + DARK
     # 화면 전체 보랏빛(기존 페이지의 밝은 보라 분위기를 어둡게 이어받음)
@@ -64,6 +96,8 @@ def build():
     blob(base, w * 0.05, h * 0.05, w * 0.22, MAG, 0.30)
     blob(base, w * 0.20, h * 0.95, w * 0.30, MID, 0.25)
     blob(base, w * 0.75, h * 0.70, w * 0.35, PURP, 0.35)
+    if LIGHT:
+        base = light_base(w, h)
     bg = Image.fromarray(np.clip(base, 0, 255).astype(np.uint8)).resize((W * SS, H * SS), Image.BICUBIC)
     bg = bg.filter(ImageFilter.GaussianBlur(6))
 
@@ -87,12 +121,12 @@ def build():
         dist = sorted(((math.dist(a, b), j) for j, b in enumerate(nodes) if j != i))[:2]
         for dd, j in dist:
             if dd < 230 * U:
-                d.line([a, nodes[j]], fill=(*LIL, 26), width=int(1.4 * U))
+                d.line([a, nodes[j]], fill=(255, 255, 255, 70) if LIGHT else (*LIL, 26), width=int(1.4 * U))
     layer = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
     ld = ImageDraw.Draw(layer)
     for k, (x, y) in enumerate(nodes):
         r = (2.5 + (k % 3) * 1.2) * U
-        ld.ellipse([x - r, y - r, x + r, y + r], fill=(*LIL, 100))
+        ld.ellipse([x - r, y - r, x + r, y + r], fill=(255, 255, 255, 170) if LIGHT else (*LIL, 100))
         g.ellipse([x - r * 3, y - r * 3, x + r * 3, y + r * 3], fill=tuple(int(c * 0.25) for c in LIL))
     canvas.alpha_composite(layer)
 
@@ -110,7 +144,7 @@ def build():
         px, py = cx + nv[0] * o, cy + nv[1] * o
         p0 = (px - dv[0] * L * 0.4, py - dv[1] * L * 0.4)
         p1 = (px + dv[0] * L, py + dv[1] * L)
-        col = grad3(k / 11)
+        col = grad3(k / 11) if not LIGHT else mix2((255, 140, 230), (205, 190, 255), k / 11)
         wdt = 11 * U
         ld.line([p0, p1], fill=(*col, 170), width=int(wdt))
         for p in (p0, p1):
@@ -127,7 +161,7 @@ def build():
         hh = (10 + 70 * a) * U
         x = bx + k * 17 * U
         col = grad3(k / 21)
-        ld.rounded_rectangle([x, by - hh, x + 7 * U, by + hh], radius=int(3.5 * U), fill=(*col, 95))
+        ld.rounded_rectangle([x, by - hh, x + 7 * U, by + hh], radius=int(3.5 * U), fill=(255, 255, 255, 120) if LIGHT else (*col, 95))
     canvas.alpha_composite(layer)
 
     # 4) 말풍선(왼쪽 가운데, 테두리만)
@@ -199,11 +233,15 @@ def build():
     # 빛 합성
     gs = glow.resize((glow.size[0] // 8, glow.size[1] // 8), Image.BILINEAR).filter(ImageFilter.GaussianBlur(4))
     gs = gs.resize(canvas.size, Image.BILINEAR)
-    out = np.clip(np.array(canvas.convert("RGB"), float) + np.array(gs, float) * 0.9, 0, 255).astype(np.uint8)
+    a, gg = np.array(canvas.convert("RGB"), float), np.array(gs, float)
+    if LIGHT:  # 밝은 배경에서는 스크린 합성
+        out = (255 - (255 - a) * (255 - gg * 0.8) / 255).clip(0, 255).astype(np.uint8)
+    else:
+        out = np.clip(a + gg * 0.9, 0, 255).astype(np.uint8)
     # 아주 약한 비네팅
     yy, xx = np.ogrid[:out.shape[0], :out.shape[1]]
     v = ((xx / out.shape[1] - 0.5) ** 2 + (yy / out.shape[0] - 0.5) ** 2)
-    out = (out * (1 - 0.35 * v)[..., None]).astype(np.uint8)
+    out = (out * (1 - (0.08 if LIGHT else 0.35) * v)[..., None]).astype(np.uint8)
     img = Image.fromarray(out).reduce(SS)
     return img
 
@@ -240,9 +278,10 @@ def mock(img):
 
 if __name__ == "__main__":
     OUT.mkdir(exist_ok=True)
-    img = build()
-    img.save(OUT / "history_bg.png", optimize=True)
-    img.save(OUT / "history_bg.jpg", quality=92)
-    img.save(OUT / "history_bg.webp", quality=90)
-    mock(img).save(OUT / "history_bg_mock.jpg", quality=88)
+    for theme, suf in (("light", ""), ("dark", "_dark")):
+        img = build(theme)
+        img.save(OUT / f"history_bg{suf}.png", optimize=True)
+        img.save(OUT / f"history_bg{suf}.jpg", quality=92)
+        img.save(OUT / f"history_bg{suf}.webp", quality=90)
+        mock(img).save(OUT / f"history_bg{suf}_mock.jpg", quality=88)
     print("ok")
