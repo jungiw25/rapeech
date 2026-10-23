@@ -8,32 +8,72 @@
 
 #root { position: absolute; inset: 0; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
 .grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #6a4dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.say { position: absolute; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.12; }
+.say { position: absolute; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.16; }
+.say .w { display: inline-block; margin-right: 0.24em; will-change: transform, filter, opacity; }
 .lab { position: absolute; font-weight: 600; color: #a69cc8; font-size: 30px; letter-spacing: 0.01em; }
-.vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,0.10), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45)); }
+.vig { position: absolute; inset: -40px; background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,0.11), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45)); }
+
 
     #root { background: #0c0916; }
 
   </style>
   <div id="root" data-composition-id="s07" data-width="1920" data-height="1080">
-    <div id="s07-all" class="clip" data-start="0" data-duration="1" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap>
+    <div id="s07-all" class="clip" data-start="0" data-duration="7" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap>
 
-      <div style="position:absolute;left:0;top:0;width:1920px;height:540px;background:#0c0916"></div>
-      <div style="position:absolute;left:0;top:540px;width:1920px;height:540px;background:#faf9fd"></div>
-      <div style="position:absolute;left:0;top:536px;width:1920px;height:8px;background:linear-gradient(90deg,#ff03c8,#a518a4 50%,#3c24f3)"></div>
-      <div class="lab" style="left:120px;top:110px">고객에게</div>
-      <div style="position:absolute;left:120px;top:190px;padding:0 64px;height:140px;border-radius:70px;background:linear-gradient(100deg,#ff03c8,#a518a4 50%,#3c24f3);color:#fff;font-size:52px;font-weight:700;display:flex;align-items:center">네, 청구 접수를 도와드릴게요.</div>
-      <div class="say" style="left:1180px;top:200px;font-size:60px">단순 문의는<br/><span class="grad">AI</span>가 바로</div>
-      <div class="lab" style="left:120px;top:620px;color:#6b6380">상담사에게</div>
-      <div style="position:absolute;left:120px;top:690px;width:760px;height:280px;border-radius:24px;background:#fff;box-shadow:0 18px 40px rgba(27,21,48,.12);padding:40px 48px">
+      <div id="s07-low" style="position:absolute;left:0;top:540px;width:1920px;height:540px;background:#faf9fd"></div>
+      <div id="s07-seam" style="position:absolute;left:0;top:536px;width:1920px;height:8px;background:linear-gradient(90deg,#ff03c8,#a518a4 50%,#3c24f3)"></div>
+      <div class="lab" id="s07-l1" style="left:120px;top:110px">고객에게</div>
+      <div id="s07-bub" style="position:absolute;left:120px;top:190px;padding:0 64px;height:140px;border-radius:70px;background:linear-gradient(100deg,#ff03c8,#a518a4 50%,#3c24f3);color:#fff;font-size:52px;font-weight:700;display:flex;align-items:center;white-space:nowrap"><span id="s07-bt">네, 청구 접수를 도와드릴게요.</span></div>
+      <div class="say" id="s07a-say" style="left:1180px;top:200px;font-size:60px;color:#fff;"><span class="w s07a-w">단순</span><span class="w s07a-w">문의는</span><br/><span class="w s07a-w"><span class="grad">AI</span>가</span><span class="w s07a-w">바로</span></div>
+      <div class="lab" id="s07-l2" style="left:120px;top:620px;color:#6b6380">상담사에게</div>
+      <div id="s07-card" style="position:absolute;left:120px;top:690px;width:760px;height:280px;border-radius:24px;background:#fff;box-shadow:0 18px 40px rgba(27,21,48,.12);padding:40px 48px">
         <div style="font-size:30px;font-weight:700;color:#1b1530">상담 요약</div>
-        <div style="margin-top:22px;font-size:30px;font-weight:500;color:#5d5672;line-height:1.6">· 보험금 청구 문의<br/>· 목소리로 본인 확인 완료<br/>· 청구 접수 안내</div>
+        <div style="margin-top:22px;font-size:30px;font-weight:500;color:#5d5672;line-height:1.6">
+          <div class="s07-row">· 보험금 청구 문의</div><div class="s07-row">· 목소리로 본인 확인 완료</div><div class="s07-row">· 청구 접수 안내</div></div>
       </div>
-      <div class="say" style="left:1180px;top:730px;font-size:60px;color:#1b1530">깊은 상담은<br/><span class="grad">사람</span>이 더 깊게</div>
+      <div class="say" id="s07b-say" style="left:1180px;top:730px;font-size:60px;color:#1b1530;"><span class="w s07b-w">깊은</span><span class="w s07b-w">상담은</span><br/><span class="w s07b-w"><span class="grad">사람</span>이</span><span class="w s07b-w">더</span><span class="w s07b-w">깊게</span></div>
 
     </div>
   </div>
   <script>
-    window.__timelines["s07"] = gsap.timeline({ paused: true });
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+
+      const IN = (sel, t, o = {}) => tl.fromTo(sel,
+        { opacity: 0, y: o.y ?? 26, filter: `blur(${o.b ?? 14}px)` },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: o.d ?? 1.1, ease: o.e ?? "power3.out", stagger: o.s ?? 0.085 }, t);
+      const OUT = (sel, t, o = {}) => tl.to(sel,
+        { opacity: 0, y: o.y ?? -14, filter: `blur(${o.b ?? 12}px)`, duration: o.d ?? 0.7, ease: "power2.inOut", stagger: o.s ?? 0.03 }, t);
+      const FADE = (sel, t, d = 0.9, from = 0) => tl.fromTo(sel, { opacity: from }, { opacity: 1, duration: d, ease: "sine.inOut" }, t);
+      if (document.querySelector(".o")) gsap.set(".o", { transformOrigin: "50% 50%" });
+      const DRAW = (sel, t, d = 1.2, e = "power2.inOut", s = 0) => {
+        gsap.utils.toArray(sel).forEach((el, i) => {
+          const L = el.getTotalLength();
+          el.setAttribute("stroke-dasharray", `${L} ${L}`);
+          tl.fromTo(el, { attr: { "stroke-dashoffset": L } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e }, t + i * s);
+        });
+      };
+
+
+      // 아래 절반이 밝게 차오르고 경계선이 그어짐
+      tl.fromTo("#s07-low", { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 1.2, ease: "power3.inOut" }, 0.1);
+      tl.fromTo("#s07-seam", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 1.3, ease: "power3.inOut" }, 0.6);
+      // 답변 말풍선이 왼쪽에서 펼쳐짐
+      tl.fromTo("#s07-bub", { clipPath: "inset(0% 100% 0% 0% round 70px)", opacity: 0 }, { clipPath: "inset(0% 0% 0% 0% round 70px)", opacity: 1, duration: 1.1, ease: "power3.inOut" }, 1.0);
+      IN("#s07-bt", 1.55, { y: 0, b: 10 });
+      IN("#s07-l1", 0.8, { y: 10 });
+      IN(".s07a-w", 1.4);
+      // 상담 요약 카드가 떠오르고 줄마다 채워짐
+      tl.fromTo("#s07-card", { y: 60, opacity: 0, filter: "blur(10px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1.2, ease: "power3.out" }, 2.6);
+      IN(".s07-row", 3.2, { y: 10, s: 0.22, d: 0.9 });
+      IN("#s07-l2", 2.5, { y: 10 });
+      IN(".s07b-w", 3.0);
+      OUT([".s07a-w", ".s07b-w", "#s07-l1", "#s07-l2", "#s07-bub", "#s07-card"], 5.9, { s: 0.02 });
+      tl.to("#s07-seam", { scaleX: 0, transformOrigin: "100% 50%", duration: 0.8, ease: "power2.inOut" }, 6.1);
+      tl.to("#s07-low", { scaleY: 0, duration: 0.9, ease: "power3.inOut" }, 6.05);
+
+      if (document.querySelector("#s07-all .vig")) tl.fromTo("#s07-all .vig", { x: -40, y: -16, scale: 1.0 }, { x: 40, y: 16, scale: 1.06, duration: 7, ease: "sine.inOut" }, 0);
+      window.__timelines["s07"] = tl;
+    })();
   </script>
 </template>

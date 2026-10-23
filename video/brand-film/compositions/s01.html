@@ -8,28 +8,64 @@
 
 #root { position: absolute; inset: 0; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
 .grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #6a4dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.say { position: absolute; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.12; }
+.say { position: absolute; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.16; }
+.say .w { display: inline-block; margin-right: 0.24em; will-change: transform, filter, opacity; }
 .lab { position: absolute; font-weight: 600; color: #a69cc8; font-size: 30px; letter-spacing: 0.01em; }
-.vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,0.10), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45)); }
+.vig { position: absolute; inset: -40px; background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,0.11), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45)); }
+
 
     #root { background: #0c0916; }
 
   </style>
   <div id="root" data-composition-id="s01" data-width="1920" data-height="1080">
-    <div id="s01-all" class="clip" data-start="0" data-duration="1" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap>
+    <div id="s01-all" class="clip" data-start="0" data-duration="5" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap>
 
-      <div style="position:absolute;left:0;top:0;width:820px;height:1080px;background:#faf9fd;clip-path:polygon(0 0,100% 0,72% 100%,0 100%)"></div>
-      <img src="assets/brand/symbol_purple.svg" style="position:absolute;left:250px;top:390px;width:260px;filter:none" />
-      <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;overflow:visible"><defs><filter id="glow" filterUnits="userSpaceOnUse" x="-300" y="-300" width="2520" height="1680"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="glows" filterUnits="userSpaceOnUse" x="-300" y="-300" width="2520" height="1680"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="g1" x1="470" y1="0" x2="1960" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs>
-        <path d="M470 430 L1960 300" stroke="url(#g1)" stroke-width="10" stroke-linecap="round" filter="url(#glow)" />
-        <path d="M720 412 L1960 300" stroke="#fff" stroke-opacity=".55" stroke-width="2" />
-        <path d="M900 364 l180 -16" stroke="#fff" stroke-opacity="0.1" stroke-width="2"/><path d="M1030 393 l200 -18" stroke="#fff" stroke-opacity="0.13" stroke-width="2"/><path d="M1160 422 l220 -20" stroke="#fff" stroke-opacity="0.16" stroke-width="2"/><path d="M1290 331 l240 -22" stroke="#fff" stroke-opacity="0.1" stroke-width="2"/><path d="M1420 360 l260 -24" stroke="#fff" stroke-opacity="0.13" stroke-width="2"/><path d="M1550 389 l280 -26" stroke="#fff" stroke-opacity="0.16" stroke-width="2"/><path d="M1680 298 l300 -28" stroke="#fff" stroke-opacity="0.1" stroke-width="2"/><path d="M1810 327 l320 -30" stroke="#fff" stroke-opacity="0.13" stroke-width="2"/>
-      </svg>
-      <div class="lab" style="left:1220px;top:700px">하나의 신호가 출발합니다</div>
+      <div id="s01-dark" style="position:absolute;inset:0;background:#0c0916"></div>
+      <div class="vig" id="s01-vig"></div>
+      <div id="s01-light" style="position:absolute;inset:0;background:#faf9fd"></div>
+      <img id="s01-last" src="assets/intro_last.png" style="position:absolute;left:0;top:0;width:1920px;height:1080px" />
+      <img id="s01-sym" src="assets/brand/symbol_purple.svg" style="position:absolute;left:587.0px;top:362.4px;width:256.8px;height:275.2px" />
+      <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;overflow:visible;"><defs><filter id="s01-glow" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="s01-glows" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="s01-g" x1="758.2165605095541" y1="0" x2="2200" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs><g id="s01-beam"><path id="s01-line" d="M758 485 L3200 485" stroke="url(#s01-g)" stroke-width="10" stroke-linecap="round" filter="url(#s01-glow)"/></g>
+        <path class="s01-st" d="M700 305 l220 0" stroke="#fff" stroke-opacity="0.1" stroke-width="2"/><path class="s01-st" d="M860 545 l235 0" stroke="#fff" stroke-opacity="0.13" stroke-width="2"/><path class="s01-st" d="M1020 365 l250 0" stroke="#fff" stroke-opacity="0.16" stroke-width="2"/><path class="s01-st" d="M1180 605 l265 0" stroke="#fff" stroke-opacity="0.1" stroke-width="2"/><path class="s01-st" d="M1340 425 l280 0" stroke="#fff" stroke-opacity="0.13" stroke-width="2"/><path class="s01-st" d="M1500 665 l295 0" stroke="#fff" stroke-opacity="0.16" stroke-width="2"/><path class="s01-st" d="M1660 485 l310 0" stroke="#fff" stroke-opacity="0.1" stroke-width="2"/><path class="s01-st" d="M1820 305 l325 0" stroke="#fff" stroke-opacity="0.13" stroke-width="2"/><path class="s01-st" d="M1980 545 l340 0" stroke="#fff" stroke-opacity="0.16" stroke-width="2"/></svg>
 
     </div>
   </div>
   <script>
-    window.__timelines["s01"] = gsap.timeline({ paused: true });
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+
+      const IN = (sel, t, o = {}) => tl.fromTo(sel,
+        { opacity: 0, y: o.y ?? 26, filter: `blur(${o.b ?? 14}px)` },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: o.d ?? 1.1, ease: o.e ?? "power3.out", stagger: o.s ?? 0.085 }, t);
+      const OUT = (sel, t, o = {}) => tl.to(sel,
+        { opacity: 0, y: o.y ?? -14, filter: `blur(${o.b ?? 12}px)`, duration: o.d ?? 0.7, ease: "power2.inOut", stagger: o.s ?? 0.03 }, t);
+      const FADE = (sel, t, d = 0.9, from = 0) => tl.fromTo(sel, { opacity: from }, { opacity: 1, duration: d, ease: "sine.inOut" }, t);
+      if (document.querySelector(".o")) gsap.set(".o", { transformOrigin: "50% 50%" });
+      const DRAW = (sel, t, d = 1.2, e = "power2.inOut", s = 0) => {
+        gsap.utils.toArray(sel).forEach((el, i) => {
+          const L = el.getTotalLength();
+          el.setAttribute("stroke-dasharray", `${L} ${L}`);
+          tl.fromTo(el, { attr: { "stroke-dashoffset": L } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e }, t + i * s);
+        });
+      };
+
+
+      // 인트로 마지막 화면 → 워드마크만 서서히 사라지고 심볼만 남음
+      tl.to("#s01-last", { opacity: 0, duration: 0.9, ease: "sine.inOut" }, 0.15);
+      // 심볼에서 신호선이 오른쪽으로 뻗어 나감
+      tl.fromTo("#s01-line", { attr: { d: "M758 485 L759 485" } }, { attr: { d: "M758 485 L3200 485" }, duration: 1.5, ease: "power3.inOut" }, 0.7);
+      // 밝은 면이 오른쪽에서부터 걷히며 어두운 공간이 드러남
+      tl.fromTo("#s01-light", { clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" },
+        { clipPath: "polygon(0% 0%, 0% 0%, -10% 100%, 0% 100%)", duration: 1.8, ease: "power2.inOut" }, 1.1);
+      // 심볼은 왼쪽으로 물러나며 흐려지고, 카메라가 선을 따라 가운데로
+      tl.to("#s01-sym", { x: -420, opacity: 0, filter: "blur(10px)", duration: 1.6, ease: "power2.inOut" }, 1.9);
+      tl.to("#s01-beam", { y: 55, duration: 2.0, ease: "power2.inOut" }, 2.0);
+      tl.to("#s01-line", { attr: { d: "M-200 485 L3200 485" }, duration: 1.8, ease: "power2.inOut" }, 2.2);
+      tl.fromTo(".s01-st", { opacity: 0, x: 200 }, { opacity: 1, x: -600, duration: 2.2, ease: "sine.inOut", stagger: 0.05 }, 1.8);
+      tl.to(".s01-st", { opacity: 0, duration: 0.5, ease: "sine.inOut" }, 4.42);
+
+      if (document.querySelector("#s01-all .vig")) tl.fromTo("#s01-all .vig", { x: -40, y: -16, scale: 1.0 }, { x: 40, y: 16, scale: 1.06, duration: 5, ease: "sine.inOut" }, 0);
+      window.__timelines["s01"] = tl;
+    })();
   </script>
 </template>

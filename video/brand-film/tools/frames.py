@@ -353,7 +353,7 @@ hosts = "\n".join(
     f'      <div id="s{i:02d}" data-composition-id="s{i:02d}" data-composition-src="compositions/s{i:02d}.html" data-start="{i - 1}" data-duration="1" data-track-index="1" data-track-kind="graphics" data-width="1920" data-height="1080"></div>'
     for i in range(1, 13)
 )
-(ROOT / "frames.html").write_text(f"""<!doctype html>
+(ROOT / "tools" / "frames_preview.html").write_text(f"""<!doctype html>
 <html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=1920, height=1080"/>
 <script src="assets/gsap.min.js"></script>
 <style>*{{margin:0;padding:0;box-sizing:border-box}} html,body{{width:1920px;height:1080px;overflow:hidden;background:{DARK}}} #root{{position:relative;width:100%;height:100%}}</style></head>

@@ -8,24 +8,61 @@
 
 #root { position: absolute; inset: 0; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
 .grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #6a4dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.say { position: absolute; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.12; }
+.say { position: absolute; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.16; }
+.say .w { display: inline-block; margin-right: 0.24em; will-change: transform, filter, opacity; }
 .lab { position: absolute; font-weight: 600; color: #a69cc8; font-size: 30px; letter-spacing: 0.01em; }
-.vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,0.10), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45)); }
+.vig { position: absolute; inset: -40px; background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,0.11), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45)); }
+
 
     #root { background: #0c0916; }
 
   </style>
   <div id="root" data-composition-id="s05" data-width="1920" data-height="1080">
-    <div id="s05-all" class="clip" data-start="0" data-duration="1" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap>
+    <div id="s05-all" class="clip" data-start="0" data-duration="6" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap>
 
       <div class="vig"></div>
-      <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;overflow:visible"><defs><filter id="glow" filterUnits="userSpaceOnUse" x="-300" y="-300" width="2520" height="1680"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="glows" filterUnits="userSpaceOnUse" x="-300" y="-300" width="2520" height="1680"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="g5" x1="0" y1="0" x2="1500" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs><path d="M-40 560 L760 560" stroke="url(#g5)" stroke-width="9" stroke-linecap="round" filter="url(#glow)"/><path d="M760 560 C 1000 560, 1060 330, 1260 330" fill="none" stroke="#3a3350" stroke-width="4" stroke-linecap="round" /><path d="M760 560 C 1000 560, 1060 560, 1360 560" fill="none" stroke="url(#g5)" stroke-width="9" stroke-linecap="round" filter="url(#glow)"/><path d="M760 560 C 1000 560, 1060 790, 1260 790" fill="none" stroke="#3a3350" stroke-width="4" stroke-linecap="round" /><circle cx="1320" cy="330" r="46" fill="#1c1730" stroke="#3a3350" stroke-width="3"/><circle cx="1420" cy="560" r="74" fill="none" stroke="url(#g5)" stroke-width="3" opacity=".5"/><circle cx="1420" cy="560" r="52" fill="#faf9fd"/><circle cx="1420" cy="560" r="24" fill="url(#g5)"/><circle cx="1320" cy="790" r="46" fill="#1c1730" stroke="#3a3350" stroke-width="3"/></svg>
-      <div class="lab" style="left:1520px;top:540px;color:#fff;font-size:34px">가장 알맞은 AI</div>
-      <div class="say" style="left:120px;top:150px;font-size:72px">질문에 <span class="grad">가장 알맞은 AI</span>로</div>
+      <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;overflow:visible;"><defs><filter id="s05-glow" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="s05-glows" filterUnits="userSpaceOnUse" x="-400" y="-400" width="2720" height="1880"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="s05-g" x1="0" y1="0" x2="1500" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs><path id="s05-main" d="M-200 560 L760 560" stroke="url(#s05-g)" stroke-width="9" stroke-linecap="round" filter="url(#s05-glow)"/><path class="s05-br" d="M760 560 C 1000 560, 1060 330, 1260 330" fill="none" stroke="#3a3350" stroke-width="4" stroke-linecap="round"/><path class="s05-br" d="M760 560 C 1000 560, 1060 560, 1360 560" fill="none" stroke="#3a3350" stroke-width="4" stroke-linecap="round"/><path class="s05-br" d="M760 560 C 1000 560, 1060 790, 1260 790" fill="none" stroke="#3a3350" stroke-width="4" stroke-linecap="round"/><path id="s05-hot" d="M760 560 C 1000 560, 1060 560, 1360 560" fill="none" stroke="url(#s05-g)" stroke-width="9" stroke-linecap="round" filter="url(#s05-glow)"/><circle class="s05-n o" cx="1320" cy="330" r="46" fill="#1c1730" stroke="#3a3350" stroke-width="3"/><circle class="s05-n o" cx="1420" cy="560" r="46" fill="#1c1730" stroke="#3a3350" stroke-width="3"/><circle class="s05-n o" cx="1320" cy="790" r="46" fill="#1c1730" stroke="#3a3350" stroke-width="3"/><circle id="s05-r" class="o" cx="1420" cy="560" r="74" fill="none" stroke="url(#s05-g)" stroke-width="3"/><circle id="s05-w" class="o" cx="1420" cy="560" r="52" fill="#faf9fd"/><circle id="s05-c" class="o" cx="1420" cy="560" r="24" fill="url(#s05-g)"/></svg>
+      <div class="lab" id="s05-lab" style="left:1520px;top:540px;color:#fff;font-size:34px">가장 알맞은 AI</div>
+      <div class="say" id="s05-say" style="left:120px;top:150px;font-size:72px;color:#fff;"><span class="w s05-w">질문에</span><span class="w s05-w"><span class="grad">가장</span></span><span class="w s05-w"><span class="grad">알맞은</span></span><span class="w s05-w"><span class="grad">AI</span>로</span></div>
 
     </div>
   </div>
   <script>
-    window.__timelines["s05"] = gsap.timeline({ paused: true });
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+
+      const IN = (sel, t, o = {}) => tl.fromTo(sel,
+        { opacity: 0, y: o.y ?? 26, filter: `blur(${o.b ?? 14}px)` },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: o.d ?? 1.1, ease: o.e ?? "power3.out", stagger: o.s ?? 0.085 }, t);
+      const OUT = (sel, t, o = {}) => tl.to(sel,
+        { opacity: 0, y: o.y ?? -14, filter: `blur(${o.b ?? 12}px)`, duration: o.d ?? 0.7, ease: "power2.inOut", stagger: o.s ?? 0.03 }, t);
+      const FADE = (sel, t, d = 0.9, from = 0) => tl.fromTo(sel, { opacity: from }, { opacity: 1, duration: d, ease: "sine.inOut" }, t);
+      if (document.querySelector(".o")) gsap.set(".o", { transformOrigin: "50% 50%" });
+      const DRAW = (sel, t, d = 1.2, e = "power2.inOut", s = 0) => {
+        gsap.utils.toArray(sel).forEach((el, i) => {
+          const L = el.getTotalLength();
+          el.setAttribute("stroke-dasharray", `${L} ${L}`);
+          tl.fromTo(el, { attr: { "stroke-dashoffset": L } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e }, t + i * s);
+        });
+      };
+
+
+      DRAW("#s05-main", 0.0, 1.0, "power2.out");
+      DRAW(".s05-br", 0.7, 1.1, "power2.inOut", 0.08);
+      tl.fromTo(".s05-n", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9, ease: "back.out(1.3)", stagger: 0.1 }, 1.4);
+      // 질문이 셋 중 하나를 골라 흘러감
+      DRAW("#s05-hot", 2.3, 1.0, "power2.inOut");
+      tl.fromTo("#s05-w", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8, ease: "back.out(1.4)" }, 3.1);
+      tl.fromTo("#s05-c", { scale: 0 }, { scale: 1, duration: 0.7, ease: "back.out(1.6)" }, 3.25);
+      tl.fromTo("#s05-r", { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 0.6, duration: 1.1, ease: "expo.out" }, 3.3);
+      tl.to(".s05-n", { opacity: 0.45, duration: 0.8, ease: "sine.inOut" }, 3.2);
+      IN("#s05-lab", 3.6, { y: 10 });
+      IN(".s05-w", 0.4);
+      OUT([".s05-w", "#s05-lab", ".s05-br", ".s05-n", "#s05-hot", "#s05-main", "#s05-r", "#s05-c"], 5.2, { s: 0.015 });
+      tl.to("#s05-w", { scale: 0.5, opacity: 0, duration: 0.7, ease: "power2.inOut" }, 5.25);
+
+      if (document.querySelector("#s05-all .vig")) tl.fromTo("#s05-all .vig", { x: -40, y: -16, scale: 1.0 }, { x: 40, y: 16, scale: 1.06, duration: 6, ease: "sine.inOut" }, 0);
+      window.__timelines["s05"] = tl;
+    })();
   </script>
 </template>
