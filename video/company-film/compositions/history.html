@@ -10,7 +10,7 @@
     #h-big span { display: inline-block; margin-right: 0.22em; }
     .grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #6a4dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
     #h-stage { position: absolute; left: 0; top: 0; width: 3600px; height: 1080px; }
-    #h-path { position: absolute; left: 0; top: 0; overflow: visible; }
+    #h-path { position: absolute; left: 0; top: 0; overflow: visible; clip-path: inset(-20px 100% -20px 0px); }
     .h-node { position: absolute; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; background: #faf9fd; }
     .h-node i { position: absolute; left: 11px; top: 11px; width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, #ff03c8, #3c24f3); }
     .h-label { position: absolute; width: 560px; }
@@ -34,8 +34,7 @@
             </linearGradient>
           </defs>
           <polyline id="h-line" points="-60,820 320,780 1260,690 2160,600 3020,500 3600,450"
-            fill="none" stroke="url(#h-grad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"
-            pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+            fill="none" stroke="url(#h-grad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <div class="h-node" id="h-n0" style="left:320px;top:780px"><i></i></div>
         <div class="h-node" id="h-n1" style="left:1260px;top:690px"><i></i></div>
@@ -67,13 +66,16 @@
 
       const cam = [0, -100, -1000, -1850];
       const plan = [[0.25, 0.65], [1.05, 1.65], [2.25, 2.85], [3.45, 4.05]];
-      tl.fromTo("#h-line", { strokeDashoffset: 1 }, { strokeDashoffset: 1 - frac[0], duration: plan[0][1] - plan[0][0], ease: "power2.out" }, plan[0][0]);
+      // 줄이 왼쪽에서 오른쪽으로 늘어남: svg를 오른쪽에서 잘라 내는 값을 줄여 간다
+      const X = [320, 1260, 2160, 3020];
+      const R = (x) => `inset(-20px ${(3600 - x).toFixed(1)}px -20px 0px)`;
+      tl.fromTo("#h-path", { clipPath: R(0) }, { clipPath: R(X[0]), duration: plan[0][1] - plan[0][0], ease: "power2.out" }, plan[0][0]);
       for (let k = 1; k < 4; k++) {
         const [a, b] = plan[k];
-        tl.to("#h-line", { strokeDashoffset: 1 - frac[k], duration: b - a, ease: "power2.inOut" }, a);
+        tl.to("#h-path", { clipPath: R(X[k]), duration: b - a, ease: "power2.inOut" }, a);
         tl.to("#h-stage", { x: cam[k], duration: b - a + 0.12, ease: "power2.inOut" }, a);
       }
-      tl.to("#h-line", { strokeDashoffset: 0, duration: 0.8, ease: "power2.out" }, 4.1);
+      tl.to("#h-path", { clipPath: R(3600), duration: 0.8, ease: "power2.out" }, 4.1);
       for (let k = 0; k < 4; k++) {
         const t = plan[k][1];
         tl.fromTo("#h-n" + k, { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(1.6)" }, t - 0.02);
