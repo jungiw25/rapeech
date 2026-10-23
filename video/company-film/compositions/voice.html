@@ -18,9 +18,9 @@
     .v-dot { position: absolute; top: 102px; width: 36px; height: 36px; border-radius: 50%; background: #ffffff; }
   </style>
   <div id="root" data-composition-id="voice" data-width="1920" data-height="1080">
-    <img id="v-last" class="clip" src="assets/intro_last.png" data-start="0" data-duration="1.2" data-track-index="0" />
+    <img id="v-last" class="clip" src="assets/intro_last.png" data-start="0" data-duration="0.6" data-track-index="0" />
 
-    <div id="v-bars" class="clip" data-start="0.4" data-duration="6.6" data-track-index="1" data-layout-allow-overflow>
+    <div id="v-bars" class="clip" data-start="0.25" data-duration="3.5" data-track-index="1" data-layout-allow-overflow>
       <div class="v-bar" id="v-b0" style="left:1067px;background:#FF03C8"></div>
       <div class="v-bar" id="v-b1" style="left:1113px;background:#EE06C1"></div>
       <div class="v-bar" id="v-b2" style="left:1159px;background:#DE0ABA"></div>
@@ -35,12 +35,12 @@
       <div class="v-bar" id="v-b11" style="left:1573px;background:#3C24F3"></div>
     </div>
 
-    <div id="v-title" class="clip" data-start="2.2" data-duration="5.6" data-track-index="2">
+    <div id="v-title" class="clip" data-start="0.9" data-duration="3.5" data-track-index="2">
       <div id="v-quiet"><span id="v-w1">가장</span><span id="v-w2">쉬운</span><span id="v-w3">인터페이스는,</span></div>
       <div id="v-big"><span id="v-w4" class="grad">말</span><span id="v-w5">입니다</span></div>
     </div>
 
-    <div id="v-bubble-clip" class="clip" data-start="6.0" data-duration="3.5" data-track-index="3" data-layout-allow-overflow>
+    <div id="v-bubble-clip" class="clip" data-start="3.35" data-duration="2.25" data-track-index="3" data-layout-allow-overflow>
       <div id="v-bubble-wrap">
         <div id="v-tail"></div>
         <div id="v-bubble"></div>
@@ -60,55 +60,48 @@
       const bars = Array.from({ length: 12 }, (_, k) => "#v-b" + k);
 
       // 인트로 마지막 화면이 흐려지며 사라짐
-      tl.fromTo("#v-last", { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(10px)", duration: 0.4, ease: "power3.in" }, 0.5);
+      tl.fromTo("#v-last", { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(10px)", duration: 0.22, ease: "power3.in" }, 0.02);
 
       // 사선 12개가 로고 기울기로 솟아오름
       bars.forEach((b, k) => {
         tl.fromTo(b, { rotation: 22.5, scaleY: 0, x: 0, transformOrigin: "50% 50%" },
-          { scaleY: 1, duration: 0.6, ease: "expo.out" }, 0.55 + k * 0.035);
+          { scaleY: 1, duration: 0.5, ease: "expo.out" }, 0.3 + k * 0.025);
       });
-      // 똑바로 서며 파형으로
       const env = (k) => Math.pow(Math.sin(Math.PI * (k + 0.5) / 12), 0.7);
       bars.forEach((b, k) => {
-        tl.to(b, { rotation: 0, x: (k - 5.5) * -6, scaleY: 0.2 + 0.5 * env(k), duration: 0.7, ease: "power2.inOut" }, 1.4);
+        tl.to(b, { rotation: 0, x: (k - 5.5) * -6, scaleY: 0.2 + 0.5 * env(k), duration: 0.45, ease: "power2.inOut" }, 0.85);
       });
-      // 말하듯 움직임: 0.18초마다 새 높이, 음절 사이 짧은 쉼
-      for (let t = 2.1, i = 0; t < 6.0; t += 0.18, i++) {
-        const pause = i % 7 === 6;
+      for (let t = 1.3, i = 0; t < 3.05; t += 0.16, i++) {
+        const pause = i % 6 === 5;
         bars.forEach((b, k) => {
           const h = pause ? 0.06 + 0.04 * rnd() : (0.12 + 0.78 * rnd()) * env(k);
-          tl.to(b, { scaleY: Math.max(0.05, h), duration: 0.16, ease: "power2.out" }, t);
+          tl.to(b, { scaleY: Math.max(0.05, h), duration: 0.14, ease: "power2.out" }, t);
         });
       }
-      // 잦아들며 사라짐
       bars.forEach((b, k) => {
-        tl.to(b, { scaleY: 0.03, duration: 0.35, ease: "power3.in" }, 6.0 + Math.abs(k - 5.5) * 0.02);
-        tl.to(b, { opacity: 0, duration: 0.15 }, 6.35);
+        tl.to(b, { scaleY: 0.03, duration: 0.22, ease: "power3.in" }, 3.1 + Math.abs(k - 5.5) * 0.012);
+        tl.to(b, { opacity: 0, duration: 0.08 }, 3.38);
       });
 
-      // 제목: 단어마다 흐림에서 선명하게 (이동 없음)
+      // 제목
       ["#v-w1", "#v-w2", "#v-w3"].forEach((w, i) => {
-        tl.fromTo(w, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out" }, 2.3 + i * 0.08);
+        tl.fromTo(w, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out" }, 0.95 + i * 0.07);
       });
-      tl.fromTo("#v-w4", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 2.85);
-      tl.fromTo("#v-w5", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 2.95);
-      // 제목 퇴장
-      tl.to(["#v-w1", "#v-w2", "#v-w3", "#v-w4", "#v-w5"], { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in", stagger: 0.04 }, 7.3);
+      tl.fromTo("#v-w4", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, 1.3);
+      tl.fromTo("#v-w5", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, 1.38);
+      tl.to(["#v-w1", "#v-w2", "#v-w3", "#v-w4", "#v-w5"], { opacity: 0, filter: "blur(8px)", duration: 0.18, ease: "power3.in", stagger: 0.03 }, 4.15);
 
-      // 파형이 말풍선으로 (morph)
+      // 파형 → 말풍선 → 화면을 덮으며 어두운 바탕
       tl.fromTo("#v-bubble-wrap", { scaleX: 0.15, scaleY: 0.25, opacity: 0, transformOrigin: "50% 50%" },
-        { scaleX: 1, scaleY: 1, opacity: 1, duration: 0.5, ease: "power3.out" }, 6.25);
+        { scaleX: 1, scaleY: 1, opacity: 1, duration: 0.4, ease: "power3.out" }, 3.46);
       ["#v-d0", "#v-d1", "#v-d2"].forEach((d, i) => {
-        tl.fromTo(d, { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(1.6)" }, 6.6 + i * 0.07);
-        for (let k = 0; k < 2; k++) {
-          tl.to(d, { y: -16, duration: 0.18, ease: "power2.out" }, 6.95 + k * 0.42 + i * 0.1);
-          tl.to(d, { y: 0, duration: 0.18, ease: "power2.in" }, 7.13 + k * 0.42 + i * 0.1);
-        }
+        tl.fromTo(d, { scale: 0 }, { scale: 1, duration: 0.25, ease: "back.out(1.6)" }, 3.65 + i * 0.06);
+        tl.to(d, { y: -16, duration: 0.15, ease: "power2.out" }, 3.95 + i * 0.08);
+        tl.to(d, { y: 0, duration: 0.15, ease: "power2.in" }, 4.1 + i * 0.08);
       });
-      // 말풍선이 화면을 넘어 커지며 어두운 바탕이 됨
-      tl.to(["#v-d0", "#v-d1", "#v-d2"], { opacity: 0, duration: 0.15, ease: "power2.in" }, 8.25);
-      tl.to("#v-bubble-wrap", { scale: 16, duration: 0.9, ease: "power2.inOut" }, 8.35);
-      tl.to("#v-dark", { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 8.6);
+      tl.to(["#v-d0", "#v-d1", "#v-d2"], { opacity: 0, duration: 0.12, ease: "power2.in" }, 4.4);
+      tl.to("#v-bubble-wrap", { scale: 16, duration: 0.75, ease: "power2.inOut" }, 4.5);
+      tl.to("#v-dark", { opacity: 1, duration: 0.4, ease: "power2.inOut" }, 4.7);
 
       window.__timelines["voice"] = tl;
     })();

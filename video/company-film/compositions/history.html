@@ -18,12 +18,12 @@
     .h-desc { margin-top: 14px; font-size: 34px; font-weight: 500; color: #c9c1e6; line-height: 1.35; letter-spacing: -0.01em; }
   </style>
   <div id="root" data-composition-id="history" data-width="1920" data-height="1080">
-    <div id="h-title" class="clip" data-start="0.2" data-duration="9.2" data-track-index="2">
+    <div id="h-title" class="clip" data-start="0" data-duration="6.1" data-track-index="2">
       <div id="h-quiet">2005년부터,</div>
       <div id="h-big"><span id="h-w1">말을</span><span id="h-w2">알아듣는</span><span id="h-w3" class="grad">AI</span></div>
     </div>
 
-    <div id="h-stage-clip" class="clip" data-start="0" data-duration="10.5" data-track-index="1" data-layout-allow-overflow>
+    <div id="h-stage-clip" class="clip" data-start="0" data-duration="6.6" data-track-index="1" data-layout-allow-overflow>
       <div id="h-stage">
         <svg id="h-path" width="3600" height="1080" viewBox="0 0 3600 1080">
           <defs>
@@ -60,38 +60,33 @@
       // frac[0..3] = 노드 0..3, frac[4] = 끝
 
       // 제목
-      tl.fromTo("#h-quiet", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, 0.12);
+      tl.fromTo("#h-quiet", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 0.05);
       ["#h-w1", "#h-w2", "#h-w3"].forEach((w, i) => {
-        tl.fromTo(w, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out" }, 0.3 + i * 0.09);
+        tl.fromTo(w, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out" }, 0.2 + i * 0.07);
       });
 
-      // 길 그리기 + 카메라 (구간마다, 양쪽 감속)
       const cam = [0, -100, -1000, -1850];
-      const plan = [[0.6, 1.2], [1.9, 2.9], [3.7, 4.6], [5.4, 6.4]];
+      const plan = [[0.25, 0.65], [1.05, 1.65], [2.25, 2.85], [3.45, 4.05]];
       tl.fromTo("#h-line", { strokeDashoffset: 1 }, { strokeDashoffset: 1 - frac[0], duration: plan[0][1] - plan[0][0], ease: "power2.out" }, plan[0][0]);
       for (let k = 1; k < 4; k++) {
         const [a, b] = plan[k];
         tl.to("#h-line", { strokeDashoffset: 1 - frac[k], duration: b - a, ease: "power2.inOut" }, a);
-        tl.to("#h-stage", { x: cam[k], duration: b - a + 0.15, ease: "power2.inOut" }, a);
+        tl.to("#h-stage", { x: cam[k], duration: b - a + 0.12, ease: "power2.inOut" }, a);
       }
-      tl.to("#h-line", { strokeDashoffset: 0, duration: 1.0, ease: "power2.out" }, 6.5);
-
-      // 노드와 글
+      tl.to("#h-line", { strokeDashoffset: 0, duration: 0.8, ease: "power2.out" }, 4.1);
       for (let k = 0; k < 4; k++) {
         const t = plan[k][1];
-        tl.fromTo("#h-n" + k, { scale: 0 }, { scale: 1, duration: 0.4, ease: "back.out(1.6)" }, t - 0.02);
-        tl.fromTo("#h-l" + k + " .h-year", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, t + 0.08);
-        tl.fromTo("#h-l" + k + " .h-desc", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, t + 0.2);
+        tl.fromTo("#h-n" + k, { scale: 0 }, { scale: 1, duration: 0.35, ease: "back.out(1.6)" }, t - 0.02);
+        tl.fromTo("#h-l" + k + " .h-year", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out" }, t + 0.05);
+        tl.fromTo("#h-l" + k + " .h-desc", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out" }, t + 0.14);
       }
-      // 지나간 연도는 살짝 물러남
       for (let k = 0; k < 3; k++) {
-        tl.to("#h-l" + k, { opacity: 0.35, duration: 0.4, ease: "power2.inOut" }, plan[k + 1][1] + 0.5);
+        tl.to("#h-l" + k, { opacity: 0.35, duration: 0.3, ease: "power2.inOut" }, plan[k][1] + 1.9);
       }
-
-      // 끝: 제목·글이 빠지고 마지막 노드가 화면을 덮으며 밝은 화면으로
-      tl.to(["#h-quiet", "#h-big", "#h-l3"], { opacity: 0, filter: "blur(8px)", duration: 0.22, ease: "power3.in" }, 8.9);
-      tl.to("#h-n3 i", { opacity: 0, duration: 0.15, ease: "power2.in" }, 9.0);
-      tl.to("#h-n3", { scale: 130, duration: 0.7, ease: "power3.in" }, 9.1);
+      // 끝: 제목과 모든 연도 글이 빠진 뒤 마지막 노드로 줌 통과
+      tl.to(["#h-quiet", "#h-big", "#h-l0", "#h-l1", "#h-l2", "#h-l3"], { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in" }, 5.7);
+      tl.to("#h-n3 i", { opacity: 0, duration: 0.12, ease: "power2.in" }, 5.8);
+      tl.to("#h-n3", { scale: 130, duration: 0.6, ease: "power3.in" }, 5.9);
 
       window.__timelines["history"] = tl;
     })();

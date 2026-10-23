@@ -21,17 +21,17 @@
     #l-atext { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 48px; font-weight: 700; letter-spacing: -0.02em; }
   </style>
   <div id="root" data-composition-id="listen" data-width="1920" data-height="1080">
-    <div id="l-verbs" class="clip" data-start="0" data-duration="12" data-track-index="1">
+    <div id="l-verbs" class="clip" data-start="0" data-duration="7.2" data-track-index="1">
       <div class="l-verb" id="l-v0">듣고,</div>
       <div class="l-verb" id="l-v1">이해하고,</div>
       <div class="l-verb" id="l-v2">답합니다</div>
     </div>
 
-    <div id="l-tag" class="clip" data-start="0.3" data-duration="11.7" data-track-index="2">
+    <div id="l-tag" class="clip" data-start="0.2" data-duration="7.0" data-track-index="2">
       <span id="l-t0">고객의 말</span><span id="l-t1">AI가 이해한 것</span><span id="l-t2">AI의 답</span>
     </div>
 
-    <div id="l-wave" class="clip" data-start="0.4" data-duration="3.6" data-track-index="3" data-layout-allow-overflow>
+    <div id="l-wave" class="clip" data-start="0.2" data-duration="2.1" data-track-index="3" data-layout-allow-overflow>
       <div class="l-bar" id="l-b0" style="left:1008px;background:#FF03C8"></div>
       <div class="l-bar" id="l-b1" style="left:1038px;background:#F604C5"></div>
       <div class="l-bar" id="l-b2" style="left:1068px;background:#ED06C1"></div>
@@ -58,12 +58,12 @@
       <div class="l-bar" id="l-b23" style="left:1698px;background:#3C24F3"></div>
     </div>
 
-    <div id="l-saidbox" class="clip" data-start="3.4" data-duration="8.6" data-track-index="4">
+    <div id="l-saidbox" class="clip" data-start="2.0" data-duration="5.2" data-track-index="4">
       <div id="l-said"><span id="l-key"><b>보</b><b>험</b><b>금</b><b>&nbsp;</b><b>청</b><b>구</b><span id="l-ul"></span></span><b>하</b><b>고</b><b>&nbsp;</b><b>싶</b><b>어</b><b>요</b></div>
       <div id="l-intent">의도 · <span class="grad">보험금 청구</span></div>
     </div>
 
-    <div id="l-answerbox" class="clip" data-start="7.4" data-duration="4.6" data-track-index="5" data-layout-allow-overflow>
+    <div id="l-answerbox" class="clip" data-start="4.5" data-duration="2.7" data-track-index="5" data-layout-allow-overflow>
       <div id="l-answer">
         <div id="l-btail"></div>
         <div id="l-bub"></div>
@@ -82,49 +82,47 @@
 
       // 동사: 회색으로 놓였다가 단계마다 진해짐
       ["#l-v0", "#l-v1", "#l-v2"].forEach((v, i) => {
-        tl.fromTo(v, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out" }, 0.15 + i * 0.08);
+        tl.fromTo(v, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out" }, 0.08 + i * 0.07);
       });
-      [[0, 0.5], [1, 3.6], [2, 7.3]].forEach(([i, t]) => {
-        tl.to("#l-v" + i, { color: "#1b1530", duration: 0.3, ease: "power2.out" }, t);
+      [[0, 0.3], [1, 2.15], [2, 4.35]].forEach(([i, t]) => {
+        tl.to("#l-v" + i, { color: "#1b1530", duration: 0.25, ease: "power2.out" }, t);
       });
-
-      // 무대 이름표: 흐림 교체
       tl.set(["#l-t1", "#l-t2"], { opacity: 0 }, 0);
-      tl.fromTo("#l-t0", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15 }, 0.45);
-      [["#l-t0", "#l-t1", 3.55], ["#l-t1", "#l-t2", 7.25]].forEach(([a, b, t]) => {
-        tl.to(a, { opacity: 0, filter: "blur(8px)", duration: 0.15, ease: "power3.in" }, t);
-        tl.fromTo(b, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out" }, t + 0.15);
+      tl.fromTo("#l-t0", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14 }, 0.3);
+      [["#l-t0", "#l-t1", 2.1], ["#l-t1", "#l-t2", 4.3]].forEach(([a, b, t]) => {
+        tl.to(a, { opacity: 0, filter: "blur(8px)", duration: 0.13, ease: "power3.in" }, t);
+        tl.fromTo(b, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out" }, t + 0.13);
       });
-
-      // 1) 듣고: 파형
+      // 1) 듣고
       bars.forEach((b, k) => {
-        tl.fromTo(b, { scaleY: 0, transformOrigin: "50% 50%" }, { scaleY: 0.15 + 0.3 * env(k), duration: 0.5, ease: "expo.out" }, 0.45 + k * 0.012);
+        tl.fromTo(b, { scaleY: 0, transformOrigin: "50% 50%" }, { scaleY: 0.15 + 0.3 * env(k), duration: 0.4, ease: "expo.out" }, 0.25 + k * 0.008);
       });
-      for (let t = 1.25, i = 0; t < 3.3; t += 0.17, i++) {
-        const pause = i % 6 === 5;
+      for (let t = 0.75, i = 0; t < 1.85; t += 0.15, i++) {
+        const pause = i % 5 === 4;
         bars.forEach((b, k) => {
           const h = pause ? 0.05 + 0.04 * rnd() : (0.12 + 0.85 * rnd()) * env(k);
-          tl.to(b, { scaleY: Math.max(0.05, h), duration: 0.15, ease: "power2.out" }, t);
+          tl.to(b, { scaleY: Math.max(0.05, h), duration: 0.13, ease: "power2.out" }, t);
         });
       }
-      // 2) 이해하고: 파형이 납작해지며 글자가 됨
+      // 2) 이해하고
       bars.forEach((b, k) => {
-        tl.to(b, { scaleY: 0.03, duration: 0.3, ease: "power3.in" }, 3.3 + Math.abs(k - 11.5) * 0.008);
-        tl.to(b, { opacity: 0, duration: 0.12 }, 3.62);
+        tl.to(b, { scaleY: 0.03, duration: 0.25, ease: "power3.in" }, 1.9 + Math.abs(k - 11.5) * 0.006);
+        tl.to(b, { opacity: 0, duration: 0.1 }, 2.18);
       });
       const chars = gsap.utils.toArray("#l-said b");
       chars.forEach((c, i) => {
-        tl.fromTo(c, { opacity: 0, filter: "blur(4px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.12, ease: "power2.out" }, 3.55 + i * 0.045);
+        tl.fromTo(c, { opacity: 0, filter: "blur(4px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.1, ease: "power2.out" }, 2.12 + i * 0.035);
       });
-      tl.fromTo("#l-ul", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.45, ease: "power3.out" }, 4.45);
-      tl.fromTo("#l-intent", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, 4.95);
-
-      // 3) 답합니다: 문장이 위로 작아지고 답변 말풍선
-      tl.to("#l-intent", { opacity: 0, filter: "blur(8px)", duration: 0.15, ease: "power3.in" }, 7.2);
-      tl.to("#l-said", { y: -120, scale: 0.72, color: "#6b6380", duration: 0.55, ease: "power2.inOut" }, 7.3);
+      tl.fromTo("#l-ul", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.4, ease: "power3.out" }, 2.75);
+      tl.fromTo("#l-intent", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 3.05);
+      // 3) 답합니다
+      tl.to("#l-intent", { opacity: 0, filter: "blur(8px)", duration: 0.13, ease: "power3.in" }, 4.25);
+      tl.to("#l-said", { y: -120, scale: 0.72, color: "#6b6380", duration: 0.45, ease: "power2.inOut" }, 4.3);
       tl.fromTo("#l-answer", { scaleX: 0.12, scaleY: 0.3, opacity: 0, transformOrigin: "100% 50%" },
-        { scaleX: 1, scaleY: 1, opacity: 1, duration: 0.5, ease: "power3.out" }, 7.6);
-      tl.fromTo("#l-atext", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 7.95);
+        { scaleX: 1, scaleY: 1, opacity: 1, duration: 0.42, ease: "power3.out" }, 4.55);
+      tl.fromTo("#l-atext", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, 4.85);
+      // 퇴장
+      tl.to(["#l-v0", "#l-v1", "#l-v2", "#l-t2", "#l-said", "#l-answer"], { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in", stagger: 0.03 }, 6.7);
 
       window.__timelines["listen"] = tl;
     })();
