@@ -6,3 +6,5 @@ intro/out/*.wav
 video/*/node_modules/
 video/*/.hyperframes/
 video/*/node_modules/
+video/*/out/.*hf-transaction*/
+video/*/out/work-*/
