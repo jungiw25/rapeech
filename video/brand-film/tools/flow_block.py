@@ -1,7 +1,7 @@
 # scenes.py 안으로 들어가는 AI 원테이크 장면 블록(이 파일은 scenes.py가 exec 한다)
 # ================================================================ flow: AI 콜봇 원테이크 (35 s)
 LY = 540
-CUST = 170
+CUST = 240
 ST = [960, 1860, 2760, 3660, 4560]
 FLOW_DUR = 35
 # 단계별 도착 시각(장면 기준 초). 띠링 효과음도 이 값을 쓴다
@@ -28,15 +28,12 @@ for i, (lab, val, ok) in enumerate(cards):
         </div>'''
 
 # 고객(사람 + 스마트폰)
-PHX, PHY = CUST + 97, LY - 66   # 휴대폰 중심(머리에서 떨어뜨려 손에 든 모습)
+PHX, PHY = CUST + 185, LY - 40   # 휴대폰 중심(말하는 사람 앞, 떨어뜨려 둠)
 cust = f'''
   <g id="f-cust">
     <g id="f-av">
-      <circle cx="{CUST}" cy="{LY - 10}" r="118" fill="#1c1730" stroke="#3a3158" stroke-width="1.5"/>
-      <g clip-path="url(#f-avclip)">
-        <circle cx="{CUST - 14}" cy="{LY - 58}" r="36" fill="url(#f-skin)"/>
-        <path d="M{CUST - 92} {LY + 130} C {CUST - 92} {LY - 2}, {CUST + 64} {LY - 2}, {CUST + 64} {LY + 130} Z" fill="url(#f-skin)"/>
-      </g>
+      <circle cx="{CUST - 6}" cy="{LY - 36}" r="150" fill="url(#f-avglow)"/>
+      <image href="assets/emoji/speaking_head_lit.png" x="{CUST - 130}" y="{LY - 166}" width="260" height="260"/>
     </g>
     <g id="f-phone">
       <rect x="{PHX - 25}" y="{PHY - 46}" width="50" height="92" rx="11" fill="url(#flow-g)" filter="url(#flow-glows)"/>
@@ -45,7 +42,7 @@ cust = f'''
       <rect x="{PHX - 7}" y="{PHY + 36}" width="14" height="3" rx="1.5" fill="#fff" opacity=".7"/>
     </g>
     <g id="f-rings">{"".join(f'<path class="f-ring" d="M{PHX + 40 + j * 20} {PHY - 26 - j * 10} q {16 + j * 6} {26 + j * 10} 0 {52 + j * 20}" fill="none" stroke="#ff4fd8" stroke-width="4" stroke-linecap="round"/>' for j in range(3))}</g>
-    <g id="f-ok" class="o"><circle cx="{CUST + 70}" cy="{LY - 150}" r="22" fill="url(#flow-g)"/><path d="M{CUST + 60} {LY - 150} l7 7 l12 -14" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="f-ok" class="o"><circle cx="{CUST + 90}" cy="{LY - 180}" r="22" fill="url(#flow-g)"/><path d="M{CUST + 80} {LY - 180} l7 7 l12 -14" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
   </g>'''
 
 nodes = "".join(
@@ -83,17 +80,17 @@ agent = f'''<g id="f-agent">
 packet = f'''<g id="f-pk"><rect id="f-pkr" x="-56" y="-24" width="112" height="48" rx="24" fill="url(#flow-g)" filter="url(#flow-glow)"/>
     {"".join(f'<rect class="f-pb o" x="{-30 + j * 13}" y="-15" width="6" height="30" rx="3" fill="#fff"/>' for j in range(5))}</g>'''
 
-ret = f'<path id="f-ret" d="M{bx - 60} {LY - 70} C {bx - 900} {LY - 640}, {CUST + 900} {LY - 640}, {CUST + 90} {LY - 150}" fill="none" stroke="url(#flow-g)" stroke-width="5" stroke-linecap="round" filter="url(#flow-glows)"/>'
+ret = f'<path id="f-ret" d="M{bx - 60} {LY - 70} C {bx - 900} {LY - 640}, {CUST + 900} {LY - 640}, {CUST + 110} {LY - 200}" fill="none" stroke="url(#flow-g)" stroke-width="5" stroke-linecap="round" filter="url(#flow-glows)"/>'
 retpk = '<g id="f-rpk"><circle r="16" fill="#fff" filter="url(#flow-glows)"/></g>'
 
 world_svg = (f'<svg width="5200" height="1400" viewBox="0 0 5200 1400" style="position:absolute;left:0;top:0;overflow:visible">'
              f'<defs><linearGradient id="flow-g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient>'
              f'<linearGradient id="f-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f1ff"/><stop offset="1" stop-color="#b3a2f0"/></linearGradient>'
-             f'<clipPath id="f-avclip"><circle cx="{CUST}" cy="{LY - 10}" r="117"/></clipPath>'
+             f'<radialGradient id="f-avglow"><stop offset="0" stop-color="#6a4dff" stop-opacity=".35"/><stop offset="1" stop-color="#6a4dff" stop-opacity="0"/></radialGradient>'
              f'<linearGradient id="flow-rail" x1="300" y1="0" x2="4600" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient>'
              f'<filter id="flow-glow" filterUnits="userSpaceOnUse" x="-500" y="-500" width="6400" height="2400"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'
              f'<filter id="flow-glows" filterUnits="userSpaceOnUse" x="-500" y="-500" width="6400" height="2400"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
-             f'<path id="f-railL" d="M{ST[0]} {LY} L300 {LY}" stroke="url(#flow-rail)" stroke-width="6" stroke-linecap="round" filter="url(#flow-glows)" fill="none"/>'
+             f'<path id="f-railL" d="M{ST[0]} {LY} L{PHX + 40} {LY}" stroke="url(#flow-rail)" stroke-width="6" stroke-linecap="round" filter="url(#flow-glows)" fill="none"/>'
              f'<path id="f-railR" d="M{ST[0]} {LY} L{bx - 66} {LY}" stroke="url(#flow-rail)" stroke-width="6" stroke-linecap="round" filter="url(#flow-glows)" fill="none"/>'
              + agent + ret + nodes + bot + cust + packet + retpk + '</svg>')
 
@@ -130,7 +127,7 @@ flow_body = f"""
       <div id="f-world">
         {world_svg}
         {card_html}
-        <div class="f-bub" id="f-cbub" style="left:{CUST - 140}px;top:{LY - 300}px;background:#fff;color:{INK}">카드를 잃어버렸어요</div>
+        <div class="f-bub" id="f-cbub" style="left:{CUST - 120}px;top:{LY - 320}px;background:#fff;color:{INK}">카드를 잃어버렸어요</div>
         <div class="f-bub" id="f-bbub" style="left:{bx - 520}px;top:{LY - 250}px;background:linear-gradient(100deg,#ff03c8,#a518a4 50%,#3c24f3);color:#fff">본인 확인이 끝나 카드 사용을 정지했어요</div>
       </div>
       <img id="f-sym" src="assets/brand/symbol_purple.svg" style="position:absolute;left:{SYM_X:.1f}px;top:{SYM_Y:.1f}px;width:{84 * SYM_S:.1f}px;height:{90 * SYM_S:.1f}px" />
@@ -186,7 +183,7 @@ flow_js = """
       const wig = (t0, t1) => { gsap.utils.toArray(".f-pb").forEach((el, j) => { let t = t0, s = j * 977 + 7; while (t < t1) { s = (s * 1664525 + 1013904223) % 4294967296; tl.to(el, { scaleY: 0.35 + 0.65 * s / 4294967296, duration: 0.16, ease: "sine.inOut" }, t); t += 0.16; } }); };
       const CAPS = { x: -56, y: -24, width: 112, height: 48, rx: 24 };
       const CIRC = (R) => ({ x: -R, y: -R, width: 2 * R, height: 2 * R, rx: R });
-      tl.fromTo("#f-pk", { x: __PX__, y: __PY__, scale: 0.3, opacity: 0 }, { x: 340, y: LY, scale: 1, opacity: 1, duration: 0.7, ease: "power3.inOut" }, 8.3);
+      tl.fromTo("#f-pk", { x: __PX__, y: __PY__, scale: 0.3, opacity: 0 }, { x: __PX__ + 70, y: LY, scale: 1, opacity: 1, duration: 0.7, ease: "power3.inOut" }, 8.3);
       tl.to("#f-pk", { x: ST[0], duration: 0.75, ease: "power2.inOut" }, 9.0 - 0.05);
       wig(8.4, ARR[0] - 0.85);
       // 도착: 캡슐이 노드 크기의 원으로 줄어들며 겹치고, 노드가 그 빛을 이어받아 켜짐(띠링)
@@ -255,7 +252,7 @@ PBS2 = 0.08
 PBX2 = 960 - 2410 * PBS2
 PBY2 = 540 - 600 * PBS2
 # 되돌아가는 답(베지어를 점으로 샘플링)
-p0, c1, c2, p3 = (bx - 60, LY - 70), (bx - 900, LY - 640), (CUST + 900, LY - 640), (CUST + 90, LY - 150)
+p0, c1, c2, p3 = (bx - 60, LY - 70), (bx - 900, LY - 640), (CUST + 900, LY - 640), (CUST + 110, LY - 200)
 RET = []
 for k in range(25):
     v = k / 24
