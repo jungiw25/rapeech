@@ -3,3 +3,5 @@ __pycache__/
 content/*/out/bgm.wav
 intro/out/*.wav
 *.bundle
+video/*/node_modules/
+video/*/.hyperframes/

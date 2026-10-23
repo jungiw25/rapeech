@@ -1,0 +1,116 @@
+<template>
+  <style>
+    @font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+    #root { position: absolute; inset: 0; background: #faf9fd; overflow: hidden; font-family: "Pretendard", sans-serif; }
+    #v-last { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+    .v-bar { position: absolute; top: 280px; width: 18px; height: 520px; border-radius: 9px; }
+    #v-title { position: absolute; left: 160px; top: 330px; width: 860px; }
+    #v-quiet { font-size: 52px; font-weight: 600; color: #6b6380; letter-spacing: -0.02em; line-height: 1.2; }
+    #v-quiet span { display: inline-block; margin-right: 0.28em; }
+    #v-big { margin-top: 18px; font-size: 176px; font-weight: 900; color: #1b1530; letter-spacing: -0.03em; line-height: 1.05; }
+    #v-big span { display: inline-block; }
+    .grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #3c24f3); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    #v-bubble-wrap { position: absolute; left: 1020px; top: 420px; width: 640px; height: 240px; }
+    #v-bubble { position: absolute; inset: 0; border-radius: 120px; background: linear-gradient(100deg, #ff03c8, #a518a4 50%, #3c24f3); }
+    #v-tail { position: absolute; left: 84px; top: 200px; width: 76px; height: 76px; background: #e805c2; clip-path: polygon(0 0, 100% 0, 4% 100%); }
+    #v-dark { position: absolute; inset: -2px; border-radius: 120px; background: #0c0916; opacity: 0; }
+    .v-dot { position: absolute; top: 102px; width: 36px; height: 36px; border-radius: 50%; background: #ffffff; }
+  </style>
+  <div id="root" data-composition-id="voice" data-width="1920" data-height="1080">
+    <img id="v-last" class="clip" src="assets/intro_last.png" data-start="0" data-duration="1.2" data-track-index="0" />
+
+    <div id="v-bars" class="clip" data-start="0.4" data-duration="6.6" data-track-index="1" data-layout-allow-overflow>
+      <div class="v-bar" id="v-b0" style="left:1067px;background:#FF03C8"></div>
+      <div class="v-bar" id="v-b1" style="left:1113px;background:#EE06C1"></div>
+      <div class="v-bar" id="v-b2" style="left:1159px;background:#DE0ABA"></div>
+      <div class="v-bar" id="v-b3" style="left:1205px;background:#CD0EB4"></div>
+      <div class="v-bar" id="v-b4" style="left:1251px;background:#BD12AD"></div>
+      <div class="v-bar" id="v-b5" style="left:1297px;background:#AD16A7"></div>
+      <div class="v-bar" id="v-b6" style="left:1343px;background:#9B19AB"></div>
+      <div class="v-bar" id="v-b7" style="left:1389px;background:#881BB9"></div>
+      <div class="v-bar" id="v-b8" style="left:1435px;background:#751DC7"></div>
+      <div class="v-bar" id="v-b9" style="left:1481px;background:#621FD6"></div>
+      <div class="v-bar" id="v-b10" style="left:1527px;background:#4F21E4"></div>
+      <div class="v-bar" id="v-b11" style="left:1573px;background:#3C24F3"></div>
+    </div>
+
+    <div id="v-title" class="clip" data-start="2.2" data-duration="5.6" data-track-index="2">
+      <div id="v-quiet"><span id="v-w1">가장</span><span id="v-w2">쉬운</span><span id="v-w3">인터페이스는,</span></div>
+      <div id="v-big"><span id="v-w4" class="grad">말</span><span id="v-w5">입니다</span></div>
+    </div>
+
+    <div id="v-bubble-clip" class="clip" data-start="6.0" data-duration="3.5" data-track-index="3" data-layout-allow-overflow>
+      <div id="v-bubble-wrap">
+        <div id="v-tail"></div>
+        <div id="v-bubble"></div>
+        <div class="v-dot" id="v-d0" style="left:226px"></div>
+        <div class="v-dot" id="v-d1" style="left:302px"></div>
+        <div class="v-dot" id="v-d2" style="left:378px"></div>
+        <div id="v-dark"></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // 시드 고정 난수(매 렌더 동일)
+      let s = 20051101;
+      const rnd = () => { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; };
+      const bars = Array.from({ length: 12 }, (_, k) => "#v-b" + k);
+
+      // 인트로 마지막 화면이 흐려지며 사라짐
+      tl.fromTo("#v-last", { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(10px)", duration: 0.4, ease: "power3.in" }, 0.5);
+
+      // 사선 12개가 로고 기울기로 솟아오름
+      bars.forEach((b, k) => {
+        tl.fromTo(b, { rotation: 22.5, scaleY: 0, x: 0, transformOrigin: "50% 50%" },
+          { scaleY: 1, duration: 0.6, ease: "expo.out" }, 0.55 + k * 0.035);
+      });
+      // 똑바로 서며 파형으로
+      const env = (k) => Math.pow(Math.sin(Math.PI * (k + 0.5) / 12), 0.7);
+      bars.forEach((b, k) => {
+        tl.to(b, { rotation: 0, x: (k - 5.5) * -6, scaleY: 0.2 + 0.5 * env(k), duration: 0.7, ease: "power2.inOut" }, 1.4);
+      });
+      // 말하듯 움직임: 0.18초마다 새 높이, 음절 사이 짧은 쉼
+      for (let t = 2.1, i = 0; t < 6.0; t += 0.18, i++) {
+        const pause = i % 7 === 6;
+        bars.forEach((b, k) => {
+          const h = pause ? 0.06 + 0.04 * rnd() : (0.12 + 0.78 * rnd()) * env(k);
+          tl.to(b, { scaleY: Math.max(0.05, h), duration: 0.16, ease: "power2.out" }, t);
+        });
+      }
+      // 잦아들며 사라짐
+      bars.forEach((b, k) => {
+        tl.to(b, { scaleY: 0.03, duration: 0.35, ease: "power3.in" }, 6.0 + Math.abs(k - 5.5) * 0.02);
+        tl.to(b, { opacity: 0, duration: 0.15 }, 6.35);
+      });
+
+      // 제목: 단어마다 흐림에서 선명하게 (이동 없음)
+      ["#v-w1", "#v-w2", "#v-w3"].forEach((w, i) => {
+        tl.fromTo(w, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out" }, 2.3 + i * 0.08);
+      });
+      tl.fromTo("#v-w4", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 2.85);
+      tl.fromTo("#v-w5", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 2.95);
+      // 제목 퇴장
+      tl.to(["#v-w1", "#v-w2", "#v-w3", "#v-w4", "#v-w5"], { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in", stagger: 0.04 }, 7.3);
+
+      // 파형이 말풍선으로 (morph)
+      tl.fromTo("#v-bubble-wrap", { scaleX: 0.15, scaleY: 0.25, opacity: 0, transformOrigin: "50% 50%" },
+        { scaleX: 1, scaleY: 1, opacity: 1, duration: 0.5, ease: "power3.out" }, 6.25);
+      ["#v-d0", "#v-d1", "#v-d2"].forEach((d, i) => {
+        tl.fromTo(d, { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(1.6)" }, 6.6 + i * 0.07);
+        for (let k = 0; k < 2; k++) {
+          tl.to(d, { y: -16, duration: 0.18, ease: "power2.out" }, 6.95 + k * 0.42 + i * 0.1);
+          tl.to(d, { y: 0, duration: 0.18, ease: "power2.in" }, 7.13 + k * 0.42 + i * 0.1);
+        }
+      });
+      // 말풍선이 화면을 넘어 커지며 어두운 바탕이 됨
+      tl.to(["#v-d0", "#v-d1", "#v-d2"], { opacity: 0, duration: 0.15, ease: "power2.in" }, 8.25);
+      tl.to("#v-bubble-wrap", { scale: 16, duration: 0.9, ease: "power2.inOut" }, 8.35);
+      tl.to("#v-dark", { opacity: 1, duration: 0.5, ease: "power2.inOut" }, 8.6);
+
+      window.__timelines["voice"] = tl;
+    })();
+  </script>
+</template>

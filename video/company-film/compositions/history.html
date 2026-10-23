@@ -1,0 +1,99 @@
+<template>
+  <style>
+    @font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+    #root { position: absolute; inset: 0; background: #0c0916; overflow: hidden; font-family: "Pretendard", sans-serif; }
+    #h-title { position: absolute; left: 160px; top: 120px; }
+    #h-quiet { font-size: 52px; font-weight: 600; color: #a69cc8; letter-spacing: -0.02em; }
+    #h-big { margin-top: 10px; font-size: 112px; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; line-height: 1.1; }
+    #h-big span { display: inline-block; margin-right: 0.22em; }
+    .grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #6a4dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    #h-stage { position: absolute; left: 0; top: 0; width: 3600px; height: 1080px; }
+    #h-path { position: absolute; left: 0; top: 0; overflow: visible; }
+    .h-node { position: absolute; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; background: #faf9fd; }
+    .h-node i { position: absolute; left: 11px; top: 11px; width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, #ff03c8, #3c24f3); }
+    .h-label { position: absolute; width: 560px; }
+    .h-year { font-size: 76px; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; line-height: 1; }
+    .h-desc { margin-top: 14px; font-size: 34px; font-weight: 500; color: #c9c1e6; line-height: 1.35; letter-spacing: -0.01em; }
+  </style>
+  <div id="root" data-composition-id="history" data-width="1920" data-height="1080">
+    <div id="h-title" class="clip" data-start="0.2" data-duration="9.2" data-track-index="2">
+      <div id="h-quiet">2005년부터,</div>
+      <div id="h-big"><span id="h-w1">말을</span><span id="h-w2">알아듣는</span><span id="h-w3" class="grad">AI</span></div>
+    </div>
+
+    <div id="h-stage-clip" class="clip" data-start="0" data-duration="10.5" data-track-index="1" data-layout-allow-overflow>
+      <div id="h-stage">
+        <svg id="h-path" width="3600" height="1080" viewBox="0 0 3600 1080">
+          <defs>
+            <linearGradient id="h-grad" x1="0" y1="0" x2="3600" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#ff03c8" />
+              <stop offset="0.5" stop-color="#a518a4" />
+              <stop offset="1" stop-color="#5a3dff" />
+            </linearGradient>
+          </defs>
+          <polyline id="h-line" points="-60,820 320,780 1260,690 2160,600 3020,500 3600,450"
+            fill="none" stroke="url(#h-grad)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"
+            pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" />
+        </svg>
+        <div class="h-node" id="h-n0" style="left:320px;top:780px"><i></i></div>
+        <div class="h-node" id="h-n1" style="left:1260px;top:690px"><i></i></div>
+        <div class="h-node" id="h-n2" style="left:2160px;top:600px"><i></i></div>
+        <div class="h-node" id="h-n3" style="left:3020px;top:500px"><i></i></div>
+        <div class="h-label" id="h-l0" style="left:300px;top:836px"><div class="h-year">2005</div><div class="h-desc">예스피치 설립</div></div>
+        <div class="h-label" id="h-l1" style="left:1240px;top:746px"><div class="h-year">2022</div><div class="h-desc">라피치로 새 이름,<br />코넥스 상장</div></div>
+        <div class="h-label" id="h-l2" style="left:2140px;top:656px"><div class="h-year">2023</div><div class="h-desc">중기부 혁신제품 지정</div></div>
+        <div class="h-label" id="h-l3" style="left:3000px;top:556px"><div class="h-year">2026</div><div class="h-desc">조달청 우수조달물품 지정,<br />네트워크 인프라 사업 합병</div></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // 꺾은선 길이 비율(점 사이 거리)로 각 노드까지의 진행도 계산
+      const P = [[-60, 820], [320, 780], [1260, 690], [2160, 600], [3020, 500], [3600, 450]];
+      const seg = P.slice(1).map((p, i) => Math.hypot(p[0] - P[i][0], p[1] - P[i][1]));
+      const total = seg.reduce((a, b) => a + b, 0);
+      const frac = []; let acc = 0;
+      seg.forEach((l) => { acc += l; frac.push(acc / total); });
+      // frac[0..3] = 노드 0..3, frac[4] = 끝
+
+      // 제목
+      tl.fromTo("#h-quiet", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, 0.12);
+      ["#h-w1", "#h-w2", "#h-w3"].forEach((w, i) => {
+        tl.fromTo(w, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out" }, 0.3 + i * 0.09);
+      });
+
+      // 길 그리기 + 카메라 (구간마다, 양쪽 감속)
+      const cam = [0, -100, -1000, -1850];
+      const plan = [[0.6, 1.2], [1.9, 2.9], [3.7, 4.6], [5.4, 6.4]];
+      tl.fromTo("#h-line", { strokeDashoffset: 1 }, { strokeDashoffset: 1 - frac[0], duration: plan[0][1] - plan[0][0], ease: "power2.out" }, plan[0][0]);
+      for (let k = 1; k < 4; k++) {
+        const [a, b] = plan[k];
+        tl.to("#h-line", { strokeDashoffset: 1 - frac[k], duration: b - a, ease: "power2.inOut" }, a);
+        tl.to("#h-stage", { x: cam[k], duration: b - a + 0.15, ease: "power2.inOut" }, a);
+      }
+      tl.to("#h-line", { strokeDashoffset: 0, duration: 1.0, ease: "power2.out" }, 6.5);
+
+      // 노드와 글
+      for (let k = 0; k < 4; k++) {
+        const t = plan[k][1];
+        tl.fromTo("#h-n" + k, { scale: 0 }, { scale: 1, duration: 0.4, ease: "back.out(1.6)" }, t - 0.02);
+        tl.fromTo("#h-l" + k + " .h-year", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, t + 0.08);
+        tl.fromTo("#h-l" + k + " .h-desc", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, t + 0.2);
+      }
+      // 지나간 연도는 살짝 물러남
+      for (let k = 0; k < 3; k++) {
+        tl.to("#h-l" + k, { opacity: 0.35, duration: 0.4, ease: "power2.inOut" }, plan[k + 1][1] + 0.5);
+      }
+
+      // 끝: 제목·글이 빠지고 마지막 노드가 화면을 덮으며 밝은 화면으로
+      tl.to(["#h-quiet", "#h-big", "#h-l3"], { opacity: 0, filter: "blur(8px)", duration: 0.22, ease: "power3.in" }, 8.9);
+      tl.to("#h-n3 i", { opacity: 0, duration: 0.15, ease: "power2.in" }, 9.0);
+      tl.to("#h-n3", { scale: 130, duration: 0.7, ease: "power3.in" }, 9.1);
+
+      window.__timelines["history"] = tl;
+    })();
+  </script>
+</template>

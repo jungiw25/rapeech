@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      :root {
+        --ground: #faf9fd;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--ground);
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      #intro-video {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1920px;
+        height: 1080px;
+        object-fit: contain;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="44"
+      data-width="1920"
+      data-height="1080"
+    >
+      <video
+        id="intro-video"
+        class="clip"
+        src="assets/intro.mp4"
+        data-start="0"
+        data-duration="12"
+        data-track-index="0"
+        data-has-audio="true"
+        data-volume="1"
+        playsinline
+        style="z-index: 1"
+      ></video>
+
+      <div
+        id="voice"
+        data-composition-id="voice"
+        data-composition-src="compositions/voice.html"
+        data-start="12"
+        data-duration="9.5"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+        style="z-index: 2"
+      ></div>
+
+      <div
+        id="history"
+        data-composition-id="history"
+        data-composition-src="compositions/history.html"
+        data-start="21.5"
+        data-duration="10.5"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+        style="z-index: 3"
+      ></div>
+
+      <div
+        id="listen"
+        data-composition-id="listen"
+        data-composition-src="compositions/listen.html"
+        data-start="32"
+        data-duration="12"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+        style="z-index: 4"
+      ></div>
+
+      <audio
+        id="bed"
+        class="clip"
+        src="assets/bed.wav"
+        data-start="12"
+        data-duration="32"
+        data-track-index="2"
+        data-volume="0.55"
+        data-fade-in="1.2"
+        data-fade-out="2"
+      ></audio>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
