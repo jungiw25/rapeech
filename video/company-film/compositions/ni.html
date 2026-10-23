@@ -1,0 +1,78 @@
+<template>
+  <style>
+    @font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+    .grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #3c24f3); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    #root { position: absolute; inset: 0; background: #faf9fd; overflow: hidden; font-family: "Pretendard", sans-serif; }
+    #n-ground { position: absolute; inset: 0; background: #0c0916; }
+    #n-left { position: absolute; left: 160px; top: 200px; width: 760px; }
+    #n-kick { font-size: 36px; font-weight: 600; color: #a69cc8; }
+    #n-title { margin-top: 18px; font-size: 104px; font-weight: 800; color: #ffffff; letter-spacing: -0.03em; line-height: 1.12; }
+    #n-title span { display: inline-block; }
+    .n-place { margin-top: 14px; font-size: 36px; font-weight: 700; color: #ffffff; }
+    .n-place b { display: inline-block; width: 14px; height: 14px; border-radius: 50%; margin-right: 18px; vertical-align: 6px; background: linear-gradient(135deg, #ff03c8, #3c24f3); }
+    #n-places { margin-top: 44px; }
+    #n-facts { margin-top: 40px; font-size: 30px; font-weight: 500; color: #c9c1e6; line-height: 1.55; }
+    #n-stack { position: absolute; left: 1000px; top: 196px; width: 780px; height: 672px; }
+    .n-layer { position: absolute; left: 0; width: 780px; height: 96px; border-radius: 14px; background: #1c1730; overflow: hidden; }
+    .n-edge { position: absolute; left: 0; top: 0; bottom: 0; width: 10px; background: linear-gradient(180deg, #ff03c8, #3c24f3); }
+    .n-name { position: absolute; left: 40px; top: 24px; font-size: 40px; font-weight: 800; color: #ffffff; letter-spacing: -0.02em; }
+    .n-desc { position: absolute; right: 34px; top: 33px; font-size: 28px; font-weight: 500; color: #b9b0da; }
+  </style>
+  <div id="root" data-composition-id="ni" data-width="1920" data-height="1080">
+    <div id="n-groundclip" class="clip" data-start="0" data-duration="10.5" data-track-index="0" data-layout-allow-overflow>
+      <div id="n-ground"></div>
+    </div>
+    <div id="n-leftclip" class="clip" data-start="0.3" data-duration="10.2" data-track-index="1">
+      <div id="n-left">
+        <div id="n-kick">NI 사업 · Network Infrastructure</div>
+        <div id="n-title"><span id="n-t1" class="grad">AI 인프라</span>를<br /><span id="n-t2">짓습니다</span></div>
+        <div id="n-places">
+          <div class="n-place" id="n-p1"><b></b>데이터센터 · 전산센터</div>
+          <div class="n-place" id="n-p2"><b></b>ESS · 스마트공장</div>
+        </div>
+        <div id="n-facts"><div id="n-f1">1997년 설립, 약 30년 업력의 서경엔씨에스와 합병</div><div id="n-f2">미국 5개 주 배터리 · 태양광 공장 현장 구축</div></div>
+      </div>
+    </div>
+    <div id="n-stackclip" class="clip" data-start="0.6" data-duration="9.9" data-track-index="2">
+      <div id="n-stack">
+        <div class="n-layer" id="n-y5" style="top:0px"><div class="n-edge"></div><div class="n-name">유지보수</div><div class="n-desc">장애 대응 · 정기 점검 · 부품 교체</div></div>
+        <div class="n-layer" id="n-y4" style="top:112px"><div class="n-edge"></div><div class="n-name">통합관제</div><div class="n-desc">설비와 망을 한 화면에서 감시</div></div>
+        <div class="n-layer" id="n-y3" style="top:224px"><div class="n-edge"></div><div class="n-name">출입보안</div><div class="n-desc">출입 통제 · 보안 시스템</div></div>
+        <div class="n-layer" id="n-y2" style="top:336px"><div class="n-edge"></div><div class="n-name">네트워크</div><div class="n-desc">유무선 네트워크 구축</div></div>
+        <div class="n-layer" id="n-y1" style="top:448px"><div class="n-edge"></div><div class="n-name">통합배선</div><div class="n-desc">케이블 설계 · 시공 · 인증 시험</div></div>
+        <div class="n-layer" id="n-y0" style="top:560px"><div class="n-edge"></div><div class="n-name">전산 설계</div><div class="n-desc">데이터센터 · 전산센터 설계</div></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // 어두운 바탕이 아래에서 차오름(층을 쌓는 장면의 예고)
+      tl.fromTo("#n-ground", { scaleY: 0, transformOrigin: "50% 100%" }, { scaleY: 1, duration: 0.5, ease: "power3.inOut" }, 0);
+      tl.fromTo("#n-kick", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 0.42);
+      tl.fromTo("#n-t1", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.55);
+      tl.fromTo("#n-t2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 0.68);
+      // 아래층부터 차례로 쌓임
+      for (let k = 0; k < 6; k++) {
+        tl.fromTo("#n-y" + k, { opacity: 0, y: -60 }, { opacity: 1, y: 0, duration: 0.45, ease: "expo.out" }, 0.8 + k * 0.28);
+      }
+      tl.fromTo("#n-p1", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 2.7);
+      tl.fromTo("#n-p2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 2.85);
+      tl.fromTo("#n-f1", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 4.3);
+      tl.fromTo("#n-f2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 4.5);
+      for (let r = 0; r < 2; r++) {
+        for (let k = 0; k < 6; k++) {
+          const t = 5.3 + r * 2.2 + k * 0.28;
+          tl.to("#n-y" + k, { backgroundColor: "#3a2a78", duration: 0.2, ease: "power2.out" }, t);
+          tl.to("#n-y" + k, { backgroundColor: "#1c1730", duration: 0.4, ease: "power2.in" }, t + 0.25);
+        }
+      }
+      tl.to(["#n-left", "#n-stack"], { opacity: 0, filter: "blur(8px)", duration: 0.22, ease: "power3.in", stagger: 0.05 }, 10.1);
+      window.__timelines["ni"] = tl;
+    })();
+  </script>
+</template>

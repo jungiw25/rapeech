@@ -18,7 +18,7 @@
     .h-desc { margin-top: 14px; font-size: 34px; font-weight: 500; color: #c9c1e6; line-height: 1.35; letter-spacing: -0.01em; }
   </style>
   <div id="root" data-composition-id="history" data-width="1920" data-height="1080">
-    <div id="h-title" class="clip" data-start="0" data-duration="6.1" data-track-index="2">
+    <div id="h-title" class="clip" data-start="0" data-duration="6.3" data-track-index="2">
       <div id="h-quiet">2005년부터,</div>
       <div id="h-big"><span id="h-w1">말을</span><span id="h-w2">알아듣는</span><span id="h-w3" class="grad">AI</span></div>
     </div>
@@ -44,7 +44,7 @@
         <div class="h-label" id="h-l0" style="left:300px;top:836px"><div class="h-year">2005</div><div class="h-desc">예스피치 설립</div></div>
         <div class="h-label" id="h-l1" style="left:1240px;top:746px"><div class="h-year">2022</div><div class="h-desc">라피치로 새 이름,<br />코넥스 상장</div></div>
         <div class="h-label" id="h-l2" style="left:2140px;top:656px"><div class="h-year">2023</div><div class="h-desc">중기부 혁신제품 지정</div></div>
-        <div class="h-label" id="h-l3" style="left:3000px;top:556px"><div class="h-year">2026</div><div class="h-desc">조달청 우수조달물품 지정,<br />네트워크 인프라 사업 합병</div></div>
+        <div class="h-label" id="h-l3" style="left:3000px;top:556px"><div class="h-year">2026</div><div class="h-desc">우수조달물품 지정,<br />NI 사업 합병</div></div>
       </div>
     </div>
   </div>
@@ -84,9 +84,9 @@
         tl.to("#h-l" + k, { opacity: 0.35, duration: 0.3, ease: "power2.inOut" }, plan[k][1] + 1.9);
       }
       // 끝: 제목과 모든 연도 글이 빠진 뒤 마지막 노드로 줌 통과
-      tl.to(["#h-quiet", "#h-big", "#h-l0", "#h-l1", "#h-l2", "#h-l3"], { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in" }, 5.7);
-      tl.to("#h-n3 i", { opacity: 0, duration: 0.12, ease: "power2.in" }, 5.8);
-      tl.to("#h-n3", { scale: 130, duration: 0.6, ease: "power3.in" }, 5.9);
+      tl.to(["#h-quiet", "#h-big", "#h-l0", "#h-l1", "#h-l2", "#h-l3"], { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in" }, 5.95);
+      tl.to("#h-n3 i", { opacity: 0, duration: 0.1, ease: "power2.in" }, 6.0);
+      tl.to("#h-n3", { scale: 130, duration: 0.45, ease: "power3.in" }, 6.1);
 
       window.__timelines["history"] = tl;
     })();

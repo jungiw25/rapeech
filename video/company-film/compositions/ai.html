@@ -1,0 +1,69 @@
+<template>
+  <style>
+    @font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+    .grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #3c24f3); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    #root { position: absolute; inset: 0; background: #faf9fd; overflow: hidden; font-family: "Pretendard", sans-serif; }
+    #a-left { position: absolute; left: 160px; top: 250px; width: 700px; }
+    #a-kick { font-size: 36px; font-weight: 600; color: #6b6380; letter-spacing: -0.01em; }
+    #a-title { margin-top: 18px; font-size: 104px; font-weight: 800; color: #1b1530; letter-spacing: -0.03em; line-height: 1.12; }
+    #a-title span { display: inline-block; }
+    #a-sector { margin-top: 40px; font-size: 34px; font-weight: 600; color: #1b1530; }
+    #a-sector2 { margin-top: 10px; font-size: 30px; font-weight: 500; color: #6b6380; }
+    #a-list { position: absolute; left: 960px; top: 190px; width: 820px; }
+    #a-mark { position: absolute; left: -36px; top: 30px; width: 10px; height: 92px; border-radius: 5px; background: linear-gradient(180deg, #ff03c8, #3c24f3); }
+    .a-row { position: relative; height: 140px; }
+    .a-line { position: absolute; left: 0; right: 0; top: 0; height: 2px; background: #ddd7ea; }
+    .a-name { position: absolute; left: 0; top: 26px; font-size: 50px; font-weight: 800; color: #1b1530; letter-spacing: -0.02em; }
+    .a-desc { position: absolute; left: 0; top: 90px; font-size: 31px; font-weight: 500; color: #5d5672; letter-spacing: -0.01em; }
+  </style>
+  <div id="root" data-composition-id="ai" data-width="1920" data-height="1080">
+    <div id="a-leftclip" class="clip" data-start="0" data-duration="9.2" data-track-index="1">
+      <div id="a-left">
+        <div id="a-kick">AI 사업 · Conversational AI</div>
+        <div id="a-title"><span id="a-t1">고객센터의 말을,</span><br /><span id="a-t2" class="grad">AI로</span></div>
+        <div id="a-sector">은행 · 카드 · 보험 · 통신 · 공공</div>
+        <div id="a-sector2">음성봇부터 화자인증, AI 에이전트까지</div>
+      </div>
+    </div>
+    <div id="a-listclip" class="clip" data-start="0.4" data-duration="8.8" data-track-index="2">
+      <div id="a-list">
+        <div id="a-mark"></div>
+        <div class="a-row" id="a-r0"><div class="a-line" id="a-ln0"></div><div class="a-name" id="a-n0">ConvAI</div><div class="a-desc" id="a-d0">대화형 AI 플랫폼 · 콜봇, 보이스봇, 챗봇</div></div>
+        <div class="a-row" id="a-r1"><div class="a-line" id="a-ln1"></div><div class="a-name" id="a-n1">EMBUS</div><div class="a-desc" id="a-d1">AI 봇 게이트웨이 · 전화망과 STT·TTS를 연결</div></div>
+        <div class="a-row" id="a-r2"><div class="a-line" id="a-ln2"></div><div class="a-name" id="a-n2">ORCHE</div><div class="a-desc" id="a-d2">질문을 분석해 가장 알맞은 AI로 연결</div></div>
+        <div class="a-row" id="a-r3"><div class="a-line" id="a-ln3"></div><div class="a-name" id="a-n3">ASENTI</div><div class="a-desc" id="a-d3">목소리로 본인을 확인하는 화자인증</div></div>
+        <div class="a-row" id="a-r4"><div class="a-line" id="a-ln4"></div><div class="a-name" id="a-n4">RiLACC</div><div class="a-desc" id="a-d4">LLM 기반 AI 콜봇 · 감정 분석, 지식 추론</div></div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#a-kick", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 0.1);
+      tl.fromTo("#a-t1", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 0.22);
+      tl.fromTo("#a-t2", { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, 0.36);
+      tl.fromTo("#a-sector", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 2.9);
+      tl.fromTo("#a-sector2", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 3.05);
+      for (let i = 0; i < 5; i++) {
+        const t = 0.55 + i * 0.42;
+        tl.fromTo("#a-ln" + i, { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.45, ease: "expo.out" }, t);
+        tl.fromTo("#a-n" + i, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, t + 0.06);
+        tl.fromTo("#a-d" + i, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, t + 0.16);
+      }
+      tl.fromTo("#a-mark", { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.3, ease: "expo.out" }, 3.4);
+      for (let i = 1; i < 5; i++) {
+        tl.to("#a-mark", { y: i * 140, duration: 0.4, ease: "power3.inOut" }, 3.4 + i * 1.05);
+      }
+      for (let i = 0; i < 5; i++) {
+        tl.to("#a-n" + i, { color: "#5a2be0", duration: 0.2 }, 3.45 + i * 1.05);
+        if (i < 4) tl.to("#a-n" + i, { color: "#1b1530", duration: 0.2 }, 3.45 + (i + 1) * 1.05);
+      }
+      tl.to(["#a-left", "#a-list"], { opacity: 0, filter: "blur(8px)", duration: 0.22, ease: "power3.in", stagger: 0.05 }, 8.85);
+      window.__timelines["ai"] = tl;
+    })();
+  </script>
+</template>
