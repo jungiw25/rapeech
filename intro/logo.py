@@ -1,6 +1,6 @@
 """라피치 영문 로고 SVG를 조각(사선 12개, 삼각형, 글자 7개)으로 나눠 래스터화한다.
 
-외부 SVG 라이브러리 없이 path(M L H V C Z)만 해석한다. brand/en/logotype/en_logo_purple.svg 전용.
+외부 SVG 라이브러리 없이 path(M L H V C Z)만 해석한다. 기본은 국문 로고(brand/ko/logotype/ko_logo_purple.svg). RAPEECH_LOGO=en 이면 영문 로고.
 """
 import re
 from pathlib import Path
@@ -8,7 +8,12 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageChops, ImageDraw
 
-SVG = Path(__file__).resolve().parent.parent / "brand" / "en" / "logotype" / "en_logo_purple.svg"
+import os
+
+_LANG = os.environ.get("RAPEECH_LOGO", "ko")
+SVG = Path(__file__).resolve().parent.parent / "brand" / _LANG / "logotype" / f"{_LANG}_logo_purple.svg"
+# 로고 전체 폭(viewBox 단위). 심볼은 두 로고가 같고 워드마크 폭만 다르다
+LOGO_W = float(re.search(r'viewBox="0 0 ([\d.]+)', SVG.read_text()).group(1))
 
 
 def parse_path(d, steps=20):
@@ -76,12 +81,12 @@ def parse_path(d, steps=20):
 def load():
     s = SVG.read_text()
     ds = re.findall(r'<path d="([^"]+)"', s)
-    assert len(ds) == 21, len(ds)
+    assert len(ds) >= 15, len(ds)
     tri = parse_path(ds[0])
     stripes = [parse_path(d) for d in ds[1:13]]
     clip = parse_path(ds[13])
-    letters = [parse_path(d) for d in ds[14:21]]
-    letters.sort(key=lambda subs: min(p[0] for p in subs[0]))  # 왼쪽(R)부터
+    letters = [parse_path(d) for d in ds[14:]]
+    letters.sort(key=lambda subs: min(p[0] for p in subs[0]))  # 왼쪽 글자부터
     return dict(tri=tri, stripes=stripes, clip=clip, letters=letters)
 
 

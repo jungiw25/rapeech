@@ -323,7 +323,7 @@ class Scene:
         s = self.s
         o_sym = (self.cx - 43 * s, self.cy - 50 * s)
         lift = (40 if not self.portrait else 60) * self.u
-        o_fin = (self.cx - 157 * s, self.cy - 45 * s - lift)
+        o_fin = (self.cx - LG.LOGO_W / 2 * s, self.cy - 45 * s - lift)
         k = in_out(seg(t, 8.85, 9.6))
         return (lerp(o_sym[0], o_fin[0], k), lerp(o_sym[1], o_fin[1], k)), o_fin
 
