@@ -1,0 +1,35 @@
+<template>
+  <style>
+@font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+
+#root { position: absolute; inset: 0; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
+.grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #6a4dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.say { position: absolute; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.12; }
+.lab { position: absolute; font-weight: 600; color: #a69cc8; font-size: 30px; letter-spacing: 0.01em; }
+.vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,0.10), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45)); }
+
+    #root { background: #0c0916; }
+
+  </style>
+  <div id="root" data-composition-id="s01" data-width="1920" data-height="1080">
+    <div id="s01-all" class="clip" data-start="0" data-duration="1" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap>
+
+      <div style="position:absolute;left:0;top:0;width:820px;height:1080px;background:#faf9fd;clip-path:polygon(0 0,100% 0,72% 100%,0 100%)"></div>
+      <img src="assets/brand/symbol_purple.svg" style="position:absolute;left:250px;top:390px;width:260px;filter:none" />
+      <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;overflow:visible"><defs><filter id="glow" filterUnits="userSpaceOnUse" x="-300" y="-300" width="2520" height="1680"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="glows" filterUnits="userSpaceOnUse" x="-300" y="-300" width="2520" height="1680"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="g1" x1="470" y1="0" x2="1960" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs>
+        <path d="M470 430 L1960 300" stroke="url(#g1)" stroke-width="10" stroke-linecap="round" filter="url(#glow)" />
+        <path d="M720 412 L1960 300" stroke="#fff" stroke-opacity=".55" stroke-width="2" />
+        <path d="M900 364 l180 -16" stroke="#fff" stroke-opacity="0.1" stroke-width="2"/><path d="M1030 393 l200 -18" stroke="#fff" stroke-opacity="0.13" stroke-width="2"/><path d="M1160 422 l220 -20" stroke="#fff" stroke-opacity="0.16" stroke-width="2"/><path d="M1290 331 l240 -22" stroke="#fff" stroke-opacity="0.1" stroke-width="2"/><path d="M1420 360 l260 -24" stroke="#fff" stroke-opacity="0.13" stroke-width="2"/><path d="M1550 389 l280 -26" stroke="#fff" stroke-opacity="0.16" stroke-width="2"/><path d="M1680 298 l300 -28" stroke="#fff" stroke-opacity="0.1" stroke-width="2"/><path d="M1810 327 l320 -30" stroke="#fff" stroke-opacity="0.13" stroke-width="2"/>
+      </svg>
+      <div class="lab" style="left:1220px;top:700px">하나의 신호가 출발합니다</div>
+
+    </div>
+  </div>
+  <script>
+    window.__timelines["s01"] = gsap.timeline({ paused: true });
+  </script>
+</template>

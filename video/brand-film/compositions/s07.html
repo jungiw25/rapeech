@@ -1,0 +1,39 @@
+<template>
+  <style>
+@font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+
+#root { position: absolute; inset: 0; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
+.grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #6a4dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.say { position: absolute; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.12; }
+.lab { position: absolute; font-weight: 600; color: #a69cc8; font-size: 30px; letter-spacing: 0.01em; }
+.vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,0.10), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45)); }
+
+    #root { background: #0c0916; }
+
+  </style>
+  <div id="root" data-composition-id="s07" data-width="1920" data-height="1080">
+    <div id="s07-all" class="clip" data-start="0" data-duration="1" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap>
+
+      <div style="position:absolute;left:0;top:0;width:1920px;height:540px;background:#0c0916"></div>
+      <div style="position:absolute;left:0;top:540px;width:1920px;height:540px;background:#faf9fd"></div>
+      <div style="position:absolute;left:0;top:536px;width:1920px;height:8px;background:linear-gradient(90deg,#ff03c8,#a518a4 50%,#3c24f3)"></div>
+      <div class="lab" style="left:120px;top:110px">고객에게</div>
+      <div style="position:absolute;left:120px;top:190px;padding:0 64px;height:140px;border-radius:70px;background:linear-gradient(100deg,#ff03c8,#a518a4 50%,#3c24f3);color:#fff;font-size:52px;font-weight:700;display:flex;align-items:center">네, 청구 접수를 도와드릴게요.</div>
+      <div class="say" style="left:1180px;top:200px;font-size:60px">단순 문의는<br/><span class="grad">AI</span>가 바로</div>
+      <div class="lab" style="left:120px;top:620px;color:#6b6380">상담사에게</div>
+      <div style="position:absolute;left:120px;top:690px;width:760px;height:280px;border-radius:24px;background:#fff;box-shadow:0 18px 40px rgba(27,21,48,.12);padding:40px 48px">
+        <div style="font-size:30px;font-weight:700;color:#1b1530">상담 요약</div>
+        <div style="margin-top:22px;font-size:30px;font-weight:500;color:#5d5672;line-height:1.6">· 보험금 청구 문의<br/>· 목소리로 본인 확인 완료<br/>· 청구 접수 안내</div>
+      </div>
+      <div class="say" style="left:1180px;top:730px;font-size:60px;color:#1b1530">깊은 상담은<br/><span class="grad">사람</span>이 더 깊게</div>
+
+    </div>
+  </div>
+  <script>
+    window.__timelines["s07"] = gsap.timeline({ paused: true });
+  </script>
+</template>

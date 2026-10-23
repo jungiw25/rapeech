@@ -1,0 +1,38 @@
+<template>
+  <style>
+@font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+
+#root { position: absolute; inset: 0; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
+.grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #6a4dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.say { position: absolute; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.12; }
+.lab { position: absolute; font-weight: 600; color: #a69cc8; font-size: 30px; letter-spacing: 0.01em; }
+.vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,0.10), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45)); }
+
+    #root { background: #0c0916; }
+
+  </style>
+  <div id="root" data-composition-id="s03" data-width="1920" data-height="1080">
+    <div id="s03-all" class="clip" data-start="0" data-duration="1" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap>
+
+      <div class="vig"></div>
+      <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;overflow:visible"><defs><filter id="glow" filterUnits="userSpaceOnUse" x="-300" y="-300" width="2520" height="1680"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="glows" filterUnits="userSpaceOnUse" x="-300" y="-300" width="2520" height="1680"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="g3" x1="900" y1="0" x2="1980" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs>
+        <path d="M-40 560 L940 540" stroke="#6b6380" stroke-width="8" stroke-linecap="round" stroke-dasharray="2 22" />
+        <path d="M-40 560 L940 540" stroke="#8a8399" stroke-opacity=".5" stroke-width="3" />
+        <rect x="900" y="300" width="120" height="480" rx="18" fill="none" stroke="url(#g3)" stroke-opacity="1.0" stroke-width="4.0"/><rect x="928" y="314" width="116" height="452" rx="18" fill="none" stroke="url(#g3)" stroke-opacity="0.8200000000000001" stroke-width="3.5"/><rect x="956" y="328" width="112" height="424" rx="18" fill="none" stroke="url(#g3)" stroke-opacity="0.64" stroke-width="3.0"/><rect x="984" y="342" width="108" height="396" rx="18" fill="none" stroke="url(#g3)" stroke-opacity="0.45999999999999996" stroke-width="2.5"/><rect x="1012" y="356" width="104" height="368" rx="18" fill="none" stroke="url(#g3)" stroke-opacity="0.28" stroke-width="2.0"/>
+        <path d="M960 540 L1980 520" stroke="url(#g3)" stroke-width="10" stroke-linecap="round" filter="url(#glow)" />
+        <path d="M1060 476 l90 -2" stroke="#fff" stroke-opacity=".18" stroke-width="2"/><path d="M1155 526 l98 -2" stroke="#fff" stroke-opacity=".18" stroke-width="2"/><path d="M1250 576 l106 -2" stroke="#fff" stroke-opacity=".18" stroke-width="2"/><path d="M1345 496 l114 -2" stroke="#fff" stroke-opacity=".18" stroke-width="2"/><path d="M1440 546 l122 -2" stroke="#fff" stroke-opacity=".18" stroke-width="2"/><path d="M1535 466 l130 -2" stroke="#fff" stroke-opacity=".18" stroke-width="2"/><path d="M1630 516 l138 -2" stroke="#fff" stroke-opacity=".18" stroke-width="2"/><path d="M1725 566 l146 -2" stroke="#fff" stroke-opacity=".18" stroke-width="2"/><path d="M1820 486 l154 -2" stroke="#fff" stroke-opacity=".18" stroke-width="2"/>
+      </svg>
+      <div class="lab" style="left:120px;top:610px">전화망</div>
+      <div class="lab" style="left:870px;top:830px;color:#fff">AI 봇 게이트웨이</div>
+      <div class="say" style="left:120px;top:150px;font-size:72px">전화가 걸려 오는 순간,<br/>AI가 <span class="grad">함께 듣습니다</span></div>
+
+    </div>
+  </div>
+  <script>
+    window.__timelines["s03"] = gsap.timeline({ paused: true });
+  </script>
+</template>

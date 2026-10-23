@@ -5,3 +5,4 @@ intro/out/*.wav
 *.bundle
 video/*/node_modules/
 video/*/.hyperframes/
+video/*/node_modules/

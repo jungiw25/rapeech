@@ -1,0 +1,31 @@
+<template>
+  <style>
+@font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+
+#root { position: absolute; inset: 0; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
+.grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #6a4dff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.say { position: absolute; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.12; }
+.lab { position: absolute; font-weight: 600; color: #a69cc8; font-size: 30px; letter-spacing: 0.01em; }
+.vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,0.10), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45)); }
+
+    #root { background: #0c0916; }
+
+  </style>
+  <div id="root" data-composition-id="s05" data-width="1920" data-height="1080">
+    <div id="s05-all" class="clip" data-start="0" data-duration="1" data-track-index="1" data-layout-allow-overflow data-layout-allow-overlap>
+
+      <div class="vig"></div>
+      <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;overflow:visible"><defs><filter id="glow" filterUnits="userSpaceOnUse" x="-300" y="-300" width="2520" height="1680"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><filter id="glows" filterUnits="userSpaceOnUse" x="-300" y="-300" width="2520" height="1680"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><linearGradient id="g5" x1="0" y1="0" x2="1500" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs><path d="M-40 560 L760 560" stroke="url(#g5)" stroke-width="9" stroke-linecap="round" filter="url(#glow)"/><path d="M760 560 C 1000 560, 1060 330, 1260 330" fill="none" stroke="#3a3350" stroke-width="4" stroke-linecap="round" /><path d="M760 560 C 1000 560, 1060 560, 1360 560" fill="none" stroke="url(#g5)" stroke-width="9" stroke-linecap="round" filter="url(#glow)"/><path d="M760 560 C 1000 560, 1060 790, 1260 790" fill="none" stroke="#3a3350" stroke-width="4" stroke-linecap="round" /><circle cx="1320" cy="330" r="46" fill="#1c1730" stroke="#3a3350" stroke-width="3"/><circle cx="1420" cy="560" r="74" fill="none" stroke="url(#g5)" stroke-width="3" opacity=".5"/><circle cx="1420" cy="560" r="52" fill="#faf9fd"/><circle cx="1420" cy="560" r="24" fill="url(#g5)"/><circle cx="1320" cy="790" r="46" fill="#1c1730" stroke="#3a3350" stroke-width="3"/></svg>
+      <div class="lab" style="left:1520px;top:540px;color:#fff;font-size:34px">가장 알맞은 AI</div>
+      <div class="say" style="left:120px;top:150px;font-size:72px">질문에 <span class="grad">가장 알맞은 AI</span>로</div>
+
+    </div>
+  </div>
+  <script>
+    window.__timelines["s05"] = gsap.timeline({ paused: true });
+  </script>
+</template>
