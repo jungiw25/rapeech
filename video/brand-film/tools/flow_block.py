@@ -19,13 +19,12 @@ cards = [
 CHECK = '<svg width="34" height="34" viewBox="0 0 34 34" style="margin-left:14px;vertical-align:-5px"><circle cx="17" cy="17" r="16" fill="url(#fck)"/><path d="M10 17.5 l5 5 l9 -11" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="fck" x1="0" y1="0" x2="34" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs></svg>'
 card_html = ""
 for i, (lab, val, ok) in enumerate(cards):
-    x = ST[i] - 270
     chars = "".join(f'<b class="f-c{i}" style="display:inline-block;font-weight:700">{"&nbsp;" if c == " " else c}</b>' for c in val)
     card_html += f'''
-        <div class="f-card" id="f-card{i}" style="left:{x}px;top:{LY + 80}px">
+        <div class="f-wrap" style="left:{ST[i]}px;top:{LY + 80}px"><div class="f-card" id="f-card{i}">
           <div class="f-cl">{lab}</div>
           <div class="f-cv">{chars}{CHECK if ok else ""}</div>
-        </div>'''
+        </div></div>'''
 
 # 고객(사람 + 스마트폰)
 PHX, PHY = CUST + 185, LY - 40   # 휴대폰 중심(말하는 사람 앞, 떨어뜨려 둠)
@@ -69,18 +68,17 @@ bot = f'''<g id="f-bot">
 # 상담사(복잡한 상담 연결)
 ax, ay = ST[3], LY + 330
 agent = f'''<g id="f-agent">
-    <path id="f-branch" d="M{ax} {LY + 30} L{ax} {ay - 70}" stroke="#9d79ff" stroke-width="4" stroke-dasharray="2 14" stroke-linecap="round" fill="none"/>
-    <circle cx="{ax}" cy="{ay - 20}" r="30" fill="none" stroke="#fff" stroke-width="5"/>
-    <path d="M{ax - 50} {ay + 70} C {ax - 50} {ay + 20}, {ax + 50} {ay + 20}, {ax + 50} {ay + 70}" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
-    <path d="M{ax - 36} {ay - 18} a36 36 0 0 1 72 0" fill="none" stroke="#ff4fd8" stroke-width="5" stroke-linecap="round"/>
-    <text x="{ax + 80}" y="{ay + 12}" font-family="Pretendard" font-weight="700" font-size="40" fill="#fff">상담사</text>
+    <path id="f-branch" d="M{ax} {LY + 30} L{ax} {ay - 86}" stroke="#9d79ff" stroke-width="4" stroke-dasharray="2 14" stroke-linecap="round" fill="none"/>
+    <circle cx="{ax}" cy="{ay}" r="120" fill="url(#f-avglow)"/>
+    <image href="assets/emoji/agent_headset_lit.png" x="{ax - 90}" y="{ay - 80}" width="180" height="180"/>
+    <text x="{ax + 110}" y="{ay + 22}" font-family="Pretendard" font-weight="700" font-size="40" fill="#fff">상담사</text>
   </g>'''
 
 # 목소리 묶음(선을 타고 이동)
 packet = f'''<g id="f-pk"><rect id="f-pkr" x="-56" y="-24" width="112" height="48" rx="24" fill="url(#flow-g)" filter="url(#flow-glow)"/>
     {"".join(f'<rect class="f-pb o" x="{-30 + j * 13}" y="-15" width="6" height="30" rx="3" fill="#fff"/>' for j in range(5))}</g>'''
 
-ret = f'<path id="f-ret" d="M{bx - 60} {LY - 70} C {bx - 900} {LY - 640}, {CUST + 900} {LY - 640}, {CUST + 110} {LY - 200}" fill="none" stroke="url(#flow-g)" stroke-width="5" stroke-linecap="round" filter="url(#flow-glows)"/>'
+ret = '<path id="f-ret" d="__RETD__" fill="none" stroke="url(#flow-g)" stroke-width="5" stroke-linecap="round" filter="url(#flow-glows)"/>'
 retpk = '<g id="f-rpk"><circle r="16" fill="#fff" filter="url(#flow-glows)"/></g>'
 
 world_svg = (f'<svg width="5200" height="1400" viewBox="0 0 5200 1400" style="position:absolute;left:0;top:0;overflow:visible">'
@@ -114,10 +112,11 @@ cap_html = "".join(say(t, 60, 0, 150, f"f{cid}", extra="width:1920px;text-align:
 
 flow_css = f"""
     #f-world {{ position: absolute; left: 0; top: 0; width: 5200px; height: 1400px; }}
-    .f-card {{ position: absolute; width: 540px; padding: 26px 34px; border-radius: 22px; background: rgba(28,23,48,.92); border: 1.5px solid #3a3158; }}
+    .f-wrap {{ position: absolute; width: 0; display: flex; justify-content: center; }}
+    .f-card {{ position: relative; flex: none; text-align: center; padding: 26px 40px; border-radius: 22px; background: rgba(28,23,48,.92); border: 1.5px solid #3a3158; }}
     .f-cl {{ font-size: 28px; font-weight: 600; color: {SUB}; }}
     .f-cv {{ margin-top: 10px; font-size: 40px; font-weight: 700; color: #fff; letter-spacing: -0.02em; white-space: nowrap; }}
-    .f-bub {{ position: absolute; height: 92px; padding: 0 40px; border-radius: 46px; display: flex; align-items: center; font-size: 38px; font-weight: 700; white-space: nowrap; }}
+    .f-bub {{ position: relative; flex: none; height: 92px; padding: 0 40px; border-radius: 46px; display: flex; align-items: center; font-size: 38px; font-weight: 700; white-space: nowrap; }}
 """
 flow_body = f"""
       <div id="f-dark" style="position:absolute;inset:0;background:{DARK}"></div>
@@ -127,8 +126,8 @@ flow_body = f"""
       <div id="f-world">
         {world_svg}
         {card_html}
-        <div class="f-bub" id="f-cbub" style="left:{CUST - 120}px;top:{LY - 320}px;background:#fff;color:{INK}">카드를 잃어버렸어요</div>
-        <div class="f-bub" id="f-bbub" style="left:{bx - 520}px;top:{LY - 250}px;background:linear-gradient(100deg,#ff03c8,#a518a4 50%,#3c24f3);color:#fff">본인 확인이 끝나 카드 사용을 정지했어요</div>
+        <div class="f-wrap" style="left:{CUST}px;top:{LY - 320}px"><div class="f-bub" id="f-cbub" style="background:#fff;color:{INK}">카드를 잃어버렸어요</div></div>
+        <div class="f-wrap" style="left:{bx}px;top:{LY - 250}px"><div class="f-bub" id="f-bbub" style="background:linear-gradient(100deg,#ff03c8,#a518a4 50%,#3c24f3);color:#fff">본인 확인이 끝나 카드 사용을 정지했어요</div></div>
       </div>
       <img id="f-sym" src="assets/brand/symbol_purple.svg" style="position:absolute;left:{SYM_X:.1f}px;top:{SYM_Y:.1f}px;width:{84 * SYM_S:.1f}px;height:{90 * SYM_S:.1f}px" />
       <img id="f-last" src="assets/intro_last.png" style="position:absolute;left:0;top:0;width:1920px;height:1080px" />
@@ -229,12 +228,20 @@ flow_js = """
       tl.to("#f-cbub", { opacity: 1, duration: 0.8, ease: "sine.inOut" }, 26.9);
       tl.to("#f-world", { x: __PBX__, y: __PBY__, scale: __PBS__, transformOrigin: "0px 0px", duration: 2.4, ease: "power3.inOut" }, 27.0);
       CAP("fcP", 28.6, 32.4);
-      DRAW("#f-ret", 28.3, 1.6, "power2.inOut");
       tl.fromTo("#f-rpk", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 28.3);
       tl.to("#f-rpk", { motionPath: null, duration: 0 }, 28.3);
       const RP = __RETPTS__;
       gsap.set("#f-rpk", { x: RP[0][0], y: RP[0][1] });
-      for (let k = 1; k < RP.length; k++) tl.to("#f-rpk", { x: RP[k][0], y: RP[k][1], duration: 1.7 / (RP.length - 1), ease: "none" }, 28.3 + 1.7 * (k - 1) / (RP.length - 1));
+      // 선은 점이 지나간 자리까지만 정확히 그려짐(점과 선 사이 틈 없음, 선이 앞서지 않음)
+      const RL = [0]; for (let k = 1; k < RP.length; k++) RL.push(RL[k - 1] + Math.hypot(RP[k][0] - RP[k - 1][0], RP[k][1] - RP[k - 1][1]));
+      const RT = RL[RL.length - 1], ret = document.querySelector("#f-ret");
+      ret.setAttribute("stroke-dasharray", `${RT + 10} ${RT + 10}`);
+      gsap.set(ret, { attr: { "stroke-dashoffset": RT } });
+      for (let k = 1; k < RP.length; k++) {
+        const d = 1.7 / (RP.length - 1), t = 28.3 + d * (k - 1);
+        tl.to("#f-rpk", { x: RP[k][0], y: RP[k][1], duration: d, ease: "none" }, t);
+        tl.to(ret, { attr: { "stroke-dashoffset": RT - RL[k] }, duration: d, ease: "none" }, t);
+      }
       tl.to("#f-rpk", { opacity: 0, scale: 2, duration: 0.4, ease: "power2.out" }, __RETARR__);
       tl.fromTo("#f-ok", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.8)" }, __RETARR__);
       DRAW("#f-branch", 29.5, 0.9, "power2.inOut");
@@ -254,12 +261,13 @@ PBY2 = 540 - 600 * PBS2
 # 되돌아가는 답(베지어를 점으로 샘플링)
 p0, c1, c2, p3 = (bx - 60, LY - 70), (bx - 900, LY - 640), (CUST + 900, LY - 640), (CUST + 110, LY - 200)
 RET = []
-for k in range(25):
-    v = k / 24
+N = 72
+for k in range(N + 1):
+    v = k / N
     u = 4 * v ** 3 if v < 0.5 else 1 - (-2 * v + 2) ** 3 / 2
     x = (1 - u) ** 3 * p0[0] + 3 * (1 - u) ** 2 * u * c1[0] + 3 * (1 - u) * u * u * c2[0] + u ** 3 * p3[0]
     y = (1 - u) ** 3 * p0[1] + 3 * (1 - u) ** 2 * u * c1[1] + 3 * (1 - u) * u * u * c2[1] + u ** 3 * p3[1]
-    RET.append([round(x), round(y)])
+    RET.append([round(x, 1), round(y, 1)])
 flow_js = (flow_js.replace("__ST__", json.dumps(ST)).replace("__ARR__", json.dumps(ARR)).replace("__TRV__", json.dumps(TRV)).replace("__LY__", str(LY))
            .replace("__DX__", f"{960 - SYM_CX:.1f}").replace("__DY__", f"{540 - SYM_CY:.1f}")
            .replace("__PX__", str(PHX)).replace("__PY__", str(PHY))
@@ -267,5 +275,6 @@ flow_js = (flow_js.replace("__ST__", json.dumps(ST)).replace("__ARR__", json.dum
            .replace("__PBX2__", f"{PBX2:.1f}").replace("__PBY2__", f"{PBY2:.1f}").replace("__PBS2__", str(PBS2))
            .replace("__RETPTS__", json.dumps(RET)).replace("__RETARR__", str(RET_ARR)))
 flow_js = flow_js.replace('      tl.to("#f-rpk", { motionPath: null, duration: 0 }, 28.3);\n', "")
+flow_body = flow_body.replace("__RETD__", "M" + " L".join(f"{x} {y}" for x, y in RET))
 scene("flow", FLOW_DUR, flow_body, flow_js, css=flow_css)
 FLOW_EVENTS = dict(arrive=ARR, travel=[t for t in TRV if t], ret=RET_ARR)

@@ -66,3 +66,7 @@ QA:      본편 0.0(인트로 이음새), 8, 24, 37, 50(줌 아웃), 58, 68(클�
 - 마지막 프레임(로고 + "Conversational AI · Network Infrastructure")이 픽셀 단위로 같다(차이 0 확인)
 - 인트로 말풍선: 고객 "카드를 잃어버렸어요" → AI "분실 신고, 바로 도와드릴게요"
 - 아웃트로: 웹사이트 주소 없음, 글자는 흐림에서 부드럽게
+
+## 전달 파일 인코딩
+- 렌더 원본(out/raw.mp4)을 재생 호환용으로 다시 인코딩: H.264 High@4.2, yuv420p, 60 fps 고정, GOP 2 s, AAC 48 kHz, faststart
+- 사람 아이콘: 고객 🗣(speaking_head) / 상담사(bust_in_silhouette + 헤드셋), 둘 다 Fluent Emoji 3D(MIT)로 같은 명암
