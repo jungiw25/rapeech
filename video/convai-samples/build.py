@@ -128,109 +128,133 @@ CAP("k4", 14.0, null);
 
 # ─────────────────────────────────────────────── B: 같은 고객, 세 가지 상황
 def build_b():
-    dur = 21.5
+    dur = 28.0
     caps = [("k1", "NLU 콜봇", "자주 하는 문의는 [바로 처리]하고"),
             ("k2", "LLM AI 에이전트", "복잡한 질문은 [맥락을 이해해] 답하고"),
-            ("k3", "AICC 구축", "이런 대화 수백 개가 동시에, [고객센터 전체]를 AI로"),
-            ("k4", "ConvAI  ·  조달청 우수조달물품 지정 2026", "이 모든 것을 하나의 플랫폼, [ConvAI]로")]
-    P = dict(cu=(300, 470), n1=(1300, 330), n2=(1300, 610))
+            ("k3", "상담사 연결  ·  대화 요약 전달", "사람이 필요한 상담은 [상담사]에게 바로"),
+            ("k4", "AICC 구축", "상담사와 AI가 [함께 일하는] 고객센터"),
+            ("k5", "ConvAI  ·  조달청 우수조달물품 지정 2026", "고객은 더 빠르게, 상담사는 [더 중요한 상담]에 집중")]
+    P = dict(cu=(300, 470), n1=(1180, 330), n2=(1180, 610), n3=(1600, 470))
+    cx, cy = P["cu"]
 
     def nd(nid, xy, text):
         x, y = xy
         return (f'<g id="{nid}"><circle cx="{x}" cy="{y}" r="70" fill="#1a1233" stroke="#fff" stroke-opacity=".4" stroke-width="1.5"/>'
                 f'<circle id="{nid}R" cx="{x}" cy="{y}" r="70" fill="none" stroke="#ff4fd8" stroke-width="2.5" transform="rotate(-90 {x} {y})"/>'
                 f'<text x="{x}" y="{y + 9}" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="26" fill="#fff">{text}</text></g>')
-    cx, cy = P["cu"]
-    convo = f'''<g id="convo">
-    <circle cx="{cx}" cy="{cy - 30}" r="130" fill="url(#avg)"/>
-    <image href="assets/customer.png" x="{cx - 110}" y="{cy - 140}" width="220" height="220"/>
-    <path id="l1" d="M{cx + 120} {cy - 40} C {cx + 400} {cy - 40}, 900 {P["n1"][1]}, {P["n1"][0] - 72} {P["n1"][1]}" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
-    <path id="l2" d="M{cx + 120} {cy + 10} C {cx + 400} {cy + 10}, 900 {P["n2"][1]}, {P["n2"][0] - 72} {P["n2"][1]}" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
-    {nd("n1", P["n1"], "콜봇")}{nd("n2", P["n2"], "AI 에이전트")}
-    <circle id="d1" r="7" fill="#fff"/><circle id="d2" r="7" fill="#fff"/></g>'''
+
+    def paths(pre, w=2, op=".7"):
+        l1 = f'M{cx + 120} {cy - 40} C {cx + 400} {cy - 40}, 800 {P["n1"][1]}, {P["n1"][0] - 72} {P["n1"][1]}'
+        l2 = f'M{cx + 120} {cy + 10} C {cx + 400} {cy + 10}, 800 {P["n2"][1]}, {P["n2"][0] - 72} {P["n2"][1]}'
+        l3 = f'M{P["n2"][0] + 72} {P["n2"][1]} C {P["n2"][0] + 220} {P["n2"][1]}, {P["n3"][0] - 200} {P["n3"][1]}, {P["n3"][0] - 74} {P["n3"][1]}'
+        return "".join(f'<path id="{pre}{k}" d="{d}" fill="none" stroke="#fff" stroke-opacity="{op}" stroke-width="{w}"/>' for k, d in (("1", l1), ("2", l2), ("3", l3)))
+
+    x3, y3 = P["n3"]
+    counselor = (f'<g id="n3"><circle cx="{x3}" cy="{y3}" r="74" fill="#1a1233" stroke="#fff" stroke-opacity=".4" stroke-width="1.5"/>'
+                 f'<circle id="n3R" cx="{x3}" cy="{y3}" r="74" fill="none" stroke="#ff4fd8" stroke-width="2.5" transform="rotate(-90 {x3} {y3})"/>'
+                 f'<image href="assets/agent.png" x="{x3 - 56}" y="{y3 - 60}" width="112" height="112"/>'
+                 f'<text x="{x3}" y="{y3 + 112}" text-anchor="middle" font-family="Pretendard" font-weight="700" font-size="26" fill="#fff">상담사</text></g>')
+    card = ('<g id="card"><rect x="-86" y="-24" width="172" height="48" rx="12" fill="#fff"/>'
+            '<rect x="-70" y="-10" width="20" height="20" rx="4" fill="#ff4fd8"/>'
+            '<text x="-40" y="8" font-family="Pretendard" font-weight="800" font-size="20" fill="#1b1530">대화 요약</text></g>')
+    convo = ('<g id="convo">'
+             f'<circle cx="{cx}" cy="{cy - 30}" r="130" fill="url(#avg)"/>'
+             f'<image id="cust" href="assets/customer.png" x="{cx - 110}" y="{cy - 140}" width="220" height="220"/>'
+             + paths("l") + nd("n1", P["n1"], "콜봇") + nd("n2", P["n2"], "AI 에이전트") + counselor
+             + '<circle id="d1" r="7" fill="#fff"/><circle id="d2" r="7" fill="#fff"/><circle id="d3" r="7" fill="#fff"/>' + card + '</g>')
     cells = ""
     W, H, S = 540, 190, 0.3
+    k = 0
     for r in range(3):
         for c in range(3):
             if (r, c) == (1, 1):
                 continue
-            tx, ty = 960 + (c - 1) * W - 1060 * S, 430 + (r - 1) * H - 470 * S
-            k = len(cells.split('class="cell"')) - 1
+            tx, ty = 960 + (c - 1) * W - 1000 * S, 420 + (r - 1) * H - 480 * S
             cells += (f'<g class="cell" transform="translate({tx:.1f} {ty:.1f}) scale({S})">'
                       f'<image href="assets/customer.png" x="{cx - 110}" y="{cy - 140}" width="220" height="220"/>'
-                      f'<path id="c{k}a" d="M{cx + 120} {cy - 40} C {cx + 400} {cy - 40}, 900 {P["n1"][1]}, {P["n1"][0] - 72} {P["n1"][1]}" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="3"/>'
-                      f'<path id="c{k}b" d="M{cx + 120} {cy + 10} C {cx + 400} {cy + 10}, 900 {P["n2"][1]}, {P["n2"][0] - 72} {P["n2"][1]}" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="3"/>'
+                      + paths(f"c{k}p", 3, ".55")
                       + "".join(f'<circle cx="{P[n][0]}" cy="{P[n][1]}" r="70" fill="#1a1233" stroke="#ff4fd8" stroke-width="4"/>' for n in ("n1", "n2"))
-                      + f'<circle class="cd" id="cd{k}" r="16" fill="#fff"/></g>')
-    svg = f'''<svg class="layer" viewBox="0 0 1920 1080">
-  <defs><radialGradient id="avg"><stop offset="0" stop-color="#6a4dff" stop-opacity=".3"/><stop offset="1" stop-color="#6a4dff" stop-opacity="0"/></radialGradient></defs>
-  <g id="grid">{cells}</g>
-  {convo}
-  <rect id="frame" x="140" y="140" width="1640" height="590" rx="24" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.5"/>
-  <text id="frameT" x="176" y="182" font-family="Pretendard" font-weight="600" font-size="22" letter-spacing="5" fill="#b5abd8">고객센터</text>
-</svg>'''
-    dom = (at(620, 255, f'<div class="bub q" id="q1">카드 분실 신고할게요</div>')
-           + at(1640, 330, f'<div class="bub a" id="a1">신고 완료됐어요{CHECK}</div>')
-           + at(720, 690, f'<div class="bub q" id="q2">해외에서 잃어버렸는데, 재발급은 어떻게 받나요?</div>')
-           + at(1640, 610, '<div class="bub think" id="th">• • •</div>')
-           + at(1640, 610, f'<div class="bub a" id="a2" style="font-size:24px">재발급 방법을 안내해 드릴게요{CHECK}</div>')
-           + f'<div class="plate" id="plate" style="left:560px;top:668px;width:800px">ConvAI<small>대화형 AI 플랫폼</small></div>')
+                      + f'<circle cx="{x3}" cy="{y3}" r="74" fill="#1a1233" stroke="#ff4fd8" stroke-width="4"/>'
+                      f'<image href="assets/agent.png" x="{x3 - 56}" y="{y3 - 60}" width="112" height="112"/>'
+                      f'<circle class="cd" id="cd{k}" r="16" fill="#fff"/><rect class="cc" id="cc{k}" x="-50" y="-16" width="100" height="32" rx="8" fill="#fff"/></g>')
+            k += 1
+    svg = ('<svg class="layer" viewBox="0 0 1920 1080">'
+           '<defs><radialGradient id="avg"><stop offset="0" stop-color="#6a4dff" stop-opacity=".3"/><stop offset="1" stop-color="#6a4dff" stop-opacity="0"/></radialGradient></defs>'
+           f'<g id="grid">{cells}</g>{convo}'
+           '<rect id="frame" x="140" y="140" width="1640" height="570" rx="24" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.5"/>'
+           '<text id="frameT" x="176" y="182" font-family="Pretendard" font-weight="600" font-size="22" letter-spacing="5" fill="#b5abd8">고객센터</text></svg>')
+    dom = (at(620, 255, '<div class="bub q" id="q1">카드 분실 신고할게요</div>')
+           + at(1540, 250, f'<div class="bub a" id="a1">신고 완료됐어요{CHECK}</div>')
+           + at(700, 700, '<div class="bub q" id="q2">해외에서 잃어버렸는데, 재발급은 어떻게 받나요?</div>')
+           + at(1500, 610, '<div class="bub think" id="th">• • •</div>')
+           + at(1560, 610, f'<div class="bub a" id="a2" style="font-size:24px">재발급 방법을 안내해 드릴게요{CHECK}</div>')
+           + at(800, 470, '<div class="bub q" id="q3">부정 사용이 의심돼요. 상담사와 통화하고 싶어요</div>')
+           + at(1600, 260, '<div class="bub a" id="a3" style="font-size:24px">앞선 내용 확인했어요, 바로 도와드릴게요</div>')
+           + '<div class="plate" id="plate" style="left:560px;top:668px;width:800px">ConvAI<small>대화형 AI 플랫폼</small></div>')
     caps_html = "".join(cap_html(c, t, x) for c, t, x in caps)
-    body = f'''<div class="layer vig"></div>{svg}<div class="layer">{dom}</div>{caps_html}<img id="prev" class="layer" src="assets/flow_last.png" />'''
-    js = INTRO_JS + """
-gsap.set(["#convo", "#grid", ".cell", "#frame", "#frameT", "#n1", "#n2", "#l1", "#l2", "#d1", "#d2", "#q1", "#a1", "#q2", "#th", "#a2", "#plate", ".cap"], { opacity: 0 });
-prep(document.getElementById("n1R")); prep(document.getElementById("n2R"));
-// ── 1. 같은 고객, 간단한 문의 → 콜봇이 바로 처리
-FIN("#convo", 0.9, 0.05);
-tl.fromTo("#convo image", { opacity: 0, scale: 0.85, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.9, ease: "power3.out", immediateRender: false }, 0.9);
-gsap.set("#convo image", { opacity: 0 });
-tl.fromTo("#n1", { opacity: 0, scale: 0.7, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.7, ease: "power3.out", immediateRender: false }, 1.3);
-CAP("k1", 1.4, 6.3);
-tl.fromTo("#q1", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 1.9);
-FIN("#l1", 2.5, 0.05); FIN("#d1", 2.5, 0.05);
-ALONG("#l1", "#d1", 2.5, 1.0, "power2.inOut");
-FOUT("#d1", 3.5, 0.2);
-DR("#n1R", 3.4, 0.7, "power2.inOut");
-tl.fromTo("#a1", { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 4.1);
-FOUT(["#q1"], 6.0, 0.4);
-// ── 2. 같은 고객, 복잡한 질문 → AI 에이전트(콜봇과 같은 크기, 나란히)
-tl.fromTo("#n2", { opacity: 0, scale: 0.7, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.7, ease: "power3.out", immediateRender: false }, 6.6);
-CAP("k2", 6.8, 12.2);
-tl.fromTo("#q2", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 7.2);
-FIN("#l2", 7.9, 0.05); FIN("#d2", 7.9, 0.05);
-ALONG("#l2", "#d2", 7.9, 1.0, "power2.inOut");
-FOUT("#d2", 8.9, 0.2);
-DR("#n2R", 8.8, 1.4, "power2.inOut");
-tl.fromTo("#th", { opacity: 0 }, { opacity: 1, duration: 0.3, immediateRender: false }, 9.0);
-for (let k = 0; k < 2; k++) tl.to("#th", { opacity: 0.4, duration: 0.25, yoyo: true, repeat: 1, ease: "sine.inOut" }, 9.3 + k * 0.5);
-tl.to("#th", { opacity: 0, duration: 0.2 }, 10.2);
-tl.fromTo("#a2", { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 10.3);
-FOUT(["#q2", "#a1", "#a2"], 12.1, 0.4);
-// ── 3. 물러나면: 같은 대화가 수백 개, 고객센터 전체
-tl.to("#convo", { scale: 0.3, x: 960 - 1060 * 0.3, y: 430 - 470 * 0.3, svgOrigin: "0 0", duration: 1.4, ease: "power3.inOut" }, 12.4);
-FIN("#grid", 13.3, 0.05);
-gsap.utils.toArray(".cell").forEach((el, i) => tl.fromTo(el, { opacity: 0 }, { opacity: 0.75, duration: 0.6, ease: "sine.out", immediateRender: false }, 13.3 + i * 0.07));
-DR("#frame", 13.6, 1.0, "power2.inOut"); FIN("#frame", 13.6, 0.05); FIN("#frameT", 14.2, 0.5);
-CAP("k3", 13.0, 17.2);
-// 고객센터 안의 대화들이 계속 오감(같은 점이 다시 흐름)
-for (let r = 0; r < 2; r++) {
-  const t = 14.4 + r * 1.3;
-  ALONG("#l1", "#d1", t, 0.9, "power2.inOut", false); tl.fromTo("#d1", { opacity: 0 }, { opacity: 1, duration: 0.1, immediateRender: false }, t); FOUT("#d1", t + 0.9, 0.15);
-  ALONG("#l2", "#d2", t + 0.5, 0.9, "power2.inOut", false); tl.fromTo("#d2", { opacity: 0 }, { opacity: 1, duration: 0.1, immediateRender: false }, t + 0.5); FOUT("#d2", t + 1.4, 0.15);
-}
-// ── 4. 모두 하나의 플랫폼 위에
-for (let k = 0; k < 8; k++) for (let r = 0; r < 2; r++) {
-  const t = 13.9 + k * 0.17 + r * 1.35, p = (k + r) % 3 === 2 ? "#c" + k + "b" : "#c" + k + "a";
-  tl.fromTo("#cd" + k, { opacity: 0 }, { opacity: 1, duration: 0.1, immediateRender: false }, t);
-  ALONG(p, "#cd" + k, t, 1.0, "power2.inOut", false); FOUT("#cd" + k, t + 1.0, 0.15);
-}
-gsap.set(".cd", { opacity: 0 });
-tl.to("#grid, #convo, #frame, #frameT", { y: "-=60", duration: 1.0, ease: "power3.inOut" }, 17.3);
-tl.fromTo("#plate", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", immediateRender: false }, 17.9);
-CAP("k4", 17.5, null);
-"""
+    body = f'<div class="layer vig"></div>{svg}<div class="layer">{dom}</div>{caps_html}<img id="prev" class="layer" src="assets/flow_last.png" />'
+    js = INTRO_JS + B_JS
     return page("ConvAI 시안 B", body, js, dur, CSS,
                 audio=f'<audio id="sfx" class="clip" src="assets/sfx_b.wav" data-start="0" data-duration="{dur}" data-track-index="2" data-volume="1"></audio>'), dur
+
+
+B_JS = """
+gsap.set(["#convo", "#grid", ".cell", "#frame", "#frameT", "#n1", "#n2", "#n3", "#l1", "#l2", "#l3", "#d1", "#d2", "#d3", "#card", "#cust",
+  "#q1", "#a1", "#q2", "#th", "#a2", "#q3", "#a3", "#plate", ".cap", ".cd", ".cc"], { opacity: 0 });
+["n1R", "n2R", "n3R"].forEach((id) => prep(document.getElementById(id)));
+// ── 1. 간단한 문의 → 콜봇이 바로 처리
+FIN("#convo", 0.9, 0.05);
+tl.fromTo("#cust", { opacity: 0, scale: 0.85, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.9, ease: "power3.out", immediateRender: false }, 0.9);
+tl.fromTo("#n1", { opacity: 0, scale: 0.7, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.7, ease: "power3.out", immediateRender: false }, 1.3);
+CAP("k1", 1.4, 6.1);
+tl.fromTo("#q1", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 1.9);
+FIN(["#l1", "#d1"], 2.5, 0.05); ALONG("#l1", "#d1", 2.5, 1.0); FOUT("#d1", 3.5, 0.2);
+DR("#n1R", 3.4, 0.7);
+tl.fromTo("#a1", { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 4.1);
+FOUT("#q1", 5.9, 0.4);
+// ── 2. 복잡한 질문 → AI 에이전트(콜봇과 나란히)
+tl.fromTo("#n2", { opacity: 0, scale: 0.7, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.7, ease: "power3.out", immediateRender: false }, 6.4);
+CAP("k2", 6.6, 11.9);
+tl.fromTo("#q2", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 7.0);
+FIN(["#l2", "#d2"], 7.7, 0.05); ALONG("#l2", "#d2", 7.7, 1.0); FOUT("#d2", 8.7, 0.2);
+DR("#n2R", 8.6, 1.3);
+tl.fromTo("#th", { opacity: 0 }, { opacity: 1, duration: 0.3, immediateRender: false }, 8.8);
+tl.to("#th", { opacity: 0.4, duration: 0.25, yoyo: true, repeat: 1, ease: "sine.inOut" }, 9.1);
+tl.to("#th", { opacity: 0, duration: 0.2 }, 9.7);
+tl.fromTo("#a2", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 9.8);
+FOUT(["#q2", "#a1", "#a2"], 11.8, 0.4);
+// ── 3. 사람이 필요한 상담 → AI가 대화를 정리해 상담사에게(고객은 같은 말을 반복하지 않음)
+tl.fromTo("#n3", { opacity: 0, scale: 0.7, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.8, ease: "power3.out", immediateRender: false }, 12.2);
+CAP("k3", 12.4, 17.6);
+tl.fromTo("#q3", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 12.7);
+FIN("#d3", 13.4, 0.05); ALONG("#l2", "#d3", 13.4, 0.9, "power2.inOut", false); FOUT("#d3", 14.3, 0.2);
+FIN("#l3", 14.5, 0.05); FIN("#card", 14.75, 0.2);
+ALONG("#l3", "#card", 14.5, 1.3, "power2.inOut");
+DR("#n3R", 15.6, 0.8);
+tl.to("#card", { opacity: 0, duration: 0.4, ease: "power2.in" }, 15.75);
+tl.fromTo("#a3", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 16.2);
+FOUT(["#q3", "#a3"], 17.5, 0.4);
+// ── 4. 물러나면: 상담사와 AI가 함께 일하는 고객센터
+tl.to("#convo", { scale: 0.3, x: 960 - 1000 * 0.3, y: 420 - 480 * 0.3, svgOrigin: "0 0", duration: 1.4, ease: "power3.inOut" }, 17.8);
+FIN("#grid", 18.7, 0.05);
+gsap.utils.toArray(".cell").forEach((el, i) => tl.fromTo(el, { opacity: 0 }, { opacity: 0.8, duration: 0.6, ease: "sine.out", immediateRender: false }, 18.7 + i * 0.07));
+FIN("#frame", 19.0, 0.05); DR("#frame", 19.0, 1.0); FIN("#frameT", 19.6, 0.5);
+CAP("k4", 18.4, 22.9);
+for (let k = 0; k < 8; k++) for (let r = 0; r < 2; r++) {
+  const t = 19.4 + k * 0.17 + r * 1.5, m = (k + r) % 3;
+  if (m === 2) {
+    tl.fromTo("#cc" + k, { opacity: 0 }, { opacity: 1, duration: 0.1, immediateRender: false }, t);
+    ALONG("#c" + k + "p3", "#cc" + k, t, 1.0, "power2.inOut", false); FOUT("#cc" + k, t + 1.0, 0.15);
+  } else {
+    tl.fromTo("#cd" + k, { opacity: 0 }, { opacity: 1, duration: 0.1, immediateRender: false }, t);
+    ALONG("#c" + k + "p" + (m + 1), "#cd" + k, t, 1.0, "power2.inOut", false); FOUT("#cd" + k, t + 1.0, 0.15);
+  }
+}
+// ── 5. 하나의 플랫폼 위에, 모두에게 좋은 고객센터
+tl.to("#grid, #convo, #frame, #frameT", { y: "-=60", duration: 1.0, ease: "power3.inOut" }, 23.0);
+tl.fromTo("#plate", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", immediateRender: false }, 23.6);
+CAP("k5", 23.2, null);
+"""
 
 
 def sound(out, dur, events):
@@ -256,8 +280,8 @@ def sound(out, dur, events):
 if __name__ == "__main__":
     for name, fn, ev in (("a", build_a, [("down", 0.0), ("chime", 2.1), ("pop", 1.8), ("pop", 2.9), ("whoosh", 5.2), ("pop", 5.7), ("pop", 8.1), ("chime", 8.2),
                                          ("whoosh", 9.7), ("chime", 11.6), ("whoosh", 13.6), ("chime", 14.4)]),
-                         ("b", build_b, [("down", 0.0), ("pop", 1.9), ("whoosh", 2.5), ("chime", 4.1), ("pop", 7.2), ("whoosh", 7.9), ("chime", 10.3),
-                                         ("down", 12.4), ("whoosh", 13.6), ("chime", 18.0)])):
+                         ("b", build_b, [("down", 0.0), ("pop", 1.9), ("whoosh", 2.5), ("chime", 4.1), ("pop", 7.0), ("whoosh", 7.7), ("chime", 9.8),
+                                         ("pop", 12.7), ("whoosh", 13.4), ("whoosh", 14.5), ("chime", 16.0), ("down", 17.8), ("whoosh", 19.0), ("chime", 23.7)])):
         d = HERE / name
         a = setup_project(d, f"convai-{name}", [(FILM / "assets" / "emoji" / "speaking_head_lit.png", "customer.png"),
                                                  (FILM / "assets" / "emoji" / "agent_headset_lit.png", "agent.png")])
