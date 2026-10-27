@@ -32,3 +32,6 @@ video/outro-v3/render.log
 video/brand-film-v3/assets/
 video/brand-film-v3/out/rest.mp4
 video/brand-film-v3/render.log
+video/convai-samples/*/assets/
+video/convai-samples/*/out/
+video/convai-samples/*/render.log
