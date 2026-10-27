@@ -19,3 +19,10 @@ video/intro-v2/assets/
 video/intro-v2/out/
 video/intro-v2/render.log
 video/intro-v2/.hyperframes/
+video/outro-v2/assets/
+video/outro-v2/out/
+video/outro-v2/render.log
+video/brand-film-v2/assets/
+video/brand-film-v2/out/body.mp4
+video/brand-film-v2/render.log
+video/*/.hyperframes/
