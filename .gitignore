@@ -14,3 +14,4 @@ motion-library.html
 video/samples/*/out/
 video/samples/*/.hyperframes/
 video/samples/render_*.log
+video/samples/*/assets/
