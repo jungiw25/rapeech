@@ -70,6 +70,8 @@ def build_html():
   <rect id="streamIn" x="-90" y="{LY - 2}" width="90" height="4" rx="2" fill="url(#stream)"/>
   <g id="node"><circle cx="{CX}" cy="{LY}" r="{BR}" fill="url(#nodeg)" stroke="#fff" stroke-opacity=".25" stroke-width="1.5"/>
     <circle id="ringFill" cx="{CX}" cy="{LY}" r="{BR + 12}" fill="none" stroke="url(#ring)" stroke-width="5" stroke-linecap="round" transform="rotate(-90 {CX} {LY})" filter="url(#gl2)"/>
+    <circle id="flashIn" cx="{CX}" cy="{LY}" r="{BR}" fill="#fff"/>
+    <circle id="flashRing" cx="{CX}" cy="{LY}" r="{BR + 12}" fill="none" stroke="#fff" stroke-width="2"/>
     <text x="{CX}" y="{LY + 13}" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="38" fill="#fff">AI</text></g>
 </svg>'''
     ni = f'''<svg id="ni" class="layer" viewBox="0 0 1920 1080">
@@ -117,7 +119,12 @@ tl.to(".cb", {{ scaleY: 0.08, duration: 0.5, ease: "sine.inOut" }}, 3.25);
 tl.fromTo("#streamIn", {{ x: 330, opacity: 0 }}, {{ x: {CX - BR - 18}, opacity: 1, duration: 1.0, ease: "power1.in", immediateRender: false }}, 1.95);
 tl.to("#streamIn", {{ opacity: 0, duration: 0.2 }}, 2.95);
 DR("#ringFill", 2.0, 1.4, "power2.inOut");
-tl.fromTo("#node", {{ scale: 1 }}, {{ scale: 1.06, duration: 0.3, ease: "power2.out", yoyo: true, repeat: 1, immediateRender: false }}, 3.35);
+// 게이지가 다 차면 띠링과 함께 반짝(크기는 그대로)
+gsap.set(["#flashIn", "#flashRing"], {{ opacity: 0 }});
+tl.fromTo("#flashIn", {{ opacity: 0 }}, {{ opacity: 0.55, duration: 0.08, ease: "none", immediateRender: false }}, 3.38);
+tl.to("#flashIn", {{ opacity: 0, duration: 0.6, ease: "power2.out" }}, 3.46);
+tl.fromTo("#flashRing", {{ opacity: 0.9, attr: {{ r: {BR + 12} }} }}, {{ opacity: 0, attr: {{ r: {BR + 46} }}, duration: 0.8, ease: "power2.out", immediateRender: false }}, 3.38);
+tl.fromTo("#ringFill", {{ attr: {{ "stroke-width": 5 }} }}, {{ attr: {{ "stroke-width": 8 }}, duration: 0.12, ease: "power2.out", yoyo: true, repeat: 1, immediateRender: false }}, 3.38);
 // AI 콜봇이 목소리로 답함(오른쪽)
 tl.fromTo("#who1", {{ opacity: 0, y: 8 }}, {{ opacity: 1, y: 0, duration: 0.6, ease: "power2.out", immediateRender: false }}, 3.35);
 tl.fromTo(".ab", {{ opacity: 0, scaleY: 0.05 }}, {{ opacity: 1, scaleY: 0.3, duration: 0.5, ease: "power2.out", stagger: 0.03, immediateRender: false }}, 3.4);
