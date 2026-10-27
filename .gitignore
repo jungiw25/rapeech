@@ -35,3 +35,4 @@ video/brand-film-v3/render.log
 video/convai-samples/*/assets/
 video/convai-samples/*/out/
 video/convai-samples/*/render.log
+video/*/*/.hyperframes/
