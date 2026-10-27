@@ -1,12 +1,12 @@
 """인트로 v2: 앞부분(0–6.95초)을 '회사가 하는 일'이 보이게 새로 만들고, 6.95초부터는 기존 인트로(로고)를 그대로 붙인다.
 
-이야기(한 줄의 선이 모양만 바꿔 가며 이어짐):
-  0.0–0.9  선이 그어짐
-  0.9–2.3  고객 목소리 파형 → 막대가 글자 "카드를 잃어버렸어요"로 모임   01 음성 인식 / AI가 목소리를 알아듣고
-  2.3–3.3  핵심 단어에 밑줄 → 문장이 "카드 분실 신고" 태그로 정리      02 의도 파악 / 무엇을 원하는지 이해한 뒤
-  3.3–4.6  태그가 AI 콜봇의 대답 파형으로, 아래에 대답이 글자로        03 AI 콜봇 / 목소리로 바로 답합니다
-  4.6–6.95 대답이 빛 하나로 모여 케이블 → 스위치 포트 → 서버 랙         04 네트워크 인프라 / 그 대화가 흐르는 인프라까지
-  6.95–12  기존 인트로 그대로(원형 와이프 → 로고, 마지막 프레임 = 아웃트로 마지막 프레임)
+구체적인 상담 문장 없이, 장면 두 개를 여유 있게(장면 사이 쉼 포함) 보여 준다.
+  0.0–1.1  선이 그어짐
+  1.0–4.4  고객 목소리(왼쪽 파형) → 가운데 AI 콜봇이 듣고 인식(고리가 차오름) → AI 콜봇이 목소리로 답함(오른쪽 파형)
+           소제목: 대화형 AI · 고객의 목소리를 [AI 콜봇이 알아듣고] 답합니다
+  4.4–6.95 대화가 빛 하나로 모여 케이블 → 스위치 포트 → 서버 랙
+           소제목: 네트워크 인프라 · 그 대화가 흐르는 [네트워크 인프라]까지
+  6.95–12  기존 인트로 그대로(원형 와이프 → 로고). 7.5초부터는 기존 인트로 프레임을 그대로 이어 붙여 마지막 프레임이 같다
 사용법: python3 video/intro-v2/build.py && cd video/intro-v2 && npx hyperframes render --fps 60 --quality delivery --output out/raw.mp4
 """
 import json
@@ -26,12 +26,10 @@ FONT_CSS = "".join(f'@font-face {{ font-family: "Pretendard"; font-weight: {w}; 
                    for w, n in ((900, "Black"), (800, "ExtraBold"), (700, "Bold"), (600, "SemiBold"), (500, "Medium")))
 
 G = ["#ff03c8", "#e807c3", "#d10bbd", "#ba0fb8", "#a518a4", "#8f1ab8", "#7a1dcc", "#661fdc", "#5422e6", "#4823ee", "#4024f1", "#3c24f3"]
-SENT = "카드를 잃어버렸어요"
-ANS = "분실 신고, 바로 도와드릴게요"
-CAPS = [("01  음성 인식", "AI가 [목소리를 알아듣고]", 0.95, 2.25),
-        ("02  의도 파악", "[무엇을 원하는지] 이해한 뒤", 2.35, 3.25),
-        ("03  AI 콜봇", "[목소리로] 바로 답합니다", 3.35, 4.55),
-        ("04  네트워크 인프라", "그 대화가 흐르는 [네트워크 인프라]까지", 4.7, None)]
+CAPS = [("대화형 AI", "고객의 목소리를 [AI 콜봇이 알아듣고] 답합니다", 1.25, 4.25),
+        ("네트워크 인프라", "그 대화가 흐르는 [네트워크 인프라]까지", 4.65, None)]
+LY = 420                       # 대화 장면의 가로선 높이
+CX, BR = 960, 74               # AI 콜봇 노드
 
 
 def cap_html(i, tag, text):
@@ -43,12 +41,13 @@ def cap_html(i, tag, text):
             f'<div class="ct"><span class="cl{i}">{t}</span></div></div>')
 
 
+def wave(cls, x0, n=10, gap=30, colors=G[:10]):
+    return "".join(f'<div class="bar {cls}" style="left:{x0 + k * gap - 6:.0f}px;background:{colors[k]};color:{colors[k]}"></div>' for k in range(n))
+
+
 def build_html():
-    bars = "".join(f'<div class="bar" id="b{k}" style="left:{960 + (k - 5.5) * 34 - 7:.0f}px;background:{G[k]};color:{G[k]}"></div>' for k in range(12))
-    abars = "".join(f'<div class="bar abar" id="a{k}" style="left:{960 + (k - 5.5) * 34 - 7:.0f}px;background:{G[k]};color:{G[k]}"></div>' for k in range(12))
-    sent = "".join(f'<span class="ch" id="s{i}">{"&nbsp;" if c == " " else c}</span>' for i, c in enumerate(SENT))
-    ans = "".join(f'<span class="ach">{"&nbsp;" if c == " " else c}</span>' for c in ANS)
-    # 스위치(정면) + 서버 랙 3대
+    left = wave("cb", 360, colors=G[:6] + G[:4])            # 고객(분홍 쪽)
+    right = wave("ab", 1290, colors=G[6:] + G[6:12])         # AI 콜봇(파랑 쪽)
     ports = "".join(f'<rect class="port" x="{420 + i * 52}" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/>'
                     f'<circle class="pled" id="pl{i}" cx="{437 + i * 52}" cy="440" r="4" fill="#3a3158"/>' for i in range(8))
     racks, rleds = "", ""
@@ -61,18 +60,107 @@ def build_html():
     cables = "".join(f'<path class="cab" id="cab{r}" d="M890 465 C 1010 465, 1060 {350 + r * 110}, {1180 + r * 180} {350 + r * 110}" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>'
                      for r in range(3))
     pulses = "".join(f'<circle class="pulse" id="pu{r}" r="7" fill="#fff" filter="url(#gl)"/>' for r in range(3))
+    talk = f'''<svg id="talk" class="layer" viewBox="0 0 1920 1080">
+  <defs><linearGradient id="ring" x1="{CX - BR}" y1="0" x2="{CX + BR}" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient>
+  <radialGradient id="nodeg" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#2a1f55"/><stop offset="1" stop-color="#140f2a"/></radialGradient>
+  <filter id="gl2" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <linearGradient id="stream" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff4fd8" stop-opacity="0"/><stop offset="1" stop-color="#ffd2f5"/></linearGradient></defs>
+  <line id="axL" x1="{CX - BR - 18}" y1="{LY}" x2="{CX - BR - 18}" y2="{LY}" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>
+  <line id="axR" x1="{CX + BR + 18}" y1="{LY}" x2="{CX + BR + 18}" y2="{LY}" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>
+  <rect id="streamIn" x="-90" y="{LY - 2}" width="90" height="4" rx="2" fill="url(#stream)"/>
+  <g id="node"><circle cx="{CX}" cy="{LY}" r="{BR}" fill="url(#nodeg)" stroke="#fff" stroke-opacity=".25" stroke-width="1.5"/>
+    <circle id="ringFill" cx="{CX}" cy="{LY}" r="{BR + 12}" fill="none" stroke="url(#ring)" stroke-width="5" stroke-linecap="round" transform="rotate(-90 {CX} {LY})" filter="url(#gl2)"/>
+    <text x="{CX}" y="{LY + 13}" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="38" fill="#fff">AI</text></g>
+</svg>'''
     ni = f'''<svg id="ni" class="layer" viewBox="0 0 1920 1080">
-  <defs><filter id="gl" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <radialGradient id="dotg"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#ff8be6" stop-opacity=".8"/><stop offset="1" stop-color="#ff4fd8" stop-opacity="0"/></radialGradient></defs>
+  <defs><filter id="gl" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
   <path id="drop" d="M960 420 C 960 470, 790 380, 801 452" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
   <g id="sw"><rect id="swb" x="390" y="425" width="500" height="80" rx="12" fill="#120d24" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/>{ports}</g>
   {cables}<g id="racks">{racks}</g>{rleds}{pulses}
   <text class="dlab" id="dl0" x="640" y="550" text-anchor="middle">스위치</text>
   <text class="dlab" id="dl1" x="1430" y="640" text-anchor="middle">서버 랙 · AI 데이터센터</text>
-  <g id="dot"><circle r="34" fill="url(#dotg)"/><circle r="8" fill="#fff"/></g>
-</svg>'''
+</svg>
+<svg class="layer" viewBox="0 0 1920 1080"><defs><radialGradient id="dotg"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#ff8be6" stop-opacity=".8"/><stop offset="1" stop-color="#ff4fd8" stop-opacity="0"/></radialGradient></defs>
+  <g id="dot"><circle r="34" fill="url(#dotg)"/><circle r="8" fill="#fff"/></g></svg>'''
     caps = "".join(cap_html(i, tag, text) for i, (tag, text, _, _) in enumerate(CAPS))
-    html = f"""<!doctype html>
+    who = lambda i, x, label, bg: (f'<div style="position:absolute;left:{x}px;top:{LY - 150}px;width:0;display:flex;justify-content:center">'
+                                   f'<div class="who" id="who{i}" style="{bg}">{label}</div></div>')
+    js = f"""
+const tl = gsap.timeline({{ paused: true }});
+const CAPS = {json.dumps([[c[2], c[3]] for c in CAPS])}, LY = {LY}, CX = {CX}, BR = {BR};
+const hsh = (a, b) => {{ let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; }};
+const DR = (sel, t, d, e = "power2.inOut", s = 0) => gsap.utils.toArray(sel).forEach((el, i) => {{
+  const L = el.getTotalLength(); el.setAttribute("stroke-dasharray", `${{L}} ${{L}}`);
+  tl.fromTo(el, {{ attr: {{ "stroke-dashoffset": L }} }}, {{ attr: {{ "stroke-dashoffset": 0 }}, duration: d, ease: e }}, t + i * s);
+}});
+// 말하는 파형: 정해진 높이 사이를 부드럽게 오감(시드 고정)
+const speak = (sel, t0, t1, seed, step = 0.24) => gsap.utils.toArray(sel).forEach((el, k) => {{
+  let t = t0, s = 0;
+  while (t < t1) {{ tl.to(el, {{ scaleY: 0.2 + 0.8 * hsh(k + seed, ++s) * Math.sin(Math.PI * (k + 0.5) / 10), duration: step, ease: "sine.inOut" }}, t); t += step; }}
+}});
+gsap.set(".bar", {{ scaleY: 0.05, opacity: 0 }});
+gsap.set(["#who0", "#who1", "#ni", ".cap", ".dlab", "#streamIn"], {{ opacity: 0 }});
+gsap.set("#node", {{ scale: 0, transformOrigin: "{CX}px {LY}px" }});
+// ── 0. 선 하나가 천천히 그어짐
+tl.fromTo("#line", {{ scaleX: 0 }}, {{ scaleX: 1, duration: 1.1, ease: "power2.inOut" }}, 0.0);
+// ── 1. 선이 가운데에서 열리며 AI 콜봇 노드가 생기고, 양쪽은 대화의 축이 됨
+tl.to("#line", {{ opacity: 0, duration: 0.6, ease: "sine.inOut" }}, 1.05);
+tl.to("#node", {{ scale: 1, duration: 0.9, ease: "power3.out" }}, 1.0);
+tl.fromTo("#axL", {{ attr: {{ x1: {CX - BR - 18} }} }}, {{ attr: {{ x1: 330 }}, duration: 0.9, ease: "power2.out" }}, 1.05);
+tl.fromTo("#axR", {{ attr: {{ x2: {CX + BR + 18} }} }}, {{ attr: {{ x2: 1590 }}, duration: 0.9, ease: "power2.out" }}, 1.05);
+// 고객의 목소리(왼쪽)
+tl.fromTo("#who0", {{ opacity: 0, y: 8 }}, {{ opacity: 1, y: 0, duration: 0.6, ease: "power2.out", immediateRender: false }}, 1.35);
+tl.fromTo(".cb", {{ opacity: 0, scaleY: 0.05 }}, {{ opacity: 1, scaleY: 0.3, duration: 0.5, ease: "power2.out", stagger: 0.03, immediateRender: false }}, 1.4);
+speak(".cb", 1.9, 3.2, 0);
+tl.to(".cb", {{ scaleY: 0.08, duration: 0.5, ease: "sine.inOut" }}, 3.25);
+// 목소리가 선을 타고 AI 콜봇으로 들어가며 고리가 차오름(=인식)
+tl.fromTo("#streamIn", {{ x: 330, opacity: 0 }}, {{ x: {CX - BR - 18}, opacity: 1, duration: 1.0, ease: "power1.in", immediateRender: false }}, 1.95);
+tl.to("#streamIn", {{ opacity: 0, duration: 0.2 }}, 2.95);
+DR("#ringFill", 2.0, 1.4, "power2.inOut");
+tl.fromTo("#node", {{ scale: 1 }}, {{ scale: 1.06, duration: 0.3, ease: "power2.out", yoyo: true, repeat: 1, immediateRender: false }}, 3.35);
+// AI 콜봇이 목소리로 답함(오른쪽)
+tl.fromTo("#who1", {{ opacity: 0, y: 8 }}, {{ opacity: 1, y: 0, duration: 0.6, ease: "power2.out", immediateRender: false }}, 3.35);
+tl.fromTo(".ab", {{ opacity: 0, scaleY: 0.05 }}, {{ opacity: 1, scaleY: 0.3, duration: 0.5, ease: "power2.out", stagger: 0.03, immediateRender: false }}, 3.4);
+speak(".ab", 3.9, 4.4, 50);
+// ── 2. 대화가 빛 하나로 모여 케이블 → 스위치 포트 → 서버 랙
+tl.to([".cb", ".ab"], {{ x: (k, el) => CX - parseFloat(el.style.left) - 6, scaleY: 0.05, opacity: 0, duration: 0.6, ease: "power3.inOut" }}, 4.35);
+tl.to(["#who0", "#who1", "#axL", "#axR"], {{ opacity: 0, duration: 0.45, ease: "sine.inOut" }}, 4.35);
+tl.to("#node", {{ scale: 0.12, opacity: 0, duration: 0.55, ease: "power3.in" }}, 4.45);
+gsap.set("#dot", {{ x: CX, y: LY, scale: 0, opacity: 0 }});
+tl.fromTo("#dot", {{ scale: 0, opacity: 0 }}, {{ scale: 1, opacity: 1, duration: 0.35, ease: "power2.out", immediateRender: false }}, 4.85);
+tl.fromTo("#ni", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.3, immediateRender: false }}, 4.75);
+DR("#swb", 4.8, 0.8); DR(".port", 5.0, 0.5, "power2.out", 0.03);
+DR(".rk", 4.9, 0.9, "power2.inOut", 0.12); DR(".rslot", 5.2, 0.5, "power2.out", 0.008);
+const drop = document.getElementById("drop"), DL = drop.getTotalLength();
+drop.setAttribute("stroke-dasharray", `${{DL}} ${{DL}}`); drop.setAttribute("stroke-dashoffset", DL);
+const pd = {{ p: 0 }}, putDot = () => {{ const pt = drop.getPointAtLength(pd.p * DL); gsap.set("#dot", {{ x: pt.x, y: pt.y }}); drop.setAttribute("stroke-dashoffset", DL * (1 - pd.p)); }};
+tl.fromTo(pd, {{ p: 0 }}, {{ p: 1, duration: 0.75, ease: "power2.inOut", onUpdate: putDot, immediateRender: false }}, 5.15);
+tl.to("#dot", {{ scale: 0.4, opacity: 0, duration: 0.3, ease: "power2.in" }}, 5.85);
+tl.to("#drop", {{ opacity: 0, duration: 0.6, ease: "sine.inOut" }}, 6.0);
+tl.to("#pl7", {{ attr: {{ fill: "#ff4fd8" }}, duration: 0.2 }}, 5.9);
+gsap.utils.toArray(".pled").forEach((el, i) => {{ if (i !== 7) tl.to(el, {{ attr: {{ fill: i % 2 ? "#9d79ff" : "#5a5cff" }}, duration: 0.15 }}, 5.95 + (7 - i) * 0.035); }});
+DR(".cab", 5.85, 0.6, "power2.out", 0.06);
+gsap.utils.toArray(".cab").forEach((c, r) => {{
+  const L = c.getTotalLength(), q = {{ p: 0 }}, pu = document.getElementById("pu" + r);
+  gsap.set(pu, {{ opacity: 0 }});
+  tl.fromTo(q, {{ p: 0 }}, {{ p: 1, duration: 0.6, ease: "power1.inOut", immediateRender: false, onUpdate: () => {{ const pt = c.getPointAtLength(q.p * L); gsap.set(pu, {{ x: pt.x, y: pt.y, opacity: q.p < 0.97 ? 1 : 0 }}); }} }}, 6.0 + r * 0.08);
+}});
+gsap.set(".rled", {{ opacity: 0.12 }});
+gsap.utils.toArray(".rled").forEach((el) => {{ const r = +el.classList[1].slice(1), j = +el.dataset.j; tl.to(el, {{ opacity: 1, duration: 0.15, ease: "none" }}, 6.45 + r * 0.06 + j * 0.03); }});
+tl.fromTo(".dlab", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.5, stagger: 0.15, immediateRender: false }}, 5.7);
+// ── 한글 소제목: 두 번만 바뀜(줄 마스크로 천천히)
+CAPS.forEach(([a, b], i) => {{
+  tl.fromTo("#cap" + i, {{ opacity: 1 }}, {{ opacity: 1, duration: 0.01, immediateRender: false }}, a);
+  tl.fromTo(".cl" + i, {{ yPercent: 120 }}, {{ yPercent: 0, duration: 1.0, ease: "expo.out", stagger: 0.08 }}, a);
+  if (b) tl.to(".cl" + i, {{ yPercent: -120, duration: 0.45, ease: "power2.in", stagger: 0.04 }}, b);
+}});
+// ── 6.95 원형 와이프: 기존 인트로(로고)가 가운데서 열림(기존 인트로와 같은 곡선)
+gsap.set("#logo", {{ clipPath: "circle(0px at 960px 540px)" }});
+tl.fromTo("#logo", {{ clipPath: "circle(0px at 960px 540px)" }}, {{ clipPath: "circle(1200px at 960px 540px)", duration: 0.55, ease: "power2.out", immediateRender: false }}, {CUT});
+window.__timelines = window.__timelines || {{}};
+window.__timelines["main"] = tl;
+"""
+    return f"""<!doctype html>
 <html lang="ko" data-resolution="landscape">
 <head><meta charset="UTF-8" /><meta name="viewport" content="width=1920, height=1080" /><title>Rapeech intro v2</title>
 <script src="assets/gsap.min.js"></script>
@@ -82,155 +170,53 @@ html, body {{ width: 1920px; height: 1080px; overflow: hidden; background: #0c09
 #root {{ position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }}
 .layer {{ position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }}
 .vig {{ background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,.10), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,.45)); }}
-#line {{ position: absolute; left: 360px; top: 419px; width: 1200px; height: 2px; background: linear-gradient(90deg, rgba(255,3,200,0), #ff03c8 20%, #a518a4 50%, #3c24f3 80%, rgba(60,36,243,0)); transform-origin: 50% 50%; }}
-.bar {{ position: absolute; top: 420px; width: 14px; height: 200px; margin-top: -100px; border-radius: 7px; box-shadow: 0 0 16px currentColor; }}
-.who {{ position: absolute; top: 272px; height: 40px; padding: 0 18px; border-radius: 20px; font-size: 20px; font-weight: 700; line-height: 40px; white-space: nowrap; }}
-#sent {{ position: absolute; left: 0; top: 386px; width: 1920px; text-align: center; font-size: 64px; font-weight: 800; color: #fff; letter-spacing: -0.02em; white-space: nowrap; }}
-.ch {{ display: inline-block; position: relative; }}
-.ul {{ position: absolute; left: 0; bottom: -8px; height: 6px; width: 100%; border-radius: 3px; background: linear-gradient(90deg, #ff03c8, #6a4dff); transform-origin: 0 50%; }}
-#chip {{ position: absolute; left: 960px; top: 420px; }}
-#chipi {{ position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 16px; height: 92px; padding: 0 40px 0 30px; border-radius: 46px; white-space: nowrap;
-  background: rgba(28,23,48,.9); border: 2px solid transparent; background-clip: padding-box; box-shadow: 0 0 0 2px rgba(157,121,255,.55); font-size: 44px; font-weight: 800; color: #fff; }}
-#ans {{ position: absolute; left: 0; top: 560px; width: 1920px; text-align: center; font-size: 40px; font-weight: 700; color: #fff; white-space: nowrap; }}
-.ach {{ display: inline-block; }}
-.cap {{ position: absolute; left: 0; top: 780px; width: 1920px; text-align: center; }}
-.tag {{ overflow: hidden; font-size: 19px; font-weight: 600; letter-spacing: 0.24em; color: #a69cc8; padding-bottom: 4px; }}
-.ct {{ overflow: hidden; margin-top: 14px; font-size: 50px; font-weight: 800; color: #fff; letter-spacing: -0.03em; padding-bottom: 8px; }}
+#line {{ position: absolute; left: 330px; top: {LY - 1}px; width: 1260px; height: 2px; background: linear-gradient(90deg, rgba(255,3,200,0), #ff03c8 20%, #a518a4 50%, #3c24f3 80%, rgba(60,36,243,0)); transform-origin: 50% 50%; }}
+.bar {{ position: absolute; top: {LY}px; width: 12px; height: 220px; margin-top: -110px; border-radius: 6px; box-shadow: 0 0 14px currentColor; }}
+.who {{ position: relative; flex: none; height: 40px; padding: 0 18px; border-radius: 20px; font-size: 20px; font-weight: 700; line-height: 40px; white-space: nowrap; }}
+.cap {{ position: absolute; left: 0; top: 760px; width: 1920px; text-align: center; }}
+.tag {{ overflow: hidden; font-size: 20px; font-weight: 600; letter-spacing: 0.24em; color: #b5abd8; padding-bottom: 4px; }}
+.ct {{ overflow: hidden; margin-top: 16px; font-size: 52px; font-weight: 800; color: #fff; letter-spacing: -0.03em; padding-bottom: 8px; }}
 .tag span, .ct span[class^="cl"] {{ display: inline-block; }}
 .g {{ background: linear-gradient(100deg, #ff4fd8, #b25cff 55%, #7a6bff); -webkit-background-clip: text; background-clip: text; color: transparent; }}
 .dlab {{ font-family: "Pretendard"; font-weight: 600; font-size: 20px; letter-spacing: 3px; fill: #cfc6ec; }}
-#wipe {{ position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }}
 </style></head>
 <body>
 <div id="root" data-composition-id="main" data-start="0" data-duration="12" data-fps="60" data-width="1920" data-height="1080">
   <div id="front" class="layer">
     <div class="layer vig"></div>
     <div id="line"></div>
-    <div style="position:absolute;left:960px;top:272px;width:0;display:flex;justify-content:center"><div class="who" id="who1" style="position:relative;top:0;flex:none;background:#fff;color:#1b1530">고객</div></div>
-    {bars}
-    <div id="sent">{sent}</div>
-    <div id="chip"><div id="chipi"><svg width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="url(#ckg)"/><path d="M11 20.5 l6 6 l12 -13" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="ckg" x1="0" y1="0" x2="40" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs></svg>카드 분실 신고</div></div>
-    <div style="position:absolute;left:960px;top:272px;width:0;display:flex;justify-content:center"><div class="who" id="who2" style="position:relative;top:0;flex:none;background:linear-gradient(100deg,#ff03c8,#a518a4 50%,#3c24f3);color:#fff">AI 콜봇</div></div>
-    {abars}
-    <div id="ans">{ans}</div>
+    {talk}
+    {who(0, 495, "고객", "background:#fff;color:#1b1530")}
+    {who(1, 1425, "AI 콜봇", "background:linear-gradient(100deg,#ff03c8,#a518a4 50%,#3c24f3);color:#fff")}
+    {left}{right}
     {ni}
     {caps}
   </div>
   <video id="logo" class="clip layer" src="assets/intro.mp4" data-start="{CUT}" data-duration="{12 - CUT:.2f}" data-media-start="{CUT}" data-track-index="0" data-has-audio="true" data-volume="1" playsinline style="z-index: 5"></video>
   <audio id="sfx" class="clip" src="assets/front_sfx.wav" data-start="0" data-duration="12" data-track-index="2" data-volume="1"></audio>
 </div>
-<script>
-const tl = gsap.timeline({{ paused: true }});
-const SENT = {json.dumps(SENT, ensure_ascii=False)}, CAPS = {json.dumps([[c[2], c[3]] for c in CAPS])};
-const hsh = (a, b) => {{ let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; }};
-// ── 0. 선
-tl.fromTo("#line", {{ scaleX: 0, opacity: 1 }}, {{ scaleX: 1, duration: 0.9, ease: "power3.inOut" }}, 0.05);
-// ── 1. 고객 목소리 파형(선에서 막대가 솟음)
-gsap.set(".bar", {{ scaleY: 0.04, opacity: 0 }});
-gsap.set(["#who1", "#who2", "#sent .ch", "#chip", ".abar", ".ach", "#ni", ".cap"], {{ opacity: 0 }});
-tl.to("#line", {{ opacity: 0, duration: 0.4, ease: "sine.inOut" }}, 0.75);
-gsap.utils.toArray("#front > .bar:not(.abar)").forEach((el, k) => {{
-  tl.fromTo(el, {{ opacity: 0, scaleY: 0.04 }}, {{ opacity: 1, scaleY: 0.25, duration: 0.3, ease: "power2.out", immediateRender: false }}, 0.8 + k * 0.012);
-  let t = 1.05; for (let s = 0; s < 4; s++) {{ tl.to(el, {{ scaleY: 0.18 + 0.82 * hsh(k, s + 1) * Math.sin(Math.PI * (k + 0.5) / 12), duration: 0.16, ease: "sine.inOut" }}, t); t += 0.16; }}
-}});
-tl.fromTo("#who1", {{ opacity: 0, y: 10 }}, {{ opacity: 1, y: 0, duration: 0.5, ease: "power3.out", immediateRender: false }}, 0.95);
-// 막대가 글자 자리로 날아가 글자가 됨(글자 위치는 글꼴이 준비된 뒤 측정)
-function build() {{
-  const chars = gsap.utils.toArray("#sent .ch"), rootR = document.getElementById("root").getBoundingClientRect();
-  const cx = chars.map((c) => {{ const r = c.getBoundingClientRect(); return r.left - rootR.left + r.width / 2; }});
-  gsap.utils.toArray("#front > .bar:not(.abar)").forEach((el, k) => {{
-    const ci = Math.round(k * (chars.length - 1) / 11), x0 = 960 + (k - 5.5) * 34;
-    tl.to(el, {{ x: cx[ci] - x0, scaleY: 0.3, scaleX: 0.45, duration: 0.45, ease: "power3.inOut" }}, 1.7 + k * 0.012);
-    tl.to(el, {{ opacity: 0, duration: 0.2, ease: "sine.in" }}, 2.05 + k * 0.012);
-  }});
-  chars.forEach((c, i) => tl.fromTo(c, {{ opacity: 0, y: 14, filter: "blur(8px)" }}, {{ opacity: 1, y: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out", immediateRender: false }}, 1.95 + i * 0.025));
-  // ── 2. 핵심 단어 밑줄 → 문장이 태그로 정리
-  ["s0", "s4"].forEach((id, j) => {{
-    const a = document.getElementById(id), last = j ? chars[chars.length - 1] : chars[2];
-    const ra = a.getBoundingClientRect(), rb = last.getBoundingClientRect();
-    const ul = document.createElement("div"); ul.className = "ul"; ul.style.width = (rb.right - ra.left) + "px"; a.appendChild(ul);
-    tl.fromTo(ul, {{ scaleX: 0 }}, {{ scaleX: 1, duration: 0.45, ease: "power3.inOut" }}, 2.35 + j * 0.15);
-  }});
-  tl.to("#who1", {{ opacity: 0, duration: 0.3 }}, 2.35);
-  tl.to("#sent", {{ scaleX: 0.3, opacity: 0, filter: "blur(8px)", duration: 0.32, ease: "power3.in" }}, 2.78);
-  tl.fromTo("#chip", {{ opacity: 0, scale: 0.7 }}, {{ opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)", immediateRender: false }}, 3.08);
-  // ── 3. 태그가 AI 콜봇의 대답 파형으로, 대답이 글자로
-  tl.to("#chip", {{ scale: 0.2, opacity: 0, duration: 0.35, ease: "power2.in" }}, 3.4);
-  tl.fromTo("#who2", {{ opacity: 0, y: 10 }}, {{ opacity: 1, y: 0, duration: 0.5, ease: "power3.out", immediateRender: false }}, 3.5);
-  gsap.utils.toArray(".abar").forEach((el, k) => {{
-    tl.fromTo(el, {{ opacity: 0, scaleY: 0.04 }}, {{ opacity: 1, scaleY: 0.3, duration: 0.3, ease: "power2.out", immediateRender: false }}, 3.55 + Math.abs(k - 5.5) * 0.015);
-    let t = 3.85; for (let s = 0; s < 4; s++) {{ tl.to(el, {{ scaleY: 0.18 + 0.82 * hsh(k + 40, s + 1) * Math.sin(Math.PI * (k + 0.5) / 12), duration: 0.17, ease: "sine.inOut" }}, t); t += 0.17; }}
-  }});
-  tl.fromTo(".ach", {{ opacity: 0, y: 8 }}, {{ opacity: 1, y: 0, duration: 0.3, ease: "power2.out", stagger: 0.035, immediateRender: false }}, 3.75);
-  // ── 4. 대답이 빛 하나로 모여 케이블 → 스위치 포트 → 서버 랙
-  tl.to(".abar", {{ x: (k, el) => 960 - parseFloat(el.style.left) - 7, scaleY: 0.06, duration: 0.4, ease: "power3.in" }}, 4.55);
-  tl.to(".abar", {{ opacity: 0, duration: 0.15 }}, 4.9);
-  tl.to(["#who2", "#ans"], {{ opacity: 0, y: -10, duration: 0.35, ease: "power2.in" }}, 4.55);
-  tl.fromTo("#ni", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.3, immediateRender: false }}, 4.8);
-  const DR = (sel, t, d, e = "power2.inOut", s = 0) => gsap.utils.toArray(sel).forEach((el, i) => {{
-    const L = el.getTotalLength(); el.setAttribute("stroke-dasharray", `${{L}} ${{L}}`);
-    tl.fromTo(el, {{ attr: {{ "stroke-dashoffset": L }} }}, {{ attr: {{ "stroke-dashoffset": 0 }}, duration: d, ease: e }}, t + i * s);
-  }});
-  DR("#swb", 4.85, 0.6); DR(".port", 5.0, 0.4, "power2.out", 0.03);
-  DR(".rk", 4.95, 0.7, "power2.inOut", 0.1); DR(".rslot", 5.2, 0.4, "power2.out", 0.008);
-  // 빛 하나가 포트로(선은 점이 지나간 자리까지만)
-  const drop = document.getElementById("drop"), DL = drop.getTotalLength();
-  drop.setAttribute("stroke-dasharray", `${{DL}} ${{DL}}`);
-  const pd = {{ p: 0 }}, putDot = () => {{ const pt = drop.getPointAtLength(pd.p * DL); gsap.set("#dot", {{ x: pt.x, y: pt.y }}); drop.setAttribute("stroke-dashoffset", DL * (1 - pd.p)); }};
-  gsap.set("#dot", {{ x: 960, y: 420, scale: 0, opacity: 0 }}); drop.setAttribute("stroke-dashoffset", DL);
-  tl.fromTo("#dot", {{ scale: 0, opacity: 0 }}, {{ scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)", immediateRender: false }}, 4.8);
-  tl.fromTo(pd, {{ p: 0 }}, {{ p: 1, duration: 0.6, ease: "power2.inOut", onUpdate: putDot, immediateRender: false }}, 5.0);
-  tl.to("#dot", {{ scale: 0.4, opacity: 0, duration: 0.25, ease: "power2.in" }}, 5.55);
-  tl.to("#drop", {{ opacity: 0, duration: 0.5, ease: "sine.inOut" }}, 5.7);
-  tl.to("#pl7", {{ attr: {{ fill: "#ff4fd8" }}, duration: 0.15 }}, 5.6);
-  gsap.utils.toArray(".pled").forEach((el, i) => {{ if (i !== 7) tl.to(el, {{ attr: {{ fill: i % 2 ? "#9d79ff" : "#5a5cff" }}, duration: 0.12 }}, 5.65 + (7 - i) * 0.03); }});
-  // 케이블을 따라 빛이 랙으로
-  DR(".cab", 5.55, 0.5, "power2.out", 0.06);
-  gsap.utils.toArray(".cab").forEach((c, r) => {{
-    const L = c.getTotalLength(), q = {{ p: 0 }}, pu = document.getElementById("pu" + r);
-    gsap.set(pu, {{ opacity: 0 }});
-    tl.fromTo(q, {{ p: 0 }}, {{ p: 1, duration: 0.55, ease: "power1.inOut", immediateRender: false, onUpdate: () => {{ const pt = c.getPointAtLength(q.p * L); gsap.set(pu, {{ x: pt.x, y: pt.y, opacity: q.p < 0.97 ? 1 : 0 }}); }} }}, 5.7 + r * 0.08);
-  }});
-  gsap.set(".rled", {{ opacity: 0.12 }});
-  gsap.utils.toArray(".rled").forEach((el) => {{ const r = +el.classList[1].slice(1), j = +el.dataset.j; tl.to(el, {{ opacity: 1, duration: 0.12, ease: "none" }}, 6.2 + r * 0.08 + j * 0.035); }});
-  tl.fromTo([".dlab"], {{ opacity: 0 }}, {{ opacity: 1, duration: 0.4, stagger: 0.12, immediateRender: false }}, 5.6);
-  gsap.set(".dlab", {{ opacity: 0 }});
-  // ── 한글 소제목(줄 마스크로 올라오고 내려감)
-  CAPS.forEach(([a, b], i) => {{
-    tl.fromTo("#cap" + i, {{ opacity: 1 }}, {{ opacity: 1, duration: 0.01, immediateRender: false }}, a);
-    tl.fromTo(".cl" + i, {{ yPercent: 120 }}, {{ yPercent: 0, duration: 0.7, ease: "expo.out", stagger: 0.06 }}, a);
-    if (b) tl.to(".cl" + i, {{ yPercent: -120, duration: 0.35, ease: "power3.in", stagger: 0.03 }}, b);
-  }});
-  // ── 6.95 원형 와이프: 기존 인트로(로고)가 가운데서 열림(기존 인트로와 같은 곡선)
-  tl.fromTo("#logo", {{ clipPath: "circle(0px at 960px 540px)" }}, {{ clipPath: "circle(1200px at 960px 540px)", duration: 0.55, ease: "power2.out", immediateRender: false }}, {CUT});
-  gsap.set("#logo", {{ clipPath: "circle(0px at 960px 540px)" }});
-  window.__timelines = window.__timelines || {{}};
-  window.__timelines["main"] = tl;
-}}
-document.fonts.ready.then(build);
-</script>
+<script>{js}</script>
 </body></html>"""
-    return html
 
 
 def sound(out):
     from engine.bgm import SR, add, hz, lowpass, tone, write_wav
     from intro.sfx import bell, pop, sweep
     buf = np.zeros((int(12 * SR), 2))
-    add(buf, sweep(260, 900, 0.9, partials=((1, 1), (2, 0.3)), a=0.1, r=0.25, rise=True), 0.05, 0.045)
+    add(buf, sweep(240, 760, 1.1, partials=((1, 1), (2, 0.3)), a=0.15, r=0.3, rise=True), 0.0, 0.04)
+    add(buf, pop(760, 380, 0.14), 1.05, 0.08)                              # AI 콜봇 노드
     for i, m in enumerate([76, 79, 81, 79, 84, 81]):                      # 고객 목소리(짧은 음)
-        add(buf, tone(hz(m), 0.16, ((1, 1), (2, 0.2)), a=0.01, r=0.06, decay=0.12), 0.95 + i * 0.16, 0.05, -0.2)
-    for i in range(10):                                                    # 막대가 글자로 내려앉음
-        add(buf, pop(1300 + i * 30, 700, 0.05), 1.98 + i * 0.025, 0.035)
-    add(buf, bell(88, 0.9, 0.35), 3.02, 0.13); add(buf, bell(95, 1.2, 0.5), 3.1, 0.12)   # 이해 완료(띠링)
-    for i, m in enumerate([84, 81, 86, 84, 88, 86]):                      # AI 대답
-        add(buf, tone(hz(m), 0.16, ((1, 1), (2, 0.15)), a=0.01, r=0.06, decay=0.12), 3.85 + i * 0.17, 0.05, 0.2)
-    add(buf, sweep(900, 220, 0.6, partials=((1, 1), (2, 0.3)), a=0.05, r=0.15, rise=False), 4.6, 0.05)
-    add(buf, pop(620, 260, 0.12), 5.58, 0.16)                              # 포트에 꽂힘
+        add(buf, tone(hz(m), 0.2, ((1, 1), (2, 0.2)), a=0.015, r=0.08, decay=0.15), 1.9 + i * 0.24, 0.045, -0.35)
+    add(buf, sweep(400, 1100, 1.4, partials=((1, 1), (2, 0.2)), a=0.3, r=0.3, rise=True), 2.0, 0.025)   # 고리가 차오름
+    add(buf, bell(88, 0.9, 0.35), 3.38, 0.12); add(buf, bell(95, 1.2, 0.5), 3.46, 0.11)                # 인식 완료(띠링)
+    for i, m in enumerate([84, 81, 86]):                                   # AI 대답
+        add(buf, tone(hz(m), 0.2, ((1, 1), (2, 0.15)), a=0.015, r=0.08, decay=0.15), 3.9 + i * 0.24, 0.045, 0.35)
+    add(buf, sweep(900, 240, 0.7, partials=((1, 1), (2, 0.3)), a=0.06, r=0.2, rise=False), 4.4, 0.045)
+    add(buf, pop(620, 260, 0.12), 5.88, 0.15)                              # 포트에 꽂힘
     for r in range(3):
-        add(buf, sweep(500, 1500, 0.5, partials=((1, 1),), a=0.05, r=0.1, rise=True), 5.7 + r * 0.08, 0.018)
-    for i in range(12):                                                    # 랙 LED
-        add(buf, tone(hz(91 + (i % 4) * 2), 0.06, ((1, 1),), a=0.003, r=0.03, decay=0.04), 6.2 + i * 0.035, 0.03, (i % 3 - 1) * 0.4)
+        add(buf, sweep(500, 1500, 0.55, partials=((1, 1),), a=0.06, r=0.12, rise=True), 6.0 + r * 0.08, 0.016)
+    for i in range(10):                                                    # 랙 LED
+        add(buf, tone(hz(91 + (i % 4) * 2), 0.07, ((1, 1),), a=0.003, r=0.04, decay=0.05), 6.45 + i * 0.045, 0.026, (i % 3 - 1) * 0.4)
     buf = lowpass(buf, 10000)
     buf *= 10 ** (-4 / 20) / np.abs(buf).max()
     write_wav(out, buf)
