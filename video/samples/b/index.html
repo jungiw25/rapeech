@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=1920, height=1080" /><title>Rapeech 시안 B</title><script src="assets/gsap.min.js"></script><script src="assets/three.min.js"></script>
+<style>@font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c0916; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
+.layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.hl { position: absolute; color: #fff; font-weight: 800; letter-spacing: -0.035em; line-height: 1.16; white-space: nowrap; }
+.hl .ln { display: block; overflow: hidden; padding: 0 0.06em 0.12em 0; margin-bottom: -0.12em; }
+.hl .ln > span { display: inline-block; }
+.g { background: linear-gradient(100deg, #ff4fd8, #b25cff 55%, #7a6bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.v { display: inline-block; }
+.mono { position: absolute; font-weight: 600; font-size: 19px; letter-spacing: 0.24em; color: #8e86a8; white-space: nowrap; }
+.val { position: absolute; font-weight: 700; color: #fff; letter-spacing: -0.02em; white-space: nowrap; }
+.cwrap { position: absolute; width: 0; display: flex; flex-direction: column; align-items: center; }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="22.0" data-fps="60" data-width="1920" data-height="1080">
+<canvas id="gl" class="layer" width="1920" height="1080"></canvas>
+<div class="layer"><div id="b-shade" class="layer" style="background:linear-gradient(90deg,rgba(12,9,22,.78),rgba(12,9,22,.35) 38%,rgba(12,9,22,0) 60%)"></div><div class="mono b-sl" id="b-sl0" style="left:1240px;top:842px">01 / 04   음성 인식</div><div class="val b-sv" id="b-sv0" style="left:1236px;top:880px;font-size:56px;letter-spacing:-0.03em"></div><div class="mono b-sl" id="b-sl1" style="left:1240px;top:842px">02 / 04   의도 파악</div><div class="val b-sv" id="b-sv1" style="left:1236px;top:880px;font-size:56px;letter-spacing:-0.03em"></div><div class="mono b-sl" id="b-sl2" style="left:1240px;top:842px">03 / 04   목소리 인증</div><div class="val b-sv" id="b-sv2" style="left:1236px;top:880px;font-size:56px;letter-spacing:-0.03em"></div><div class="mono b-sl" id="b-sl3" style="left:1240px;top:842px">04 / 04   업무 처리</div><div class="val b-sv" id="b-sv3" style="left:1236px;top:880px;font-size:56px;letter-spacing:-0.03em"></div><div class="mono" id="b-ai" style="left:0;top:0;opacity:0">AI · 대화</div><div class="mono" id="b-ni" style="left:0;top:0;opacity:0">NI · 인프라</div></div>
+<div class="mono" id="k1" style="left:160px;top:236px">RAPEECH  ·  CONVERSATIONAL AI</div>
+<div class="hl" id="h1" style="left:156px;top:280px;font-size:92px;"><span class="ln"><span class="h1-l">모든 대화는,</span></span><span class="ln"><span class="h1-l"><span class="g">목소리</span>에서 시작합니다.</span></span></div>
+<div class="hl" id="h2" style="left:156px;top:160px;font-size:76px;"><span class="ln"><span class="h2-l">AI 콜봇이 <span class="v h2-v" id="h2-v0">듣고</span>, <span class="v h2-v" id="h2-v1">이해하고</span>,</span></span><span class="ln"><span class="h2-l"><span class="v h2-v" id="h2-v2">확인하고</span>, <span class="v h2-v" id="h2-v3">처리합니다</span>.</span></span></div>
+<div class="hl" id="h3" style="left:156px;top:160px;font-size:76px;"><span class="ln"><span class="h3-l">끊김 없는 대화 뒤에는,</span></span><span class="ln"><span class="h3-l"><span class="g">단단한 인프라</span>가 있습니다.</span></span></div>
+<div class="hl" id="h4" style="left:156px;top:160px;font-size:76px;"><span class="ln"><span class="h4-l">인프라 구축부터 AI 도입까지,</span></span><span class="ln"><span class="h4-l"><span class="g">한 팀이</span> 함께합니다.</span></span></div>
+<audio id="bed" class="clip" src="assets/bed.wav" data-start="0" data-duration="22.0" data-track-index="2" data-volume="0.42" data-fade-in="1.2" data-fade-out="2.2"></audio>
+<audio id="sfx" class="clip" src="assets/sfx.wav" data-start="0" data-duration="22.0" data-track-index="3" data-volume="1"></audio>
+</div>
+<script>
+
+const tl = gsap.timeline({ paused: true });
+const REVEAL = (sel, t, o = {}) => tl.fromTo(sel, { yPercent: 118 }, { yPercent: 0, duration: o.d || 1.15, ease: "expo.out", stagger: o.s ?? 0.09 }, t);
+const HIDE = (sel, t, o = {}) => tl.to(sel, { yPercent: -118, duration: o.d || 0.55, ease: "power3.in", stagger: o.s ?? 0.05 }, t);
+const FADE = (sel, t, a, b, d = 0.6, e = "sine.inOut") => tl.fromTo(sel, { opacity: a }, { opacity: b, duration: d, ease: e, immediateRender: false }, t);
+const SYL = "가각간갈감강개거건검겨경고공과관구국군그근글기나남내너노누는다단달대더도동두라락란람랑래러로루르리마만말매머모목무문미바반발방배버번보복본부분비사산살상새서선설성세소속손수순스시신실심아안알애야약양어언업에여역연열영오온와완요용우운울원위유으은을음의이인일자작잔장재저전절점정제조종주중지진차찬창채처천철청초총추축출치친카타탑태터토통트파판패포표프피하학한할함합해행허현형호화확환활회효후휘흐희";
+const hsh = (a, b) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+const KEEP = " “”,.·";
+function scrambleText(text, p, d) {
+  if (p <= 0) return "";
+  const n = text.length, f = Math.floor(p * d * 24);
+  let out = "";
+  for (let i = 0; i < n; i++) {
+    const c = text[i], r = 0.3 + 0.7 * i / n;
+    if (p >= r || KEEP.includes(c)) out += (p >= r - 0.5 ? c : (KEEP.includes(c) ? c : ""));
+    else if (p >= r - 0.5) out += SYL[Math.floor(hsh(i + 1, f + 7) * SYL.length)];
+  }
+  return out;
+}
+const SCRAMBLE = (el, text, t, d = 1.0) => { const o = { p: 0 }; el.textContent = ""; tl.fromTo(o, { p: 0 }, { p: 1, duration: d, ease: "none", onUpdate() { el.textContent = scrambleText(text, o.p, d); } }, t); };
+const DRAWS = (sel, t, d = 1.0, e = "power2.inOut", s = 0) => gsap.utils.toArray(sel).forEach((el, i) => {
+  const L = el.getTotalLength(); el.setAttribute("stroke-dasharray", `${L} ${L}`);
+  tl.fromTo(el, { attr: { "stroke-dashoffset": L } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e }, t + i * s);
+});
+
+
+const ARR = [5.4, 7.2, 9.0, 10.8], DEP = [4.2, 5.9, 7.7, 9.5], STEPS = ["“카드를 잃어버렸어요”", "카드 분실 신고", "본인 확인 완료", "카드 사용 정지"];
+
+gsap.set("#k1", { opacity: 0 });
+REVEAL(".h1-l", 0.9); FADE("#k1", 0.7, 0, 1, 0.8); HIDE(".h1-l", 3.75); FADE("#k1", 3.75, 1, 0, 0.4);
+REVEAL(".h2-l", 4.35); gsap.set(".h2-v", { opacity: 0.22 });
+ARR.forEach((t, i) => tl.to("#h2-v" + i, { opacity: 1, duration: 0.5, ease: "sine.out" }, t + 0.05));
+HIDE(".h2-l", 12.0);
+REVEAL(".h3-l", 13.2); HIDE(".h3-l", 16.55);
+REVEAL(".h4-l", 17.7);
+
+gsap.set([".b-sl"], { opacity: 0 });
+for (let i = 0; i < 4; i++) {
+  const t = ARR[i];
+  tl.fromTo("#b-sl" + i, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, t + 0.05);
+  SCRAMBLE(document.getElementById("b-sv" + i), STEPS[i], t + 0.15, 0.95);
+  const off = i < 3 ? DEP[i + 1] + 0.1 : 12.0;
+  tl.to(["#b-sl" + i, "#b-sv" + i], { opacity: 0, y: -10, duration: 0.45, ease: "power2.in" }, off);
+}
+tl.fromTo("#b-shade", { opacity: 1 }, { opacity: 0.55, duration: 2, immediateRender: false }, 13.0);
+FADE("#b-ai", 18.9, 0, 1, 0.6); FADE("#b-ni", 19.2, 0, 1, 0.6);
+
+// ───────── three.js 장면(시간 t만으로 그리는 순수 함수)
+const W = 1920, H = 1080;
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("gl"), antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H, false);
+renderer.outputEncoding = THREE.sRGBEncoding; renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0c0916);
+scene.fog = new THREE.Fog(0x0c0916, 10, 26);
+const cam = new THREE.PerspectiveCamera(30, W / H, 0.1, 120);
+const C = (h) => new THREE.Color(h);
+
+scene.add(new THREE.HemisphereLight(C("#6d5bd0"), C("#0c0916"), 0.32));
+const key = new THREE.DirectionalLight(C("#fff1fb"), 0.75); key.position.set(-5, 9, 7); scene.add(key);
+const rim = new THREE.DirectionalLight(C("#5a6bff"), 0.9); rim.position.set(7, 3, -8); scene.add(rim);
+const orbLight = new THREE.PointLight(C("#ff5ad9"), 1.2, 3.2, 2); scene.add(orbLight);
+
+// 서버 랙(바닥 아래): 몸체 + 앞면 LED 줄(인스턴스)
+const ROWS = [-7.0, -4.6, -2.2, 0.2, 2.6, 5.0], RX = [];
+for (let x = -10.5; x <= 10.51; x += 0.78) RX.push(x);
+const NR = ROWS.length * RX.length, NL = NR * 6;
+const rackGeo = new THREE.BoxGeometry(0.7, 2.1, 1.1);
+const rackMat = new THREE.MeshStandardMaterial({ color: C("#16122a"), roughness: 0.42, metalness: 0.6 });
+const racks = new THREE.InstancedMesh(rackGeo, rackMat, NR);
+const ledGeo = new THREE.BoxGeometry(0.46, 0.028, 0.01);
+const ledMat = new THREE.MeshBasicMaterial({ color: 0xffffff, toneMapped: false });
+const leds = new THREE.InstancedMesh(ledGeo, ledMat, NL);
+const M = new THREE.Matrix4(), LEDINFO = [];
+let ri = 0, li = 0;
+for (const z of ROWS) for (const x of RX) {
+  M.makeTranslation(x, -1.4, z); racks.setMatrixAt(ri++, M);
+  for (let j = 0; j < 6; j++) {
+    M.makeTranslation(x - 0.05, -0.62 - j * 0.24, z + 0.556); leds.setMatrixAt(li, M);
+    const h = hsh(li, 31);
+    LEDINFO.push({ x, z, base: h < 0.18 ? 1 : (h < 0.5 ? 0.35 : 0.12), hue: (x + 10.5) / 21 });
+    leds.setColorAt(li++, C("#000"));
+  }
+}
+scene.add(racks, leds);
+const PINK = C("#ff4fd8"), PURP = C("#9d6bff"), BLUE = C("#5a5cff"), DIM = C("#2c2548"), tmp = new THREE.Color();
+
+// 바닥(대화가 흐르는 면) + 가는 격자
+const floorMat = new THREE.MeshLambertMaterial({ color: C("#0b0818"), transparent: true });
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(60, 60), floorMat); floor.rotation.x = -Math.PI / 2; scene.add(floor);
+const gp = [];
+for (let i = -20; i <= 20; i++) { gp.push(i, 0.002, -20, i, 0.002, 20, -20, 0.002, i, 20, 0.002, i); }
+const gridGeo = new THREE.BufferGeometry(); gridGeo.setAttribute("position", new THREE.Float32BufferAttribute(gp, 3));
+const gridMat = new THREE.LineBasicMaterial({ color: C("#3a3160"), transparent: true, opacity: 0.35 });
+scene.add(new THREE.LineSegments(gridGeo, gridMat));
+
+// 지나온 길(점 뒤로만 자람)과 관문 4개
+const START = -7.5, GX = [-4.5, -1.5, 1.5, 4.5];
+const trk = new THREE.Mesh(new THREE.BoxGeometry(1, 0.012, 0.035), new THREE.MeshBasicMaterial({ color: C("#e9ddff"), toneMapped: false }));
+trk.position.y = 0.007; scene.add(trk);
+const gates = GX.map((x) => {
+  const m = new THREE.Mesh(new THREE.TorusGeometry(0.86, 0.016, 16, 160), new THREE.MeshBasicMaterial({ color: C("#3d355c"), toneMapped: false, transparent: true }));
+  m.position.set(x, 0.86, 0); m.rotation.y = Math.PI / 2; scene.add(m); return m;
+});
+
+// 목소리: 액체 금속 구(정점 변형 + 브랜드 톤 반사)
+const orbMat = new THREE.ShaderMaterial({
+  uniforms: { uT: { value: 0 }, uRip: { value: 0 }, uFin: { value: 0 }, uBreath: { value: 1 } },
+  vertexShader: `
+    uniform float uT, uRip, uFin, uBreath;
+    varying vec3 vN; varying vec3 vP;
+    float disp(vec3 d){
+      float s = 0.022 * uBreath * sin(d.x*3.1 + uT*1.3) * sin(d.y*3.7 - uT*1.1) * sin(d.z*2.9 + uT*0.9);
+      s += uRip * 0.016 * sin(d.x*19.0 - uT*8.0) * smoothstep(-0.9, 0.2, d.x);
+      s += uFin * 0.011 * sin(length(d.xy - vec2(0.05, 0.12))*46.0) * smoothstep(0.1, 0.7, d.z);
+      return s;
+    }
+    vec3 P(vec3 d){ d = normalize(d); return d * 0.55 * (1.0 + disp(d)); }
+    void main(){
+      vec3 d = normalize(position);
+      vec3 t1 = normalize(abs(d.y) > 0.99 ? cross(d, vec3(1.,0.,0.)) : cross(d, vec3(0.,1.,0.)));
+      vec3 t2 = cross(d, t1);
+      vec3 p0 = P(d), pa = P(d + t1*0.012), pb = P(d + t2*0.012);
+      vec3 n = normalize(cross(pa - p0, pb - p0)); if (dot(n, d) < 0.) n = -n;
+      vN = normalize(normalMatrix * n);
+      vec4 mv = modelViewMatrix * vec4(p0, 1.0);
+      vP = mv.xyz;
+      gl_Position = projectionMatrix * mv;
+    }`,
+  fragmentShader: `
+    varying vec3 vN; varying vec3 vP;
+    vec3 env(vec3 r){
+      vec3 c = mix(vec3(.025,.018,.06), vec3(.14,.09,.30), smoothstep(-1., 1., r.y));
+      c += vec3(1.,.97,1.) * smoothstep(.72, .95, r.y) * 1.25;
+      c += vec3(1.,.30,.85) * smoothstep(.80, .98, -r.x) * 1.15;
+      c += vec3(.40,.36,1.) * smoothstep(.80, .98, r.x*.9 + r.z*.25) * 1.1;
+      c += vec3(.85,.8,1.) * exp(-abs(r.y + .08) * 16.) * .22;
+      return c;
+    }
+    void main(){
+      vec3 N = normalize(vN), V = normalize(-vP);
+      vec3 Rv = reflect(-V, N);
+      vec3 R = (vec4(Rv, 0.) * viewMatrix).xyz;
+      float ndv = clamp(dot(N, V), 0., 1.);
+      vec3 Nw = (vec4(N, 0.) * viewMatrix).xyz;
+      vec3 b = mix(vec3(1., .18, .78), vec3(.32, .26, 1.), smoothstep(-.7, .7, Nw.x + Nw.y*.3));
+      vec3 c = env(R) * mix(vec3(.9), b * 1.35, .5);
+      c += b * pow(1. - ndv, 3.) * .7;
+      c = c / (1. + c * .55);
+      gl_FragColor = vec4(pow(c, vec3(.95)), 1.);
+    }`,
+});
+const orb = new THREE.Mesh(new THREE.SphereGeometry(0.55, 200, 140), orbMat); scene.add(orb);
+// 접지 그림자
+const sc = document.createElement("canvas"); sc.width = sc.height = 128;
+const sg = sc.getContext("2d"), grd = sg.createRadialGradient(64, 64, 0, 64, 64, 64);
+grd.addColorStop(0, "rgba(0,0,0,.75)"); grd.addColorStop(1, "rgba(0,0,0,0)"); sg.fillStyle = grd; sg.fillRect(0, 0, 128, 128);
+const shadow = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 1.6), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(sc), transparent: true, depthWrite: false }));
+shadow.rotation.x = -Math.PI / 2; shadow.position.y = 0.004; scene.add(shadow);
+// 클라이맥스의 빛기둥
+const beam = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 1, 12), new THREE.MeshBasicMaterial({ color: C("#ff7be2"), toneMapped: false, transparent: true }));
+scene.add(beam);
+
+// ───────── 시간 함수
+const cl = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+const io = (x) => x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;      // power2.inOut
+const io3 = (x) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; // power3.inOut
+const seg = (t, a, b) => cl((t - a) / (b - a));
+const lerp = (a, b, u) => a + (b - a) * u;
+const V3 = (a, b, u) => new THREE.Vector3(lerp(a[0], b[0], u), lerp(a[1], b[1], u), lerp(a[2], b[2], u));
+function orbX(t) {
+  let x = START;
+  for (let i = 0; i < 4; i++) { if (t >= DEP[i]) x = lerp(i ? GX[i - 1] : START, GX[i], io(seg(t, DEP[i], ARR[i]))); }
+  if (t >= 12.4) x = lerp(GX[3], 0, io3(seg(t, 12.4, 14.0)));
+  return x;
+}
+const follow = (t) => { let s = 0; for (let k = 0; k < 8; k++) s += orbX(t - k * 0.06); return s / 8; };
+function camAt(t) {
+  const f = follow(Math.min(t, 12.3));
+  const s2 = (ff) => [new THREE.Vector3(ff - 3.6, 2.35, 6.8), new THREE.Vector3(ff + 1.5, 0.95, 0)];
+  const s1 = (u) => [V3([START - 0.2, 1.3, 5.6], [START - 0.5, 1.5, 6.4], u), V3([START - 1.7, 0.75, 0], [START - 1.9, 0.75, 0], u)];
+  if (t < 4.9) {
+    const a = s1(io(seg(t, 0, 3.4))), w = io3(seg(t, 3.4, 4.9));
+    if (w <= 0) return a;
+    const b = s2(f);
+    return [a[0].lerp(b[0], w), a[1].lerp(b[1], w)];
+  }
+  if (t < 12.3) return s2(f);
+  const [e2, e2t] = s2(GX[3]);
+  const hp = new THREE.Vector3(2.2, 8.8, 12.8), ht = new THREE.Vector3(-3.4, -1.4, 0);
+  if (t < 17.0) { const u = io3(seg(t, 12.3, 15.6)); const p = e2.clone().lerp(hp, u); p.y += Math.sin(u * Math.PI) * 0.8; return [p, e2t.clone().lerp(ht, u)]; }
+  const u = Math.sin(seg(t, 17.0, 22.0) * Math.PI / 2);
+  return [hp.clone().lerp(new THREE.Vector3(6.4, 7.4, 11.6), u), ht.clone().lerp(new THREE.Vector3(-3.6, -0.1, 0), u)];
+}
+const pinkC = C("#ff4fd8"), gateOff = C("#3d355c"), gateOn = C("#b58cff");
+function renderAt(t) {
+  const x = orbX(t);
+  // 단계별 표면: 1 음성 인식(물결) 2 의도 파악(매끈) 3 인증(지문 고리) 4 처리(매끈)
+  const hit = (i) => Math.exp(-Math.pow((t - ARR[i] - 0.5) / 0.9, 2));
+  orbMat.uniforms.uT.value = t;
+  orbMat.uniforms.uRip.value = cl(seg(t, 0.8, 2.0)) * (1 - seg(t, 3.6, 4.4)) + hit(0) * 1.2;
+  orbMat.uniforms.uFin.value = hit(2) * 1.4;
+  orbMat.uniforms.uBreath.value = 1 + hit(1) * 0.8;
+  // 클라이맥스: 위로 떠올라 납작한 판(AI 층)으로 모양이 바뀜
+  const fl = io3(seg(t, 17.3, 18.8));
+  const yb = 0.62 + Math.sin(t * 1.4) * 0.03;
+  orb.position.set(x, lerp(yb, 1.9, fl), 0);
+  orb.scale.set(lerp(1, 3.0, fl), lerp(1, 0.16, fl), lerp(1, 3.0, fl));
+  orb.rotation.y = t * 0.15;
+  const pulse = 1 + 0.06 * Math.exp(-Math.pow((t - 0.6) / 0.3, 2));
+  if (t < 1.5) orb.scale.multiplyScalar(io(seg(t, 0.2, 1.3)) * pulse);
+  orbLight.position.set(x, orb.position.y + 0.25, 0.4);
+  orbLight.intensity = 1.2 * (1 - seg(t, 13.5, 15)) + 1.0 * fl;
+  shadow.position.x = x; shadow.material.opacity = (t < 1.5 ? seg(t, 0.2, 1.3) : 1) * (1 - fl);
+  // 길: 출발점부터 점이 있는 곳까지만
+  const tx = t < 12.3 ? x : GX[3];
+  trk.scale.x = Math.max(0.0001, tx - START); trk.position.x = (START + tx) / 2;
+  trk.material.opacity = 1; trk.visible = t > DEP[0] - 0.05;
+  trk.material.transparent = true; trk.material.opacity = 1 - seg(t, 12.6, 13.8);
+  gates.forEach((g, i) => {
+    const on = seg(t, ARR[i] - 0.1, ARR[i] + 0.25), glow = Math.exp(-Math.pow((t - ARR[i] - 0.15) / 0.35, 2));
+    g.material.color.copy(gateOff).lerp(gateOn, on).lerp(pinkC, glow * 0.8);
+    g.material.opacity = cl(seg(t, 3.8, 4.8)) * (1 - seg(t, 12.5, 13.6));
+    g.scale.setScalar(1 + glow * 0.06);
+  });
+  // 바닥이 사라지며 아래의 데이터센터가 드러남
+  const fo = 1 - io(seg(t, 13.0, 15.0));
+  floorMat.opacity = 0.97 * fo; floorMat.depthWrite = fo > 0.9; floor.visible = fo > 0.01;
+  gridMat.opacity = 0.35 * fo;
+  // LED: 평소엔 은은하게, 클라이맥스엔 가운데서 퍼지는 빛의 물결
+  const reveal = seg(t, 12.8, 15.2), wave = t - 19.0;
+  for (let i = 0; i < NL; i++) {
+    const L = LEDINFO[i], d = Math.hypot(L.x, L.z);
+    let a = L.base * (0.25 + 0.75 * reveal) * (0.8 + 0.2 * Math.sin(t * 2.0 + i * 1.7));
+    if (wave > 0) a += Math.exp(-Math.pow((d - wave * 6.5) / 1.1, 2)) * 1.6 + 0.35 * seg(wave, 0.5, 2.2);
+    tmp.copy(L.hue < 0.5 ? PINK : PURP).lerp(L.hue < 0.5 ? PURP : BLUE, (L.hue % 0.5) * 2);
+    leds.setColorAt(i, DIM.clone().lerp(tmp, cl(a)).multiplyScalar(0.5 + 1.4 * cl(a, 0, 2)));
+  }
+  leds.instanceColor.needsUpdate = true;
+  // 빛기둥: AI 판에서 인프라로
+  const bu = io(seg(t, 18.55, 19.05));
+  beam.visible = bu > 0.001;
+  const top = orb.position.y - 0.1, bot = -0.3, hgt = (top - bot) * bu;
+  beam.scale.y = Math.max(0.0001, hgt); beam.position.set(0, top - hgt / 2, 0);
+  beam.material.opacity = 1 - 0.4 * seg(t, 20, 22);
+  const [p, tg] = camAt(t);
+  cam.position.copy(p); cam.lookAt(tg); cam.updateMatrixWorld();
+  renderer.render(scene, cam);
+  // AI/NI 라벨을 3D 위치에 붙임
+  const put = (id, v, dx) => { const s = v.clone().project(cam); const el = document.getElementById(id); el.style.left = ((s.x + 1) / 2 * W + dx) + "px"; el.style.top = ((1 - s.y) / 2 * H - 12) + "px"; };
+  put("b-ai", new THREE.Vector3(1.9, orb.position.y, 0), 24);
+  put("b-ni", new THREE.Vector3(2.4, -0.3, 0.75), 30);
+}
+window.addEventListener("hf-seek", (e) => renderAt(e.detail.time));
+renderAt(0);
+
+window.__timelines = window.__timelines || {};
+window.__timelines["main"] = tl;
+</script>
+</body></html>

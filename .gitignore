@@ -11,3 +11,6 @@ video/*/out/work-*/
 video/*/out/raw.mp4
 fx/
 motion-library.html
+video/samples/*/out/
+video/samples/*/.hyperframes/
+video/samples/render_*.log
