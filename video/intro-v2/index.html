@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=1920, height=1080" /><title>Rapeech intro v2</title>
+<script src="assets/gsap.min.js"></script>
+<style>@font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c0916; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
+.layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.vig { background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,.10), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,.45)); }
+#line { position: absolute; left: 360px; top: 419px; width: 1200px; height: 2px; background: linear-gradient(90deg, rgba(255,3,200,0), #ff03c8 20%, #a518a4 50%, #3c24f3 80%, rgba(60,36,243,0)); transform-origin: 50% 50%; }
+.bar { position: absolute; top: 420px; width: 14px; height: 200px; margin-top: -100px; border-radius: 7px; box-shadow: 0 0 16px currentColor; }
+.who { position: absolute; top: 272px; height: 40px; padding: 0 18px; border-radius: 20px; font-size: 20px; font-weight: 700; line-height: 40px; white-space: nowrap; }
+#sent { position: absolute; left: 0; top: 386px; width: 1920px; text-align: center; font-size: 64px; font-weight: 800; color: #fff; letter-spacing: -0.02em; white-space: nowrap; }
+.ch { display: inline-block; position: relative; }
+.ul { position: absolute; left: 0; bottom: -8px; height: 6px; width: 100%; border-radius: 3px; background: linear-gradient(90deg, #ff03c8, #6a4dff); transform-origin: 0 50%; }
+#chip { position: absolute; left: 960px; top: 420px; }
+#chipi { position: absolute; left: 0; top: 0; transform: translate(-50%, -50%); display: flex; align-items: center; gap: 16px; height: 92px; padding: 0 40px 0 30px; border-radius: 46px; white-space: nowrap;
+  background: rgba(28,23,48,.9); border: 2px solid transparent; background-clip: padding-box; box-shadow: 0 0 0 2px rgba(157,121,255,.55); font-size: 44px; font-weight: 800; color: #fff; }
+#ans { position: absolute; left: 0; top: 560px; width: 1920px; text-align: center; font-size: 40px; font-weight: 700; color: #fff; white-space: nowrap; }
+.ach { display: inline-block; }
+.cap { position: absolute; left: 0; top: 780px; width: 1920px; text-align: center; }
+.tag { overflow: hidden; font-size: 19px; font-weight: 600; letter-spacing: 0.24em; color: #a69cc8; padding-bottom: 4px; }
+.ct { overflow: hidden; margin-top: 14px; font-size: 50px; font-weight: 800; color: #fff; letter-spacing: -0.03em; padding-bottom: 8px; }
+.tag span, .ct span[class^="cl"] { display: inline-block; }
+.g { background: linear-gradient(100deg, #ff4fd8, #b25cff 55%, #7a6bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.dlab { font-family: "Pretendard"; font-weight: 600; font-size: 20px; letter-spacing: 3px; fill: #cfc6ec; }
+#wipe { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="12" data-fps="60" data-width="1920" data-height="1080">
+  <div id="front" class="layer">
+    <div class="layer vig"></div>
+    <div id="line"></div>
+    <div style="position:absolute;left:960px;top:272px;width:0;display:flex;justify-content:center"><div class="who" id="who1" style="position:relative;top:0;flex:none;background:#fff;color:#1b1530">고객</div></div>
+    <div class="bar" id="b0" style="left:766px;background:#ff03c8;color:#ff03c8"></div><div class="bar" id="b1" style="left:800px;background:#e807c3;color:#e807c3"></div><div class="bar" id="b2" style="left:834px;background:#d10bbd;color:#d10bbd"></div><div class="bar" id="b3" style="left:868px;background:#ba0fb8;color:#ba0fb8"></div><div class="bar" id="b4" style="left:902px;background:#a518a4;color:#a518a4"></div><div class="bar" id="b5" style="left:936px;background:#8f1ab8;color:#8f1ab8"></div><div class="bar" id="b6" style="left:970px;background:#7a1dcc;color:#7a1dcc"></div><div class="bar" id="b7" style="left:1004px;background:#661fdc;color:#661fdc"></div><div class="bar" id="b8" style="left:1038px;background:#5422e6;color:#5422e6"></div><div class="bar" id="b9" style="left:1072px;background:#4823ee;color:#4823ee"></div><div class="bar" id="b10" style="left:1106px;background:#4024f1;color:#4024f1"></div><div class="bar" id="b11" style="left:1140px;background:#3c24f3;color:#3c24f3"></div>
+    <div id="sent"><span class="ch" id="s0">카</span><span class="ch" id="s1">드</span><span class="ch" id="s2">를</span><span class="ch" id="s3">&nbsp;</span><span class="ch" id="s4">잃</span><span class="ch" id="s5">어</span><span class="ch" id="s6">버</span><span class="ch" id="s7">렸</span><span class="ch" id="s8">어</span><span class="ch" id="s9">요</span></div>
+    <div id="chip"><div id="chipi"><svg width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="19" fill="url(#ckg)"/><path d="M11 20.5 l6 6 l12 -13" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="ckg" x1="0" y1="0" x2="40" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs></svg>카드 분실 신고</div></div>
+    <div style="position:absolute;left:960px;top:272px;width:0;display:flex;justify-content:center"><div class="who" id="who2" style="position:relative;top:0;flex:none;background:linear-gradient(100deg,#ff03c8,#a518a4 50%,#3c24f3);color:#fff">AI 콜봇</div></div>
+    <div class="bar abar" id="a0" style="left:766px;background:#ff03c8;color:#ff03c8"></div><div class="bar abar" id="a1" style="left:800px;background:#e807c3;color:#e807c3"></div><div class="bar abar" id="a2" style="left:834px;background:#d10bbd;color:#d10bbd"></div><div class="bar abar" id="a3" style="left:868px;background:#ba0fb8;color:#ba0fb8"></div><div class="bar abar" id="a4" style="left:902px;background:#a518a4;color:#a518a4"></div><div class="bar abar" id="a5" style="left:936px;background:#8f1ab8;color:#8f1ab8"></div><div class="bar abar" id="a6" style="left:970px;background:#7a1dcc;color:#7a1dcc"></div><div class="bar abar" id="a7" style="left:1004px;background:#661fdc;color:#661fdc"></div><div class="bar abar" id="a8" style="left:1038px;background:#5422e6;color:#5422e6"></div><div class="bar abar" id="a9" style="left:1072px;background:#4823ee;color:#4823ee"></div><div class="bar abar" id="a10" style="left:1106px;background:#4024f1;color:#4024f1"></div><div class="bar abar" id="a11" style="left:1140px;background:#3c24f3;color:#3c24f3"></div>
+    <div id="ans"><span class="ach">분</span><span class="ach">실</span><span class="ach">&nbsp;</span><span class="ach">신</span><span class="ach">고</span><span class="ach">,</span><span class="ach">&nbsp;</span><span class="ach">바</span><span class="ach">로</span><span class="ach">&nbsp;</span><span class="ach">도</span><span class="ach">와</span><span class="ach">드</span><span class="ach">릴</span><span class="ach">게</span><span class="ach">요</span></div>
+    <svg id="ni" class="layer" viewBox="0 0 1920 1080">
+  <defs><filter id="gl" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <radialGradient id="dotg"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#ff8be6" stop-opacity=".8"/><stop offset="1" stop-color="#ff4fd8" stop-opacity="0"/></radialGradient></defs>
+  <path id="drop" d="M960 420 C 960 470, 790 380, 801 452" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+  <g id="sw"><rect id="swb" x="390" y="425" width="500" height="80" rx="12" fill="#120d24" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/><rect class="port" x="420" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl0" cx="437" cy="440" r="4" fill="#3a3158"/><rect class="port" x="472" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl1" cx="489" cy="440" r="4" fill="#3a3158"/><rect class="port" x="524" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl2" cx="541" cy="440" r="4" fill="#3a3158"/><rect class="port" x="576" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl3" cx="593" cy="440" r="4" fill="#3a3158"/><rect class="port" x="628" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl4" cx="645" cy="440" r="4" fill="#3a3158"/><rect class="port" x="680" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl5" cx="697" cy="440" r="4" fill="#3a3158"/><rect class="port" x="732" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl6" cx="749" cy="440" r="4" fill="#3a3158"/><rect class="port" x="784" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl7" cx="801" cy="440" r="4" fill="#3a3158"/></g>
+  <path class="cab" id="cab0" d="M890 465 C 1010 465, 1060 350, 1180 350" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/><path class="cab" id="cab1" d="M890 465 C 1010 465, 1060 460, 1360 460" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/><path class="cab" id="cab2" d="M890 465 C 1010 465, 1060 570, 1540 570" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/><g id="racks"><rect class="rk" x="1180" y="300" width="140" height="300" rx="10" fill="#120d24" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/><rect class="rslot" x="1196" y="561" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="531" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="501" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="471" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="441" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="411" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="381" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="351" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="321" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rk" x="1360" y="300" width="140" height="300" rx="10" fill="#120d24" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/><rect class="rslot" x="1376" y="561" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="531" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="501" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="471" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="441" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="411" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="381" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="351" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="321" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rk" x="1540" y="300" width="140" height="300" rx="10" fill="#120d24" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/><rect class="rslot" x="1556" y="561" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="531" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="501" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="471" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="441" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="411" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="381" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="351" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="321" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/></g><rect class="rled r0" data-j="0" x="1204" y="568" width="36" height="4" rx="2" fill="#d10bbd"/><rect class="rled r0" data-j="1" x="1204" y="538" width="53" height="4" rx="2" fill="#ba0fb8"/><rect class="rled r0" data-j="2" x="1204" y="508" width="70" height="4" rx="2" fill="#a518a4"/><rect class="rled r0" data-j="3" x="1204" y="478" width="43" height="4" rx="2" fill="#d10bbd"/><rect class="rled r0" data-j="4" x="1204" y="448" width="60" height="4" rx="2" fill="#ba0fb8"/><rect class="rled r0" data-j="5" x="1204" y="418" width="77" height="4" rx="2" fill="#a518a4"/><rect class="rled r0" data-j="6" x="1204" y="388" width="50" height="4" rx="2" fill="#d10bbd"/><rect class="rled r0" data-j="7" x="1204" y="358" width="67" height="4" rx="2" fill="#ba0fb8"/><rect class="rled r0" data-j="8" x="1204" y="328" width="40" height="4" rx="2" fill="#a518a4"/><rect class="rled r1" data-j="0" x="1384" y="568" width="43" height="4" rx="2" fill="#7a1dcc"/><rect class="rled r1" data-j="1" x="1384" y="538" width="60" height="4" rx="2" fill="#661fdc"/><rect class="rled r1" data-j="2" x="1384" y="508" width="77" height="4" rx="2" fill="#5422e6"/><rect class="rled r1" data-j="3" x="1384" y="478" width="50" height="4" rx="2" fill="#7a1dcc"/><rect class="rled r1" data-j="4" x="1384" y="448" width="67" height="4" rx="2" fill="#661fdc"/><rect class="rled r1" data-j="5" x="1384" y="418" width="40" height="4" rx="2" fill="#5422e6"/><rect class="rled r1" data-j="6" x="1384" y="388" width="57" height="4" rx="2" fill="#7a1dcc"/><rect class="rled r1" data-j="7" x="1384" y="358" width="74" height="4" rx="2" fill="#661fdc"/><rect class="rled r1" data-j="8" x="1384" y="328" width="47" height="4" rx="2" fill="#5422e6"/><rect class="rled r2" data-j="0" x="1564" y="568" width="50" height="4" rx="2" fill="#4024f1"/><rect class="rled r2" data-j="1" x="1564" y="538" width="67" height="4" rx="2" fill="#3c24f3"/><rect class="rled r2" data-j="2" x="1564" y="508" width="40" height="4" rx="2" fill="#3c24f3"/><rect class="rled r2" data-j="3" x="1564" y="478" width="57" height="4" rx="2" fill="#4024f1"/><rect class="rled r2" data-j="4" x="1564" y="448" width="74" height="4" rx="2" fill="#3c24f3"/><rect class="rled r2" data-j="5" x="1564" y="418" width="47" height="4" rx="2" fill="#3c24f3"/><rect class="rled r2" data-j="6" x="1564" y="388" width="64" height="4" rx="2" fill="#4024f1"/><rect class="rled r2" data-j="7" x="1564" y="358" width="37" height="4" rx="2" fill="#3c24f3"/><rect class="rled r2" data-j="8" x="1564" y="328" width="54" height="4" rx="2" fill="#3c24f3"/><circle class="pulse" id="pu0" r="7" fill="#fff" filter="url(#gl)"/><circle class="pulse" id="pu1" r="7" fill="#fff" filter="url(#gl)"/><circle class="pulse" id="pu2" r="7" fill="#fff" filter="url(#gl)"/>
+  <text class="dlab" id="dl0" x="640" y="550" text-anchor="middle">스위치</text>
+  <text class="dlab" id="dl1" x="1430" y="640" text-anchor="middle">서버 랙 · AI 데이터센터</text>
+  <g id="dot"><circle r="34" fill="url(#dotg)"/><circle r="8" fill="#fff"/></g>
+</svg>
+    <div class="cap" id="cap0"><div class="tag"><span class="cl0">01  음성 인식</span></div><div class="ct"><span class="cl0">AI가 <span class="g">목소리를 알아듣고</span></span></div></div><div class="cap" id="cap1"><div class="tag"><span class="cl1">02  의도 파악</span></div><div class="ct"><span class="cl1"><span class="g">무엇을 원하는지</span> 이해한 뒤</span></div></div><div class="cap" id="cap2"><div class="tag"><span class="cl2">03  AI 콜봇</span></div><div class="ct"><span class="cl2"><span class="g">목소리로</span> 바로 답합니다</span></div></div><div class="cap" id="cap3"><div class="tag"><span class="cl3">04  네트워크 인프라</span></div><div class="ct"><span class="cl3">그 대화가 흐르는 <span class="g">네트워크 인프라</span>까지</span></div></div>
+  </div>
+  <video id="logo" class="clip layer" src="assets/intro.mp4" data-start="6.95" data-duration="5.05" data-media-start="6.95" data-track-index="0" data-has-audio="true" data-volume="1" playsinline style="z-index: 5"></video>
+  <audio id="sfx" class="clip" src="assets/front_sfx.wav" data-start="0" data-duration="12" data-track-index="2" data-volume="1"></audio>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+const SENT = "카드를 잃어버렸어요", CAPS = [[0.95, 2.25], [2.35, 3.25], [3.35, 4.55], [4.7, null]];
+const hsh = (a, b) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+// ── 0. 선
+tl.fromTo("#line", { scaleX: 0, opacity: 1 }, { scaleX: 1, duration: 0.9, ease: "power3.inOut" }, 0.05);
+// ── 1. 고객 목소리 파형(선에서 막대가 솟음)
+gsap.set(".bar", { scaleY: 0.04, opacity: 0 });
+gsap.set(["#who1", "#who2", "#sent .ch", "#chip", ".abar", ".ach", "#ni", ".cap"], { opacity: 0 });
+tl.to("#line", { opacity: 0, duration: 0.4, ease: "sine.inOut" }, 0.75);
+gsap.utils.toArray("#front > .bar:not(.abar)").forEach((el, k) => {
+  tl.fromTo(el, { opacity: 0, scaleY: 0.04 }, { opacity: 1, scaleY: 0.25, duration: 0.3, ease: "power2.out", immediateRender: false }, 0.8 + k * 0.012);
+  let t = 1.05; for (let s = 0; s < 4; s++) { tl.to(el, { scaleY: 0.18 + 0.82 * hsh(k, s + 1) * Math.sin(Math.PI * (k + 0.5) / 12), duration: 0.16, ease: "sine.inOut" }, t); t += 0.16; }
+});
+tl.fromTo("#who1", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, 0.95);
+// 막대가 글자 자리로 날아가 글자가 됨(글자 위치는 글꼴이 준비된 뒤 측정)
+function build() {
+  const chars = gsap.utils.toArray("#sent .ch"), rootR = document.getElementById("root").getBoundingClientRect();
+  const cx = chars.map((c) => { const r = c.getBoundingClientRect(); return r.left - rootR.left + r.width / 2; });
+  gsap.utils.toArray("#front > .bar:not(.abar)").forEach((el, k) => {
+    const ci = Math.round(k * (chars.length - 1) / 11), x0 = 960 + (k - 5.5) * 34;
+    tl.to(el, { x: cx[ci] - x0, scaleY: 0.3, scaleX: 0.45, duration: 0.45, ease: "power3.inOut" }, 1.7 + k * 0.012);
+    tl.to(el, { opacity: 0, duration: 0.2, ease: "sine.in" }, 2.05 + k * 0.012);
+  });
+  chars.forEach((c, i) => tl.fromTo(c, { opacity: 0, y: 14, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.45, ease: "power3.out", immediateRender: false }, 1.95 + i * 0.025));
+  // ── 2. 핵심 단어 밑줄 → 문장이 태그로 정리
+  ["s0", "s4"].forEach((id, j) => {
+    const a = document.getElementById(id), last = j ? chars[chars.length - 1] : chars[2];
+    const ra = a.getBoundingClientRect(), rb = last.getBoundingClientRect();
+    const ul = document.createElement("div"); ul.className = "ul"; ul.style.width = (rb.right - ra.left) + "px"; a.appendChild(ul);
+    tl.fromTo(ul, { scaleX: 0 }, { scaleX: 1, duration: 0.45, ease: "power3.inOut" }, 2.35 + j * 0.15);
+  });
+  tl.to("#who1", { opacity: 0, duration: 0.3 }, 2.35);
+  tl.to("#sent", { scaleX: 0.3, opacity: 0, filter: "blur(8px)", duration: 0.32, ease: "power3.in" }, 2.78);
+  tl.fromTo("#chip", { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(1.7)", immediateRender: false }, 3.08);
+  // ── 3. 태그가 AI 콜봇의 대답 파형으로, 대답이 글자로
+  tl.to("#chip", { scale: 0.2, opacity: 0, duration: 0.35, ease: "power2.in" }, 3.4);
+  tl.fromTo("#who2", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out", immediateRender: false }, 3.5);
+  gsap.utils.toArray(".abar").forEach((el, k) => {
+    tl.fromTo(el, { opacity: 0, scaleY: 0.04 }, { opacity: 1, scaleY: 0.3, duration: 0.3, ease: "power2.out", immediateRender: false }, 3.55 + Math.abs(k - 5.5) * 0.015);
+    let t = 3.85; for (let s = 0; s < 4; s++) { tl.to(el, { scaleY: 0.18 + 0.82 * hsh(k + 40, s + 1) * Math.sin(Math.PI * (k + 0.5) / 12), duration: 0.17, ease: "sine.inOut" }, t); t += 0.17; }
+  });
+  tl.fromTo(".ach", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out", stagger: 0.035, immediateRender: false }, 3.75);
+  // ── 4. 대답이 빛 하나로 모여 케이블 → 스위치 포트 → 서버 랙
+  tl.to(".abar", { x: (k, el) => 960 - parseFloat(el.style.left) - 7, scaleY: 0.06, duration: 0.4, ease: "power3.in" }, 4.55);
+  tl.to(".abar", { opacity: 0, duration: 0.15 }, 4.9);
+  tl.to(["#who2", "#ans"], { opacity: 0, y: -10, duration: 0.35, ease: "power2.in" }, 4.55);
+  tl.fromTo("#ni", { opacity: 0 }, { opacity: 1, duration: 0.3, immediateRender: false }, 4.8);
+  const DR = (sel, t, d, e = "power2.inOut", s = 0) => gsap.utils.toArray(sel).forEach((el, i) => {
+    const L = el.getTotalLength(); el.setAttribute("stroke-dasharray", `${L} ${L}`);
+    tl.fromTo(el, { attr: { "stroke-dashoffset": L } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e }, t + i * s);
+  });
+  DR("#swb", 4.85, 0.6); DR(".port", 5.0, 0.4, "power2.out", 0.03);
+  DR(".rk", 4.95, 0.7, "power2.inOut", 0.1); DR(".rslot", 5.2, 0.4, "power2.out", 0.008);
+  // 빛 하나가 포트로(선은 점이 지나간 자리까지만)
+  const drop = document.getElementById("drop"), DL = drop.getTotalLength();
+  drop.setAttribute("stroke-dasharray", `${DL} ${DL}`);
+  const pd = { p: 0 }, putDot = () => { const pt = drop.getPointAtLength(pd.p * DL); gsap.set("#dot", { x: pt.x, y: pt.y }); drop.setAttribute("stroke-dashoffset", DL * (1 - pd.p)); };
+  gsap.set("#dot", { x: 960, y: 420, scale: 0, opacity: 0 }); drop.setAttribute("stroke-dashoffset", DL);
+  tl.fromTo("#dot", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)", immediateRender: false }, 4.8);
+  tl.fromTo(pd, { p: 0 }, { p: 1, duration: 0.6, ease: "power2.inOut", onUpdate: putDot, immediateRender: false }, 5.0);
+  tl.to("#dot", { scale: 0.4, opacity: 0, duration: 0.25, ease: "power2.in" }, 5.55);
+  tl.to("#drop", { opacity: 0, duration: 0.5, ease: "sine.inOut" }, 5.7);
+  tl.to("#pl7", { attr: { fill: "#ff4fd8" }, duration: 0.15 }, 5.6);
+  gsap.utils.toArray(".pled").forEach((el, i) => { if (i !== 7) tl.to(el, { attr: { fill: i % 2 ? "#9d79ff" : "#5a5cff" }, duration: 0.12 }, 5.65 + (7 - i) * 0.03); });
+  // 케이블을 따라 빛이 랙으로
+  DR(".cab", 5.55, 0.5, "power2.out", 0.06);
+  gsap.utils.toArray(".cab").forEach((c, r) => {
+    const L = c.getTotalLength(), q = { p: 0 }, pu = document.getElementById("pu" + r);
+    gsap.set(pu, { opacity: 0 });
+    tl.fromTo(q, { p: 0 }, { p: 1, duration: 0.55, ease: "power1.inOut", immediateRender: false, onUpdate: () => { const pt = c.getPointAtLength(q.p * L); gsap.set(pu, { x: pt.x, y: pt.y, opacity: q.p < 0.97 ? 1 : 0 }); } }, 5.7 + r * 0.08);
+  });
+  gsap.set(".rled", { opacity: 0.12 });
+  gsap.utils.toArray(".rled").forEach((el) => { const r = +el.classList[1].slice(1), j = +el.dataset.j; tl.to(el, { opacity: 1, duration: 0.12, ease: "none" }, 6.2 + r * 0.08 + j * 0.035); });
+  tl.fromTo([".dlab"], { opacity: 0 }, { opacity: 1, duration: 0.4, stagger: 0.12, immediateRender: false }, 5.6);
+  gsap.set(".dlab", { opacity: 0 });
+  // ── 한글 소제목(줄 마스크로 올라오고 내려감)
+  CAPS.forEach(([a, b], i) => {
+    tl.fromTo("#cap" + i, { opacity: 1 }, { opacity: 1, duration: 0.01, immediateRender: false }, a);
+    tl.fromTo(".cl" + i, { yPercent: 120 }, { yPercent: 0, duration: 0.7, ease: "expo.out", stagger: 0.06 }, a);
+    if (b) tl.to(".cl" + i, { yPercent: -120, duration: 0.35, ease: "power3.in", stagger: 0.03 }, b);
+  });
+  // ── 6.95 원형 와이프: 기존 인트로(로고)가 가운데서 열림(기존 인트로와 같은 곡선)
+  tl.fromTo("#logo", { clipPath: "circle(0px at 960px 540px)" }, { clipPath: "circle(1200px at 960px 540px)", duration: 0.55, ease: "power2.out", immediateRender: false }, 6.95);
+  gsap.set("#logo", { clipPath: "circle(0px at 960px 540px)" });
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+}
+document.fonts.ready.then(build);
+</script>
+</body></html>

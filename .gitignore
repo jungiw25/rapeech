@@ -15,3 +15,7 @@ video/samples/*/out/
 video/samples/*/.hyperframes/
 video/samples/render_*.log
 video/samples/*/assets/
+video/intro-v2/assets/
+video/intro-v2/out/
+video/intro-v2/render.log
+video/intro-v2/.hyperframes/
