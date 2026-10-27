@@ -149,7 +149,7 @@ STRIPE_ANG = math.degrees(math.atan2(4.045 - 73.183, 83.967 - 55.374))  # 로고
 exec((ROOT / "tools" / "flow_block.py").read_text(encoding="utf-8"))
 
 # ================================================================ s08 카메라 후퇴: 서버 랙 (5 s)
-k, ox, oy = 62, 900, 330
+k, ox, oy = 62, 1060, 420   # 제목과 겹치지 않게 오른쪽 아래로
 els = []
 for i in range(-1, 9):
     a, b = iso(i, -1, 0, ox, oy, k), iso(i, 8, 0, ox, oy, k)
@@ -205,7 +205,7 @@ s08_js = f"""
 scene("s08", DUR["s08"], s08, s08_js)
 
 # ================================================================ s09 AI 인프라를 짓다 (9 s)
-k, ox, oy = 60, 800, 420
+k, ox, oy = 60, 980, 540   # 제목과 겹치지 않게 오른쪽 아래로
 steps = ["전산 설계", "통합배선", "네트워크", "출입보안", "통합관제", "유지보수"]
 fl, labs = [], []
 for f in range(6):
@@ -239,7 +239,6 @@ s09 = f"""
       <div class="vig"></div>
       <div id="s09-cam" style="position:absolute;inset:0">{svg(''.join(fl), gdef("s09-g", 700, 1300), "s09")}{''.join(labs)}</div>
       {say("데이터센터,|[설계부터 운영까지]", 72, 120, 120, "s09")}
-      <div class="lab" id="s09-sub" style="left:120px;top:900px">데이터센터 · 전산센터 · ESS · 스마트공장</div>
 """
 s09_js = """
       // 아래층부터 차례로 내려앉으며 지어짐, 층마다 그 층의 일이 켜짐
@@ -259,8 +258,7 @@ s09_js = """
       // 장면 내내 아주 느린 카메라 이동(흐르는 느낌)
       tl.fromTo("#s09-cam", { scale: 0.97, x: 20 }, { scale: 1.02, x: -20, duration: 9, ease: "sine.inOut" }, 0);
       IN(".s09-w", 0.3);
-      IN("#s09-sub", 1.2, { y: 10 });
-      OUT([".s09-w", "#s09-sub", ".s09-lab"], 8.2, { s: 0.02 });
+      OUT([".s09-w", ".s09-lab"], 8.2, { s: 0.02 });
       tl.to("#s09-cam", { y: 260, opacity: 0, duration: 0.8, ease: "power2.in" }, 8.2);
 """
 scene("s09", DUR["s09"], s09, s09_js)
