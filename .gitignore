@@ -9,3 +9,5 @@ video/*/node_modules/
 video/*/out/.*hf-transaction*/
 video/*/out/work-*/
 video/*/out/raw.mp4
+fx/
+motion-library.html
