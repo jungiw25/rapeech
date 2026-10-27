@@ -24,7 +24,7 @@ MODE = os.environ.get("MODE", "")   # "b": ConvAI 장면을 시안 B(별도 영�
 DUR = 29.6
 FLOW_CUT = 32.6            # 이전 소개 영상 원테이크에서 쓰는 길이(본편 기준)
 CAPS = [("c3", "대화형 AI 플랫폼", "콜봇부터 [AI 에이전트], AICC 구축까지"),
-        ("c4", "네트워크 인프라", "그 대화가 흐르는 [네트워크]를 설계하고 구축합니다"),
+        ("c4", "네트워크 인프라", "그리고 그 대화가 흐르는 [네트워크]도 설계하고 구축합니다"),
         ("c5", "네트워크 인프라", "[AI 데이터센터]부터 전산센터, ESS 공장까지"),
         ("c6", "설계부터 운영까지", "설계, 구축, 보안과 관제, [운영까지]"),
         ("c7", "한 팀", "인프라 구축부터 AI 도입까지, [한 팀이] 함께합니다")]
@@ -94,8 +94,10 @@ def sites_svg():
 def build():
     cx, cy = 960, 430
     svg = f'''<svg class="layer" id="main" viewBox="0 0 1920 1080">
-  <defs><clipPath id="vennA"><circle id="vcA" cx="700" cy="450" r="150"/></clipPath>
-  <linearGradient id="lensg" x1="860" y1="0" x2="1060" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#e01aa8"/><stop offset="1" stop-color="#5a3cf0"/></linearGradient></defs>
+  <defs><clipPath id="vennA"><circle cx="830" cy="440" r="200"/></clipPath>
+  <linearGradient id="lensg" x1="890" y1="0" x2="1030" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff3fcf"/><stop offset="1" stop-color="#6a4dff"/></linearGradient>
+  <radialGradient id="fillA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff4fd8" stop-opacity=".05"/><stop offset="1" stop-color="#ff4fd8" stop-opacity=".2"/></radialGradient>
+  <radialGradient id="fillB" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#5a5cff" stop-opacity=".05"/><stop offset="1" stop-color="#5a5cff" stop-opacity=".22"/></radialGradient></defs>
   <g id="cvG"><circle cx="{cx}" cy="{cy}" r="76" fill="#15102a" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/>
     <circle id="cvRing" cx="{cx}" cy="{cy}" r="88" fill="none" stroke="#fff" stroke-width="2" transform="rotate(-90 {cx} {cy})"/>
     <text x="{cx}" y="{cy + 10}" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">ConvAI</text></g>
@@ -108,12 +110,22 @@ def build():
   <line id="trk" x1="400" y1="{MY}" x2="400" y2="{MY}" stroke="#fff" stroke-opacity=".75" stroke-width="2"/>
   {icons()}
   {"".join(f'<g class="mk" id="mk{i}"><circle cx="{x}" cy="{MY}" r="16" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/><circle class="mkf" id="mkf{i}" cx="{x}" cy="{MY}" r="0" fill="#fff"/></g>' for i, x in enumerate(MX))}
-  <g id="venn"><circle id="vA" cx="700" cy="450" r="150" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
-    <circle id="vB" cx="1220" cy="450" r="150" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
-    <circle id="lens" cx="1220" cy="450" r="150" fill="url(#lensg)" clip-path="url(#vennA)"/>
-    <text id="tA" x="700" y="460" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="32" fill="#fff">대화형 AI</text>
-    <text id="tB" x="1220" y="460" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="32" fill="#fff">네트워크 인프라</text>
-    <text id="tL" x="960" y="461" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">라피치</text></g>
+  <g id="venn">
+    <g id="gA"><circle cx="830" cy="440" r="200" fill="url(#fillA)"/>
+      <circle class="vring" cx="830" cy="440" r="200" fill="none" stroke="#ff6fdc" stroke-opacity=".85" stroke-width="2"/>
+      <circle id="dA" cx="830" cy="440" r="184" fill="none" stroke="#ff6fdc" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="2 10"/>
+      <g class="vic">{"".join(f'<rect x="{722 + k * 12}" y="{392 - h / 2}" width="6" height="{h}" rx="3" fill="#ff8be6"/>' for k, h in enumerate((14, 26, 40, 30, 44, 22, 12)))}</g>
+      <text class="vt" x="764" y="460" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">대화형</text>
+      <text class="vt" x="764" y="498" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">AI</text></g>
+    <g id="gB"><circle cx="1090" cy="440" r="200" fill="url(#fillB)"/>
+      <circle class="vring" cx="1090" cy="440" r="200" fill="none" stroke="#8a8cff" stroke-opacity=".85" stroke-width="2"/>
+      <circle id="dB" cx="1090" cy="440" r="184" fill="none" stroke="#8a8cff" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="2 10"/>
+      <g class="vic"><path d="M1132 372 L1176 392 L1214 370 M1176 392 L1170 414" fill="none" stroke="#a9abff" stroke-width="2"/>
+        <circle cx="1132" cy="372" r="6" fill="#a9abff"/><circle cx="1176" cy="392" r="7" fill="#a9abff"/><circle cx="1214" cy="370" r="6" fill="#a9abff"/><circle cx="1170" cy="414" r="5" fill="#a9abff"/></g>
+      <text class="vt" x="1170" y="460" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">네트워크</text>
+      <text class="vt" x="1170" y="498" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">인프라</text></g>
+    <circle id="lens" cx="1090" cy="440" r="200" fill="url(#lensg)" clip-path="url(#vennA)"/>
+    <text id="tL" x="960" y="451" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">라피치</text></g>
   <g id="dot"><circle r="14" fill="#fff" opacity=".22"/><circle r="6.5" fill="#fff"/></g>
 </svg>'''
     pills = "".join(f'<div style="position:absolute;left:{x}px;top:{y - 32}px;width:0;display:flex;justify-content:center"><div class="pill" id="p{i}">{t}</div></div>'
@@ -192,15 +204,17 @@ FOUT(["#gd", "#trk", ".mk", ".mkl", ".ic", "#dot"], 21.3, 0.5);
 
 // ── 4. 두 원(AI, NI)이 겹치고, 겹친 자리가 라피치
 FIN("#venn", 21.8, 0.05);
-gsap.set(["#lens", "#tL"], {{ opacity: 0 }});
-DR("#vA, #vB", 21.85, 1.0, "power2.inOut", 0.12);
-tl.fromTo(["#tA", "#tB"], {{ opacity: 0 }}, {{ opacity: 1, duration: 0.6, stagger: 0.12, immediateRender: false }}, 22.3);
-tl.to(["#vA", "#vcA"], {{ attr: {{ cx: 870 }}, duration: 1.2, ease: "power3.inOut" }}, 23.0);
-tl.to(["#vB", "#lens"], {{ attr: {{ cx: 1050 }}, duration: 1.2, ease: "power3.inOut" }}, 23.0);
-tl.to("#tA", {{ attr: {{ x: 790 }}, duration: 1.2, ease: "power3.inOut" }}, 23.0);
-tl.to("#tB", {{ attr: {{ x: 1145 }}, duration: 1.2, ease: "power3.inOut" }}, 23.0);
-tl.to("#tA", {{ attr: {{ "font-size": 28 }}, duration: 1.2, ease: "power3.inOut" }}, 23.0);
-tl.to("#tB", {{ attr: {{ "font-size": 26 }}, duration: 1.2, ease: "power3.inOut" }}, 23.0);
+gsap.set(["#lens", "#tL", ".vt", ".vic"], {{ opacity: 0 }});
+tl.fromTo("#gA", {{ x: -170, opacity: 0 }}, {{ x: -170, opacity: 1, duration: 0.6, ease: "sine.out", immediateRender: false }}, 21.8);
+tl.fromTo("#gB", {{ x: 170, opacity: 0 }}, {{ x: 170, opacity: 1, duration: 0.6, ease: "sine.out", immediateRender: false }}, 21.95);
+gsap.set("#gA", {{ x: -170 }}); gsap.set("#gB", {{ x: 170 }});
+DR(".vring", 21.85, 1.0, "power2.inOut", 0.12);
+tl.fromTo(".vic", {{ opacity: 0, y: 8 }}, {{ opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.12, immediateRender: false }}, 22.3);
+tl.fromTo(".vt", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.6, stagger: 0.06, immediateRender: false }}, 22.45);
+tl.fromTo("#dA", {{ rotation: 0, svgOrigin: "830 440" }}, {{ rotation: 60, svgOrigin: "830 440", duration: 6.6, ease: "none" }}, 21.8);
+tl.fromTo("#dB", {{ rotation: 0, svgOrigin: "1090 440" }}, {{ rotation: -60, svgOrigin: "1090 440", duration: 6.6, ease: "none" }}, 21.8);
+tl.to("#gA", {{ x: 0, duration: 1.2, ease: "power3.inOut" }}, 23.0);
+tl.to("#gB", {{ x: 0, duration: 1.2, ease: "power3.inOut" }}, 23.0);
 FIN("#lens", 24.15, 0.6, "sine.out");
 FIN("#tL", 24.35, 0.5);
 CAP("c7", 24.4, 28.2);
@@ -219,9 +233,22 @@ gsap.utils.toArray(".pill").forEach((el, i) => tl.fromTo(el, { opacity: 0, y: 10
 FOUT([".pill", ".con", "#cvl"], 6.5, 0.4);
 tl.to("#cvG", { scale: 0.12, opacity: 0, transformOrigin: "50% 50%", duration: 0.5, ease: "power3.in" }, 6.7);"""
     if MODE == "b":
-        convai = 'tl.to("#prev", { scale: 0.06, opacity: 0, transformOrigin: "960px 540px", duration: 1.1, ease: "power3.in" }, 5.6);'
+        convai = """
+tl.to("#prev", { y: -1080, duration: 1.4, ease: "power2.inOut" }, 5.6);
+FIN(["#bridge", "#bdot"], 5.6, 0.05);
+tl.fromTo("#bridge", { attr: { y1: 742, y2: 742 } }, { attr: { y1: -338, y2: 430 }, duration: 1.4, ease: "power2.inOut", immediateRender: false }, 5.6);
+tl.fromTo("#bdot", { y: 742 }, { y: 430, duration: 1.4, ease: "power2.inOut", immediateRender: false }, 5.6);
+tl.set("#dot", { x: 960, y: 430, scale: 1, opacity: 1 }, 7.0);
+tl.set("#bdot", { opacity: 0 }, 7.0);
+FOUT("#bridge", 7.5, 0.5);
+"""
         body = body.replace("assets/flow_last.png", "assets/convai_last.png")
+        body = body.replace('<div id="blackout"', '<svg class="layer" viewBox="0 0 1920 1080"><line id="bridge" x1="960" y1="742" x2="960" y2="742" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>'
+                            '<g id="bdot" transform="translate(960 742)"><circle r="14" fill="#fff" opacity=".22"/><circle r="6.5" fill="#fff"/></g></svg><div id="blackout"')
     js = js.replace("__CONVAI__", convai)
+    if MODE == "b":
+        js = js.replace('tl.fromTo("#dot", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out", immediateRender: false }, 7.1);', "")
+        js = js.replace('gsap.set(["#cvG"', 'gsap.set(["#bridge", "#bdot", "#cvG"')
     return page("Rapeech brand film v3 (rest)", body, js, DUR, css,
                 audio=f'<audio id="sfx" class="clip" src="assets/rest_sfx.wav" data-start="0" data-duration="{DUR}" data-track-index="2" data-volume="1"></audio>')
 

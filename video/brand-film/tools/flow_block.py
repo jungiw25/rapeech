@@ -236,11 +236,13 @@ flow_js = """
       const RL = [0]; for (let k = 1; k < RP.length; k++) RL.push(RL[k - 1] + Math.hypot(RP[k][0] - RP[k - 1][0], RP[k][1] - RP[k - 1][1]));
       const RT = RL[RL.length - 1], ret = document.querySelector("#f-ret");
       ret.setAttribute("stroke-dasharray", `${RT + 10} ${RT + 10}`);
-      gsap.set(ret, { attr: { "stroke-dashoffset": RT } });
+      // 시작 전에는 선 끝(둥근 꼭지)도 보이지 않게: 오프셋을 한 칸 더 밀고, 움직이기 전까지 숨김
+      gsap.set(ret, { attr: { "stroke-dashoffset": RT + 10 }, opacity: 0 });
+      tl.set(ret, { opacity: 1 }, 28.3);
       for (let k = 1; k < RP.length; k++) {
         const d = 1.7 / (RP.length - 1), t = 28.3 + d * (k - 1);
         tl.to("#f-rpk", { x: RP[k][0], y: RP[k][1], duration: d, ease: "none" }, t);
-        tl.to(ret, { attr: { "stroke-dashoffset": RT - RL[k] }, duration: d, ease: "none" }, t);
+        tl.to(ret, { attr: { "stroke-dashoffset": RT + 10 - RL[k] }, duration: d, ease: "none" }, t);
       }
       tl.to("#f-rpk", { opacity: 0, scale: 2, duration: 0.4, ease: "power2.out" }, __RETARR__);
       tl.fromTo("#f-ok", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.8)" }, __RETARR__);

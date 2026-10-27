@@ -31,8 +31,10 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c091
 <div id="root" data-composition-id="main" data-start="0" data-duration="29.6" data-fps="60" data-width="1920" data-height="1080">
 <div class="layer vig"></div>
 <svg class="layer" id="main" viewBox="0 0 1920 1080">
-  <defs><clipPath id="vennA"><circle id="vcA" cx="700" cy="450" r="150"/></clipPath>
-  <linearGradient id="lensg" x1="860" y1="0" x2="1060" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#e01aa8"/><stop offset="1" stop-color="#5a3cf0"/></linearGradient></defs>
+  <defs><clipPath id="vennA"><circle cx="830" cy="440" r="200"/></clipPath>
+  <linearGradient id="lensg" x1="890" y1="0" x2="1030" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff3fcf"/><stop offset="1" stop-color="#6a4dff"/></linearGradient>
+  <radialGradient id="fillA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff4fd8" stop-opacity=".05"/><stop offset="1" stop-color="#ff4fd8" stop-opacity=".2"/></radialGradient>
+  <radialGradient id="fillB" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#5a5cff" stop-opacity=".05"/><stop offset="1" stop-color="#5a5cff" stop-opacity=".22"/></radialGradient></defs>
   <g id="cvG"><circle cx="960" cy="430" r="76" fill="#15102a" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/>
     <circle id="cvRing" cx="960" cy="430" r="88" fill="none" stroke="#fff" stroke-width="2" transform="rotate(-90 960 430)"/>
     <text x="960" y="440" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">ConvAI</text></g>
@@ -45,16 +47,26 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c091
   <line id="trk" x1="400" y1="470" x2="400" y2="470" stroke="#fff" stroke-opacity=".75" stroke-width="2"/>
   <g class="ic" id="ic0"><rect x="516" y="308" width="88" height="64" rx="4" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="516" y1="324" x2="604" y2="324" stroke="#fff" stroke-opacity=".3" stroke-width="1"/><line x1="516" y1="340" x2="604" y2="340" stroke="#fff" stroke-opacity=".3" stroke-width="1"/><line x1="516" y1="356" x2="604" y2="356" stroke="#fff" stroke-opacity=".3" stroke-width="1"/><path d="M530 362 L530 322 L570 362 Z" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g><g class="ic" id="ic1"><rect x="850" y="296" width="60" height="88" rx="6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="860" y="306" width="40" height="12" rx="2" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.4"/><rect x="860" y="326" width="40" height="12" rx="2" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.4"/><rect x="860" y="346" width="40" height="12" rx="2" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.4"/><rect x="860" y="366" width="40" height="12" rx="2" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.4"/><circle class="icled" cx="894" cy="312" r="2.5" fill="#d10bbd"/><circle class="icled" cx="894" cy="332" r="2.5" fill="#8f1ab8"/><circle class="icled" cx="894" cy="352" r="2.5" fill="#5422e6"/><circle class="icled" cx="894" cy="372" r="2.5" fill="#3c24f3"/></g><g class="ic" id="ic2"><path d="M1200 296 L1236 310 L1236 342 C 1236 364, 1218 378, 1200 386 C 1182 378, 1164 364, 1164 342 L1164 310 Z" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1186 340 l10 10 l20 -22" fill="none" stroke="#ff4fd8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g><g class="ic" id="ic3"><rect x="1474" y="304" width="92" height="60" rx="5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1508 380 L1532 380 M1520 364 L1520 380" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><polyline points="1486,336 1506,336 1514,320 1524,350 1532,334 1554,334" fill="none" stroke="#ff4fd8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></g>
   <g class="mk" id="mk0"><circle cx="560" cy="470" r="16" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/><circle class="mkf" id="mkf0" cx="560" cy="470" r="0" fill="#fff"/></g><g class="mk" id="mk1"><circle cx="880" cy="470" r="16" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/><circle class="mkf" id="mkf1" cx="880" cy="470" r="0" fill="#fff"/></g><g class="mk" id="mk2"><circle cx="1200" cy="470" r="16" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/><circle class="mkf" id="mkf2" cx="1200" cy="470" r="0" fill="#fff"/></g><g class="mk" id="mk3"><circle cx="1520" cy="470" r="16" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/><circle class="mkf" id="mkf3" cx="1520" cy="470" r="0" fill="#fff"/></g>
-  <g id="venn"><circle id="vA" cx="700" cy="450" r="150" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
-    <circle id="vB" cx="1220" cy="450" r="150" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>
-    <circle id="lens" cx="1220" cy="450" r="150" fill="url(#lensg)" clip-path="url(#vennA)"/>
-    <text id="tA" x="700" y="460" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="32" fill="#fff">대화형 AI</text>
-    <text id="tB" x="1220" y="460" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="32" fill="#fff">네트워크 인프라</text>
-    <text id="tL" x="960" y="461" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">라피치</text></g>
+  <g id="venn">
+    <g id="gA"><circle cx="830" cy="440" r="200" fill="url(#fillA)"/>
+      <circle class="vring" cx="830" cy="440" r="200" fill="none" stroke="#ff6fdc" stroke-opacity=".85" stroke-width="2"/>
+      <circle id="dA" cx="830" cy="440" r="184" fill="none" stroke="#ff6fdc" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="2 10"/>
+      <g class="vic"><rect x="722" y="385.0" width="6" height="14" rx="3" fill="#ff8be6"/><rect x="734" y="379.0" width="6" height="26" rx="3" fill="#ff8be6"/><rect x="746" y="372.0" width="6" height="40" rx="3" fill="#ff8be6"/><rect x="758" y="377.0" width="6" height="30" rx="3" fill="#ff8be6"/><rect x="770" y="370.0" width="6" height="44" rx="3" fill="#ff8be6"/><rect x="782" y="381.0" width="6" height="22" rx="3" fill="#ff8be6"/><rect x="794" y="386.0" width="6" height="12" rx="3" fill="#ff8be6"/></g>
+      <text class="vt" x="764" y="460" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">대화형</text>
+      <text class="vt" x="764" y="498" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">AI</text></g>
+    <g id="gB"><circle cx="1090" cy="440" r="200" fill="url(#fillB)"/>
+      <circle class="vring" cx="1090" cy="440" r="200" fill="none" stroke="#8a8cff" stroke-opacity=".85" stroke-width="2"/>
+      <circle id="dB" cx="1090" cy="440" r="184" fill="none" stroke="#8a8cff" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="2 10"/>
+      <g class="vic"><path d="M1132 372 L1176 392 L1214 370 M1176 392 L1170 414" fill="none" stroke="#a9abff" stroke-width="2"/>
+        <circle cx="1132" cy="372" r="6" fill="#a9abff"/><circle cx="1176" cy="392" r="7" fill="#a9abff"/><circle cx="1214" cy="370" r="6" fill="#a9abff"/><circle cx="1170" cy="414" r="5" fill="#a9abff"/></g>
+      <text class="vt" x="1170" y="460" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">네트워크</text>
+      <text class="vt" x="1170" y="498" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">인프라</text></g>
+    <circle id="lens" cx="1090" cy="440" r="200" fill="url(#lensg)" clip-path="url(#vennA)"/>
+    <text id="tL" x="960" y="451" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">라피치</text></g>
   <g id="dot"><circle r="14" fill="#fff" opacity=".22"/><circle r="6.5" fill="#fff"/></g>
 </svg>
 <div class="layer"><div class="cwrap" id="cvl" style="left:960px;top:258px"><div class="mono">자체 대화형 AI 플랫폼</div><div class="mono" style="margin-top:10px;font-size:16px;letter-spacing:.12em;color:#8e86a8">조달청 우수조달물품 지정 · 2026</div></div><div style="position:absolute;left:470px;top:398px;width:0;display:flex;justify-content:center"><div class="pill" id="p0">NLU 콜봇</div></div><div style="position:absolute;left:1450px;top:398px;width:0;display:flex;justify-content:center"><div class="pill" id="p1">LLM AI 에이전트</div></div><div style="position:absolute;left:960px;top:598px;width:0;display:flex;justify-content:center"><div class="pill" id="p2">AICC 구축</div></div><div class="cwrap mkl" id="mkl0" style="left:560px;top:504px"><div class="mono">01</div><div class="val">설계</div></div><div class="cwrap mkl" id="mkl1" style="left:880px;top:504px"><div class="mono">02</div><div class="val">구축</div></div><div class="cwrap mkl" id="mkl2" style="left:1200px;top:504px"><div class="mono">03</div><div class="val">보안 · 관제</div></div><div class="cwrap mkl" id="mkl3" style="left:1520px;top:504px"><div class="mono">04</div><div class="val">운영</div></div></div>
-<div class="cap" id="c3"><div class="tag"><span class="c3-l">대화형 AI 플랫폼</span></div><div class="ct"><span class="cw c3-l">콜봇부터 <span class="g">AI 에이전트</span>, AICC 구축까지</span></div></div><div class="cap" id="c4"><div class="tag"><span class="c4-l">네트워크 인프라</span></div><div class="ct"><span class="cw c4-l">그 대화가 흐르는 <span class="g">네트워크</span>를 설계하고 구축합니다</span></div></div><div class="cap" id="c5"><div class="tag"><span class="c5-l">네트워크 인프라</span></div><div class="ct"><span class="cw c5-l"><span class="g">AI 데이터센터</span>부터 전산센터, ESS 공장까지</span></div></div><div class="cap" id="c6"><div class="tag"><span class="c6-l">설계부터 운영까지</span></div><div class="ct"><span class="cw c6-l">설계, 구축, 보안과 관제, <span class="g">운영까지</span></span></div></div><div class="cap" id="c7"><div class="tag"><span class="c7-l">한 팀</span></div><div class="ct"><span class="cw c7-l">인프라 구축부터 AI 도입까지, <span class="g">한 팀이</span> 함께합니다</span></div></div>
+<div class="cap" id="c3"><div class="tag"><span class="c3-l">대화형 AI 플랫폼</span></div><div class="ct"><span class="cw c3-l">콜봇부터 <span class="g">AI 에이전트</span>, AICC 구축까지</span></div></div><div class="cap" id="c4"><div class="tag"><span class="c4-l">네트워크 인프라</span></div><div class="ct"><span class="cw c4-l">그리고 그 대화가 흐르는 <span class="g">네트워크</span>도 설계하고 구축합니다</span></div></div><div class="cap" id="c5"><div class="tag"><span class="c5-l">네트워크 인프라</span></div><div class="ct"><span class="cw c5-l"><span class="g">AI 데이터센터</span>부터 전산센터, ESS 공장까지</span></div></div><div class="cap" id="c6"><div class="tag"><span class="c6-l">설계부터 운영까지</span></div><div class="ct"><span class="cw c6-l">설계, 구축, 보안과 관제, <span class="g">운영까지</span></span></div></div><div class="cap" id="c7"><div class="tag"><span class="c7-l">한 팀</span></div><div class="ct"><span class="cw c7-l">인프라 구축부터 AI 도입까지, <span class="g">한 팀이</span> 함께합니다</span></div></div>
 <img id="prev" class="layer" src="assets/flow_last.png" />
 <div id="blackout" class="layer" style="background:#0c0916"></div>
 <audio id="sfx" class="clip" src="assets/rest_sfx.wav" data-start="0" data-duration="29.6" data-track-index="2" data-volume="1"></audio>
@@ -170,15 +182,17 @@ FOUT(["#gd", "#trk", ".mk", ".mkl", ".ic", "#dot"], 21.3, 0.5);
 
 // ── 4. 두 원(AI, NI)이 겹치고, 겹친 자리가 라피치
 FIN("#venn", 21.8, 0.05);
-gsap.set(["#lens", "#tL"], { opacity: 0 });
-DR("#vA, #vB", 21.85, 1.0, "power2.inOut", 0.12);
-tl.fromTo(["#tA", "#tB"], { opacity: 0 }, { opacity: 1, duration: 0.6, stagger: 0.12, immediateRender: false }, 22.3);
-tl.to(["#vA", "#vcA"], { attr: { cx: 870 }, duration: 1.2, ease: "power3.inOut" }, 23.0);
-tl.to(["#vB", "#lens"], { attr: { cx: 1050 }, duration: 1.2, ease: "power3.inOut" }, 23.0);
-tl.to("#tA", { attr: { x: 790 }, duration: 1.2, ease: "power3.inOut" }, 23.0);
-tl.to("#tB", { attr: { x: 1145 }, duration: 1.2, ease: "power3.inOut" }, 23.0);
-tl.to("#tA", { attr: { "font-size": 28 }, duration: 1.2, ease: "power3.inOut" }, 23.0);
-tl.to("#tB", { attr: { "font-size": 26 }, duration: 1.2, ease: "power3.inOut" }, 23.0);
+gsap.set(["#lens", "#tL", ".vt", ".vic"], { opacity: 0 });
+tl.fromTo("#gA", { x: -170, opacity: 0 }, { x: -170, opacity: 1, duration: 0.6, ease: "sine.out", immediateRender: false }, 21.8);
+tl.fromTo("#gB", { x: 170, opacity: 0 }, { x: 170, opacity: 1, duration: 0.6, ease: "sine.out", immediateRender: false }, 21.95);
+gsap.set("#gA", { x: -170 }); gsap.set("#gB", { x: 170 });
+DR(".vring", 21.85, 1.0, "power2.inOut", 0.12);
+tl.fromTo(".vic", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.12, immediateRender: false }, 22.3);
+tl.fromTo(".vt", { opacity: 0 }, { opacity: 1, duration: 0.6, stagger: 0.06, immediateRender: false }, 22.45);
+tl.fromTo("#dA", { rotation: 0, svgOrigin: "830 440" }, { rotation: 60, svgOrigin: "830 440", duration: 6.6, ease: "none" }, 21.8);
+tl.fromTo("#dB", { rotation: 0, svgOrigin: "1090 440" }, { rotation: -60, svgOrigin: "1090 440", duration: 6.6, ease: "none" }, 21.8);
+tl.to("#gA", { x: 0, duration: 1.2, ease: "power3.inOut" }, 23.0);
+tl.to("#gB", { x: 0, duration: 1.2, ease: "power3.inOut" }, 23.0);
 FIN("#lens", 24.15, 0.6, "sine.out");
 FIN("#tL", 24.35, 0.5);
 CAP("c7", 24.4, 28.2);
