@@ -36,3 +36,6 @@ video/convai-samples/*/assets/
 video/convai-samples/*/out/
 video/convai-samples/*/render.log
 video/*/*/.hyperframes/
+video/brand-film-v3b/assets/
+video/brand-film-v3b/out/rest.mp4
+video/brand-film-v3b/render.log

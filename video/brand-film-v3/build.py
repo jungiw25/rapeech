@@ -19,6 +19,8 @@ sys.path.insert(0, str(HERE.parent))
 sys.path.insert(0, str(HERE.parent.parent))
 from kit_v2 import FILM, G, REPO, cap_html, page, setup_project  # noqa: E402
 
+import os
+MODE = os.environ.get("MODE", "")   # "b": ConvAI 장면을 시안 B(별도 영상)로 대체 → 이 영상은 5.6초부터 사용
 DUR = 29.6
 FLOW_CUT = 32.6            # 이전 소개 영상 원테이크에서 쓰는 길이(본편 기준)
 CAPS = [("c3", "대화형 AI 플랫폼", "콜봇부터 [AI 에이전트], AICC 구축까지"),
@@ -134,17 +136,7 @@ gsap.set("#dot", {{ x: {cx}, y: {cy}, transformOrigin: "50% 50%" }});
 prep(document.getElementById("cvRing"));
 
 // ── 1. 이전 장면이 가운데로 모이며 ConvAI 노드가 됨
-tl.to("#prev", {{ scale: 0.06, opacity: 0, transformOrigin: "960px 540px", duration: 1.1, ease: "power3.in" }}, 0.0);
-tl.fromTo("#cvG", {{ opacity: 0, scale: 0.6, y: 110, transformOrigin: "50% 50%" }}, {{ opacity: 1, scale: 1, y: 110, duration: 0.8, ease: "power3.out", immediateRender: false }}, 0.75);
-tl.to("#cvG", {{ y: 0, duration: 0.8, ease: "power2.inOut" }}, 1.55);
-DR("#cvRing", 1.6, 1.1, "power2.inOut");
-tl.to("#cvRing", {{ attr: {{ stroke: "#ff4fd8" }}, duration: 0.4, ease: "sine.out" }}, 2.7);
-CAP("c3", 1.4, 6.5);
-tl.fromTo("#cvl", {{ opacity: 0, y: 8 }}, {{ opacity: 1, y: 0, duration: 0.7, ease: "power3.out", immediateRender: false }}, 2.4);
-FIN(".con", 2.6, 0.05); DR(".con", 2.6, 0.55, "power2.out", 0.15);
-gsap.utils.toArray(".pill").forEach((el, i) => tl.fromTo(el, {{ opacity: 0, y: 10 }}, {{ opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }}, 2.9 + i * 0.2));
-FOUT([".pill", ".con", "#cvl"], 6.5, 0.4);
-tl.to("#cvG", {{ scale: 0.12, opacity: 0, transformOrigin: "50% 50%", duration: 0.5, ease: "power3.in" }}, 6.7);
+__CONVAI__
 
 // ── 2. 네트워크 인프라
 const N = 7.4;
@@ -215,6 +207,21 @@ CAP("c7", 24.4, 28.2);
 // ── 5. 어둡게 정리 → 아웃트로
 FIN("#blackout", 28.4, 0.8, "sine.inOut");
 """
+    convai = """tl.to("#prev", { scale: 0.06, opacity: 0, transformOrigin: "960px 540px", duration: 1.1, ease: "power3.in" }, 0.0);
+tl.fromTo("#cvG", { opacity: 0, scale: 0.6, y: 110, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, y: 110, duration: 0.8, ease: "power3.out", immediateRender: false }, 0.75);
+tl.to("#cvG", { y: 0, duration: 0.8, ease: "power2.inOut" }, 1.55);
+DR("#cvRing", 1.6, 1.1, "power2.inOut");
+tl.to("#cvRing", { attr: { stroke: "#ff4fd8" }, duration: 0.4, ease: "sine.out" }, 2.7);
+CAP("c3", 1.4, 6.5);
+tl.fromTo("#cvl", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", immediateRender: false }, 2.4);
+FIN(".con", 2.6, 0.05); DR(".con", 2.6, 0.55, "power2.out", 0.15);
+gsap.utils.toArray(".pill").forEach((el, i) => tl.fromTo(el, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 2.9 + i * 0.2));
+FOUT([".pill", ".con", "#cvl"], 6.5, 0.4);
+tl.to("#cvG", { scale: 0.12, opacity: 0, transformOrigin: "50% 50%", duration: 0.5, ease: "power3.in" }, 6.7);"""
+    if MODE == "b":
+        convai = 'tl.to("#prev", { scale: 0.06, opacity: 0, transformOrigin: "960px 540px", duration: 1.1, ease: "power3.in" }, 5.6);'
+        body = body.replace("assets/flow_last.png", "assets/convai_last.png")
+    js = js.replace("__CONVAI__", convai)
     return page("Rapeech brand film v3 (rest)", body, js, DUR, css,
                 audio=f'<audio id="sfx" class="clip" src="assets/rest_sfx.wav" data-start="0" data-duration="{DUR}" data-track-index="2" data-volume="1"></audio>')
 
@@ -236,10 +243,14 @@ def sound(out):
     def whoosh(t, up=True, g=0.035, d=0.8):
         add(buf, sweep(220 if up else 900, 900 if up else 220, d, partials=((1, 1), (2, 0.3)), a=0.1, r=0.2, rise=up), t, g)
 
-    whoosh(0.0, False, 0.045, 1.1); add(buf, pop(760, 380, 0.14), 0.85, 0.08)
-    chime(2.7, 0.11, hi=True)
-    for i in range(3):
-        add(buf, pop(820, 380), 2.9 + i * 0.2, 0.06)
+    if MODE == "b":
+        whoosh(5.6, False, 0.045, 1.1)
+    else:
+        whoosh(0.0, False, 0.045, 1.1); add(buf, pop(760, 380, 0.14), 0.85, 0.08)
+    if MODE != "b":
+        chime(2.7, 0.11, hi=True)
+        for i in range(3):
+            add(buf, pop(820, 380), 2.9 + i * 0.2, 0.06)
     whoosh(6.7, False, 0.04, 0.6); add(buf, pop(620, 260, 0.12), 8.5, 0.14)
     for r in range(3):
         add(buf, sweep(500, 1500, 0.55, partials=((1, 1),), a=0.06, r=0.12, rise=True), 8.6 + r * 0.08, 0.015)
@@ -262,7 +273,12 @@ def sound(out):
 
 
 if __name__ == "__main__":
-    a = setup_project(HERE, "brand-film-v3")
+    if MODE == "b":
+        HERE = HERE.parent / "brand-film-v3b"
+        HERE.mkdir(exist_ok=True)
+    a = setup_project(HERE, "brand-film-v3" + MODE)
+    if MODE == "b":
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-sseof", "-0.02", "-i", str(REPO / "video" / "convai-samples" / "b" / "out" / "raw.mp4"), "-frames:v", "1", "-update", "1", str(a / "convai_last.png")], check=True)
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{12 + FLOW_CUT:.3f}", "-i", str(FILM / "out" / "raw.mp4"), "-frames:v", "1", str(a / "flow_last.png")], check=True)
     (HERE / "index.html").write_text(build(), encoding="utf-8")
     sound(a / "rest_sfx.wav")

@@ -257,7 +257,7 @@ CAP("k5", 23.2, null);
 """
 
 
-def sound(out, dur, events):
+def sound(out, dur, events, bed_on=True):
     from engine.bgm import SR, add, synth, lowpass, write_wav
     from intro.sfx import bell, pop, sweep
     buf = np.zeros((int((dur + 1) * SR), 2))
@@ -270,8 +270,9 @@ def sound(out, dur, events):
             add(buf, sweep(240, 900, 0.8, partials=((1, 1), (2, 0.3)), a=0.1, r=0.2, rise=True), t, 0.03)
         elif kind == "down":
             add(buf, sweep(900, 240, 1.0, partials=((1, 1), (2, 0.3)), a=0.1, r=0.2, rise=False), t, 0.045)
-    bed = synth(dur + 0.5, seed=21, bpm=92)[: len(buf)]
-    buf[: len(bed)] += bed * 0.42
+    if bed_on:
+        bed = synth(dur + 0.5, seed=21, bpm=92)[: len(buf)]
+        buf[: len(bed)] += bed * 0.42
     buf = lowpass(buf, 10000)[: int(dur * SR)]
     buf *= 10 ** (-3 / 20) / np.abs(buf).max()
     write_wav(out, buf)
@@ -289,4 +290,5 @@ if __name__ == "__main__":
         html, dur = fn()
         (d / "index.html").write_text(html, encoding="utf-8")
         sound(a / f"sfx_{name}.wav", dur, ev)
+        sound(a / f"sfx_{name}_nobed.wav", dur, ev, bed_on=False)   # 회사 소개 영상에 넣을 때(배경음악은 영상 전체에 따로)
     print("ok")
