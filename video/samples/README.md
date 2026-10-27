@@ -1,4 +1,4 @@
-# 브랜드 필름 리뉴얼 시안 (22초 샘플 2종)
+# 브랜드 필름 리뉴얼 시안 (22초 샘플 5종)
 
 목표: 지금 본편의 "AI 티"(모든 요소가 빛남, 그라데이션 과다, 평평한 벡터, 똑같은 글자 등장)를 덜고 더 세련되게.
 두 시안은 **같은 이야기, 같은 타이밍, 같은 소리**라 나란히 비교할 수 있다. 인트로·아웃트로 로고 부분은 손대지 않는다.
@@ -25,9 +25,24 @@
 - 클라이맥스: 구가 떠올라 납작한 AI 판으로 바뀌고, 빛기둥이 인프라에 닿으며 LED가 가운데서 물결처럼 켜짐
 - three.js(시간만으로 그리는 결정적 렌더)
 
+## C안: 페이퍼 (`out/rapeech_sample_C_paper.mp4`)
+- 08 페이퍼 컷아웃 + 03 클레이모피즘. 밝은 라벤더 종이 바탕, 부드러운 종이 그림자
+- 목소리 = 종이 물결 다섯 겹, 단계 카드는 팝업북처럼 일어섬, 종이 원반이 지나간 자리만 종이 띠가 깔림
+- 데이터센터 = 종이 층이 아래부터 일어서는 건물, 마지막에 목소리 원반이 말랑하게 내려앉음
+
+## D안: 바우하우스 (`out/rapeech_sample_D_bauhaus.mp4`)
+- 12 바우하우스 + 06 키네틱 타이포. 크림색 바탕의 12칸 격자, 평면 도형(브랜드 분홍·파랑 + 검정), 빛 효과 없음
+- 단계마다 도형 모듈: 막대(인식) → 원과 사분원(의도) → 동심원(인증) → 검은 사각과 체크(처리)
+- 마지막에 검은 랙이 한 덩어리(NI)가 되고 분홍 반원(AI)이 그 위에 놓임
+
+## E안: 하프톤 (`out/rapeech_sample_E_halftone.mp4`)
+- 04 하프톤 + 09 인피니트 줌. 장면 전체를 브랜드 그라데이션 망점으로 찍음(인쇄물 질감)
+- 마지막 노드 속으로 한 번에 줌인하면 그 안에 있던 데이터센터가 화면을 채움
+
 ## 다시 만들기
 ```bash
-python3 video/samples/build_samples.py
+python3 video/samples/build_samples.py     # A, B
+python3 video/samples/build_samples2.py    # C, D, E
 cd video/samples/a && npx hyperframes render --fps 60 --quality delivery --output out/raw.mp4
 cd video/samples/b && npx hyperframes render --fps 60 --quality delivery --output out/raw.mp4
 ```

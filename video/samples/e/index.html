@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=1920, height=1080" /><title>Rapeech 시안 E</title><script src="assets/gsap.min.js"></script>
+<style>@font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c0916; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
+.layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.hl { position: absolute; color: #fff; font-weight: 800; letter-spacing: -0.035em; line-height: 1.16; white-space: nowrap; }
+.hl .ln { display: block; overflow: hidden; padding: 0 0.06em 0.12em 0; margin-bottom: -0.12em; }
+.hl .ln > span { display: inline-block; }
+.g { background: linear-gradient(100deg, #ff4fd8, #b25cff 55%, #7a6bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.v { display: inline-block; }
+.mono { position: absolute; font-weight: 600; font-size: 19px; letter-spacing: 0.24em; color: #8e86a8; white-space: nowrap; }
+.val { position: absolute; font-weight: 700; color: #fff; letter-spacing: -0.02em; white-space: nowrap; }
+.cwrap { position: absolute; width: 0; display: flex; flex-direction: column; align-items: center; }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="22.0" data-fps="60" data-width="1920" data-height="1080">
+<canvas id="ht" class="layer" width="1920" height="1080"></canvas>
+<div class="layer"><div class="cwrap" style="left:400px;top:686px"><div class="mono e-sl" id="e-sl0" style="position:relative">01  음성 인식</div><div class="val e-sv" id="e-sv0" style="position:relative;margin-top:14px;font-size:34px"></div></div><div class="cwrap" style="left:800px;top:686px"><div class="mono e-sl" id="e-sl1" style="position:relative">02  의도 파악</div><div class="val e-sv" id="e-sv1" style="position:relative;margin-top:14px;font-size:34px"></div></div><div class="cwrap" style="left:1200px;top:686px"><div class="mono e-sl" id="e-sl2" style="position:relative">03  목소리 인증</div><div class="val e-sv" id="e-sv2" style="position:relative;margin-top:14px;font-size:34px"></div></div><div class="cwrap" style="left:1600px;top:686px"><div class="mono e-sl" id="e-sl3" style="position:relative">04  업무 처리</div><div class="val e-sv" id="e-sv3" style="position:relative;margin-top:14px;font-size:34px"></div></div></div>
+<div class="mono" id="k1" style="left:160px;top:236px">RAPEECH  ·  CONVERSATIONAL AI</div>
+<div class="hl" id="h1" style="left:156px;top:280px;font-size:92px;"><span class="ln"><span class="h1-l">모든 대화는,</span></span><span class="ln"><span class="h1-l"><span class="g">목소리</span>에서 시작합니다.</span></span></div>
+<div class="hl" id="h2" style="left:156px;top:160px;font-size:76px;"><span class="ln"><span class="h2-l">AI 콜봇이 <span class="v h2-v" id="h2-v0">듣고</span>, <span class="v h2-v" id="h2-v1">이해하고</span>,</span></span><span class="ln"><span class="h2-l"><span class="v h2-v" id="h2-v2">확인하고</span>, <span class="v h2-v" id="h2-v3">처리합니다</span>.</span></span></div>
+<div class="hl" id="h3" style="left:156px;top:160px;font-size:76px;"><span class="ln"><span class="h3-l">끊김 없는 대화 뒤에는,</span></span><span class="ln"><span class="h3-l"><span class="g">단단한 인프라</span>가 있습니다.</span></span></div>
+<div class="hl" id="h4" style="left:156px;top:160px;font-size:76px;"><span class="ln"><span class="h4-l">인프라 구축부터 AI 도입까지,</span></span><span class="ln"><span class="h4-l"><span class="g">한 팀이</span> 함께합니다.</span></span></div>
+<audio id="bed" class="clip" src="assets/bed.wav" data-start="0" data-duration="22.0" data-track-index="2" data-volume="0.42" data-fade-in="1.2" data-fade-out="2.2"></audio>
+<audio id="sfx" class="clip" src="assets/sfx.wav" data-start="0" data-duration="22.0" data-track-index="3" data-volume="1"></audio>
+</div>
+<script>
+
+const tl = gsap.timeline({ paused: true });
+const REVEAL = (sel, t, o = {}) => tl.fromTo(sel, { yPercent: 118 }, { yPercent: 0, duration: o.d || 1.15, ease: "expo.out", stagger: o.s ?? 0.09 }, t);
+const HIDE = (sel, t, o = {}) => tl.to(sel, { yPercent: -118, duration: o.d || 0.55, ease: "power3.in", stagger: o.s ?? 0.05 }, t);
+const FADE = (sel, t, a, b, d = 0.6, e = "sine.inOut") => tl.fromTo(sel, { opacity: a }, { opacity: b, duration: d, ease: e, immediateRender: false }, t);
+const SYL = "가각간갈감강개거건검겨경고공과관구국군그근글기나남내너노누는다단달대더도동두라락란람랑래러로루르리마만말매머모목무문미바반발방배버번보복본부분비사산살상새서선설성세소속손수순스시신실심아안알애야약양어언업에여역연열영오온와완요용우운울원위유으은을음의이인일자작잔장재저전절점정제조종주중지진차찬창채처천철청초총추축출치친카타탑태터토통트파판패포표프피하학한할함합해행허현형호화확환활회효후휘흐희";
+const hsh = (a, b) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+const KEEP = " “”,.·";
+function scrambleText(text, p, d) {
+  if (p <= 0) return "";
+  const n = text.length, f = Math.floor(p * d * 24);
+  let out = "";
+  for (let i = 0; i < n; i++) {
+    const c = text[i], r = 0.3 + 0.7 * i / n;
+    if (p >= r || KEEP.includes(c)) out += (p >= r - 0.5 ? c : (KEEP.includes(c) ? c : ""));
+    else if (p >= r - 0.5) out += SYL[Math.floor(hsh(i + 1, f + 7) * SYL.length)];
+  }
+  return out;
+}
+const SCRAMBLE = (el, text, t, d = 1.0) => { const o = { p: 0 }; el.textContent = ""; tl.fromTo(o, { p: 0 }, { p: 1, duration: d, ease: "none", onUpdate() { el.textContent = scrambleText(text, o.p, d); } }, t); };
+const DRAWS = (sel, t, d = 1.0, e = "power2.inOut", s = 0) => gsap.utils.toArray(sel).forEach((el, i) => {
+  const L = el.getTotalLength(); el.setAttribute("stroke-dasharray", `${L} ${L}`);
+  tl.fromTo(el, { attr: { "stroke-dashoffset": L } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e }, t + i * s);
+});
+
+const ARR = [5.4, 7.2, 9.0, 10.8], DEP = [4.2, 5.9, 7.7, 9.5], VALS = ["“카드를 잃어버렸어요”", "카드 분실 신고", "본인 확인 완료", "카드 사용 정지"];
+const cl = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v)); const seg = (t, a, b) => cl((t - a) / (b - a));
+const io = (x) => x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; const io3 = (x) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const lerp = (a, b, u) => a + (b - a) * u;
+
+gsap.set("#k1", { opacity: 0 });
+REVEAL(".h1-l", 0.9); FADE("#k1", 0.7, 0, 1, 0.8); HIDE(".h1-l", 3.75); FADE("#k1", 3.75, 1, 0, 0.4);
+REVEAL(".h2-l", 4.35); gsap.set(".h2-v", { opacity: 0.22 });
+ARR.forEach((t, i) => tl.to("#h2-v" + i, { opacity: 1, duration: 0.5, ease: "sine.out" }, t + 0.05));
+HIDE(".h2-l", 12.0);
+REVEAL(".h3-l", 13.2); HIDE(".h3-l", 16.55);
+REVEAL(".h4-l", 17.7);
+
+const SX = [400, 800, 1200, 1600], START = 160, LY = 640, ZS = 14;
+gsap.set(".e-sl", { opacity: 0 });
+for (let i = 0; i < 4; i++) {
+  tl.fromTo("#e-sl" + i, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, ARR[i] + 0.1);
+  SCRAMBLE(document.getElementById("e-sv" + i), VALS[i], ARR[i] + 0.2, 0.9);
+  if (i < 3) tl.to(["#e-sl" + i, "#e-sv" + i], { opacity: 0.38, duration: 0.6 }, ARR[i + 1] - 0.3);
+}
+tl.to([".e-sl", ".e-sv"], { opacity: 0, duration: 0.5 }, 11.95);
+
+// ───────── 장면을 낮은 해상도로 그린 뒤, 칸마다 밝기만큼 망점을 찍음(시간 t로만 결정)
+const CELL = 10, GW = 1920 / CELL, GH = 1080 / CELL;
+const off = document.createElement("canvas"); off.width = GW; off.height = GH;
+const o = off.getContext("2d", { willReadFrequently: true });
+const out = document.getElementById("ht").getContext("2d");
+const BK = 10, BCOL = [];
+for (let b = 0; b < BK; b++) {
+  const u = b / (BK - 1), A = u < 0.5 ? [255, 60, 210] : [170, 90, 255], Bc = u < 0.5 ? [170, 90, 255] : [80, 80, 255], v = (u % 0.5) * 2;
+  BCOL.push(A.map((c, i) => Math.round(c + (Bc[i] - c) * (u === 1 ? 1 : v))));
+}
+function orbX(t) {
+  let x = START;
+  for (let i = 0; i < 4; i++) if (t >= DEP[i]) x = lerp(i ? SX[i - 1] : START, SX[i], io(seg(t, DEP[i], ARR[i])));
+  return x;
+}
+function sphere(x, y, r, gain = 1) {
+  if (r <= 0.5) return;
+  const g = o.createRadialGradient(x - r * 0.35, y - r * 0.4, r * 0.05, x, y, r);
+  g.addColorStop(0, `rgba(255,255,255,${gain})`); g.addColorStop(0.45, `rgba(150,150,150,${gain})`); g.addColorStop(1, `rgba(25,25,25,${gain})`);
+  o.fillStyle = g; o.beginPath(); o.arc(x, y, r, 0, Math.PI * 2); o.fill();
+}
+const C30 = Math.cos(Math.PI / 6), KK = 50;
+const iso = (x, y, z) => [(x - y) * C30 * KK, (x + y) * 0.5 * KK - z * KK];
+function plate(z, a, flash) {
+  const P = (x, y, zz) => iso(x - 3.5, y - 2, zz + z - 1.6);
+  const poly = (pts, c) => { o.fillStyle = c; o.beginPath(); pts.forEach((p, i) => i ? o.lineTo(p[0], p[1]) : o.moveTo(p[0], p[1])); o.closePath(); o.fill(); };
+  const g = (v) => `rgba(${v},${v},${v},${a})`;
+  poly([P(0, 4, 0), P(7, 4, 0), P(7, 4, 0.14), P(0, 4, 0.14)], g(70 + flash * 60));
+  poly([P(7, 0, 0), P(7, 4, 0), P(7, 4, 0.14), P(7, 0, 0.14)], g(110 + flash * 60));
+  poly([P(0, 0, 0.14), P(7, 0, 0.14), P(7, 4, 0.14), P(0, 4, 0.14)], g(150 + flash * 100));
+  o.strokeStyle = `rgba(255,255,255,${a})`; o.lineWidth = 6; o.beginPath();
+  const e = [P(0, 4, 0.14), P(7, 4, 0.14), P(7, 0, 0.14)]; e.forEach((p, i) => i ? o.lineTo(p[0], p[1]) : o.moveTo(p[0], p[1])); o.stroke();
+}
+function drawScene(t) {
+  o.setTransform(1, 0, 0, 1, 0, 0); o.fillStyle = "#000"; o.fillRect(0, 0, GW, GH);
+  o.setTransform(1 / CELL, 0, 0, 1 / CELL, 0, 0);
+  // 카메라: 마지막 노드 속으로 들어가는 줌(인피니트 줌)
+  const zu = io3(seg(t, 12.2, 13.9)), s = Math.pow(ZS, zu);
+  const Ox = lerp(1600, 1290, zu), Oy = lerp(640, 560, zu);
+  o.translate(Ox, Oy); o.scale(s, s); o.translate(-1600, -640);
+  const fade = 1 - seg(s, 2, 5);
+  // 1. 목소리: 큰 구와 퍼지는 고리 → 작은 점으로 줄어 출발점으로
+  const mv = io3(seg(t, 3.5, 4.4));
+  const r0 = 210 * io3(seg(t, 0.2, 1.3)), px = lerp(1300, START, mv), py = lerp(560, LY, mv), rr = lerp(r0, 26, mv);
+  if (t < 4.5) for (let k = 0; k < 3; k++) {
+    const ph = ((t - 0.8 - k * 0.45) % 1.4 + 1.4) % 1.4 / 1.4;
+    if (t < 0.8 + k * 0.45) continue;
+    o.strokeStyle = `rgba(255,255,255,${0.55 * (1 - ph) * (1 - mv)})`; o.lineWidth = 16; o.beginPath(); o.arc(1300, 560, 220 + ph * 260, 0, Math.PI * 2); o.stroke();
+  }
+  // 2. 길과 노드
+  const x = t < 4.4 ? px : orbX(t);
+  if (t > 3.9 && fade > 0) {
+    o.strokeStyle = `rgba(255,255,255,${0.85 * fade})`; o.lineWidth = 7; o.beginPath(); o.moveTo(START, LY); o.lineTo(x, LY); o.stroke();
+    SX.forEach((sx, i) => {
+      const on = seg(t, ARR[i] - 0.05, ARR[i] + 0.3);
+      o.strokeStyle = `rgba(255,255,255,${(0.35 + 0.5 * on) * fade * seg(t, 3.9, 4.6)})`; o.lineWidth = 6;
+      o.beginPath(); o.arc(sx, LY, 38, 0, Math.PI * 2); o.stroke();
+      if (on > 0) { o.fillStyle = `rgba(255,255,255,${0.8 * on * fade})`; o.beginPath(); o.arc(sx, LY, 16 * on, 0, Math.PI * 2); o.fill(); }
+    });
+  }
+  if (t < 12.4) sphere(t < 4.4 ? px : x, t < 4.4 ? py : LY, t < 4.4 ? rr : 26 + 6 * Math.exp(-Math.pow((t - ARR.find((a) => a > t - 0.6) || 99) / 0.25, 2)), 1);
+  // 3. 노드 안에 있던 데이터센터(1/ZS 크기)가 줌으로 화면을 채움 → 층이 아래부터 쌓임 → 4. 두 층으로 모임
+  if (s > 1.5) {
+    o.save(); o.translate(1600, 640); o.scale(1 / ZS, 1 / ZS);
+    const Z = [0, 0.12, 0.24, 3.0, 3.12, 3.24], cv = io3(seg(t, 16.85, 18.15));
+    for (let f = 0; f < 6; f++) {
+      const ap = io3(seg(t, 13.3 + f * 0.36, 14.1 + f * 0.36));
+      if (ap <= 0) continue;
+      const z = lerp(f * 1.0, Z[f], cv) + (1 - ap) * 0.6;
+      const fl = f < 3 ? Math.exp(-Math.pow((t - 19.3) / 0.35, 2)) : Math.exp(-Math.pow((t - 18.85) / 0.35, 2));
+      plate(z, ap * seg(s, 2, 6), fl);
+    }
+    const dy = lerp(-700, iso(0, 0, 3.24 - 1.6 + 0.14)[1], io(seg(t, 18.3, 18.95)));
+    if (t > 18.3 && t < 19.9) sphere(0, t < 18.95 ? dy : lerp(dy, iso(0, 0, 0.38 - 1.6)[1], io(seg(t, 18.95, 19.35))), 22 * (1 - seg(t, 19.4, 19.9)), 1);
+    o.restore();
+  }
+  // 망점 찍기
+  const im = o.getImageData(0, 0, GW, GH).data;
+  out.fillStyle = "#0c0916"; out.fillRect(0, 0, 1920, 1080);
+  const paths = BCOL.map(() => new Path2D()), white = new Path2D();
+  for (let gy = 0; gy < GH; gy++) for (let gx = 0; gx < GW; gx++) {
+    const i = (gy * GW + gx) * 4, lum = (im[i] + im[i + 1] + im[i + 2]) / 765;
+    const r = CELL * 0.56 * Math.sqrt(0.035 + 0.965 * lum);
+    const cx = gx * CELL + CELL / 2 + (gy % 2 ? CELL / 2 : 0) * 0, cy = gy * CELL + CELL / 2;
+    const p = lum > 0.82 ? white : paths[Math.min(BK - 1, Math.floor((gx / GW + gy / GH * 0.25) / 1.25 * BK))];
+    p.moveTo(cx + r, cy); p.arc(cx, cy, r, 0, Math.PI * 2);
+  }
+  paths.forEach((p, b) => { out.fillStyle = `rgb(${BCOL[b].join(",")})`; out.fill(p); });
+  out.fillStyle = "#fff4fd"; out.fill(white);
+}
+window.addEventListener("hf-seek", (e) => drawScene(e.detail.time));
+drawScene(0);
+
+window.__timelines = window.__timelines || {};
+window.__timelines["main"] = tl;
+</script>
+</body></html>
