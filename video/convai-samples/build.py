@@ -141,7 +141,7 @@ def build_b():
         x, y = xy
         return (f'<g id="{nid}"><circle cx="{x}" cy="{y}" r="70" fill="#1a1233" stroke="#fff" stroke-opacity=".4" stroke-width="1.5"/>'
                 f'<circle id="{nid}R" cx="{x}" cy="{y}" r="70" fill="none" stroke="#ff4fd8" stroke-width="2.5" transform="rotate(-90 {x} {y})"/>'
-                f'<text x="{x}" y="{y + 9}" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="26" fill="#fff">{text}</text></g>')
+                f'<text class="ntxt" x="{x}" y="{y + 9}" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="26" fill="#fff">{text}</text></g>')
 
     def paths(pre, w=2, op=".7"):
         l1 = f'M{cx + 120} {cy - 40} C {cx + 400} {cy - 40}, 800 {P["n1"][1]}, {P["n1"][0] - 72} {P["n1"][1]}'
@@ -153,12 +153,12 @@ def build_b():
     counselor = (f'<g id="n3"><circle cx="{x3}" cy="{y3}" r="74" fill="#1a1233" stroke="#fff" stroke-opacity=".4" stroke-width="1.5"/>'
                  f'<circle id="n3R" cx="{x3}" cy="{y3}" r="74" fill="none" stroke="#ff4fd8" stroke-width="2.5" transform="rotate(-90 {x3} {y3})"/>'
                  f'<image href="assets/agent.png" x="{x3 - 56}" y="{y3 - 60}" width="112" height="112"/>'
-                 f'<text x="{x3}" y="{y3 + 112}" text-anchor="middle" font-family="Pretendard" font-weight="700" font-size="26" fill="#fff">상담사</text></g>')
+                 f'<text class="ntxt" x="{x3}" y="{y3 + 112}" text-anchor="middle" font-family="Pretendard" font-weight="700" font-size="26" fill="#fff">상담사</text></g>')
     card = ('<g id="card"><rect x="-86" y="-24" width="172" height="48" rx="12" fill="#fff"/>'
             '<rect x="-70" y="-10" width="20" height="20" rx="4" fill="#ff4fd8"/>'
             '<text x="-40" y="8" font-family="Pretendard" font-weight="800" font-size="20" fill="#1b1530">대화 요약</text></g>')
     convo = ('<g id="convo">'
-             f'<circle cx="{cx}" cy="{cy - 30}" r="130" fill="url(#avg)"/>'
+             f'<circle id="cglow" cx="{cx}" cy="{cy - 30}" r="130" fill="url(#avg)"/>'
              f'<image id="cust" href="assets/customer.png" x="{cx - 110}" y="{cy - 140}" width="220" height="220"/>'
              + paths("l") + nd("n1", P["n1"], "콜봇") + nd("n2", P["n2"], "AI 에이전트") + counselor
              + '<circle id="d1" r="7" fill="#fff"/><circle id="d2" r="7" fill="#fff"/><circle id="d3" r="7" fill="#fff"/>' + card + '</g>')
@@ -182,7 +182,7 @@ def build_b():
            '<defs><radialGradient id="avg"><stop offset="0" stop-color="#6a4dff" stop-opacity=".3"/><stop offset="1" stop-color="#6a4dff" stop-opacity="0"/></radialGradient></defs>'
            f'<g id="grid">{cells}</g>{convo}'
            '<rect id="frame" x="140" y="140" width="1640" height="570" rx="24" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.5"/>'
-           '<text id="frameT" x="176" y="182" font-family="Pretendard" font-weight="600" font-size="22" letter-spacing="5" fill="#b5abd8">고객센터</text></svg>')
+           '</svg>')
     dom = (at(620, 255, '<div class="bub q" id="q1">카드 분실 신고할게요</div>')
            + at(1540, 250, f'<div class="bub a" id="a1">신고 완료됐어요{CHECK}</div>')
            + at(700, 700, '<div class="bub q" id="q2">해외에서 잃어버렸는데, 재발급은 어떻게 받나요?</div>')
@@ -199,7 +199,7 @@ def build_b():
 
 
 B_JS = """
-gsap.set(["#convo", "#grid", ".cell", "#frame", "#frameT", "#n1", "#n2", "#n3", "#l1", "#l2", "#l3", "#d1", "#d2", "#d3", "#card", "#cust",
+gsap.set(["#convo", "#grid", ".cell", "#frame", "#n1", "#n2", "#n3", "#l1", "#l2", "#l3", "#d1", "#d2", "#d3", "#card", "#cust",
   "#q1", "#a1", "#q2", "#th", "#a2", "#q3", "#a3", "#plate", ".cap", ".cd", ".cc"], { opacity: 0 });
 ["n1R", "n2R", "n3R"].forEach((id) => prep(document.getElementById(id)));
 // 선 꾸밈(그라데이션 + 시작 점 + 방향 화살표)
@@ -246,7 +246,9 @@ FOUT(["#q3", "#a3"], 17.5, 0.4);
 tl.to("#convo", { scale: 0.3, x: 960 - 1000 * 0.3, y: 420 - 480 * 0.3, svgOrigin: "0 0", duration: 1.4, ease: "power3.inOut" }, 17.8);
 FIN("#grid", 18.7, 0.05);
 gsap.utils.toArray(".cell").forEach((el, i) => tl.fromTo(el, { opacity: 0 }, { opacity: 0.8, duration: 0.6, ease: "sine.out", immediateRender: false }, 18.7 + i * 0.07));
-FIN("#frame", 19.0, 0.05); DR("#frame", 19.0, 1.0); FIN("#frameT", 19.6, 0.5);
+FIN("#frame", 19.0, 0.05); DR("#frame", 19.0, 1.0);
+// 넓게 물러나면 가운데 대화의 이름표·빛이 서서히 사라져 나머지 8개와 같아짐
+tl.to(".ntxt, #cglow", { opacity: 0, duration: 0.9, ease: "sine.inOut" }, 18.4);
 CAP("k4", 18.4, 22.9);
 for (let k = 0; k < 8; k++) for (let r = 0; r < 2; r++) {
   const t = 19.4 + k * 0.17 + r * 1.5, m = (k + r) % 3;
@@ -259,7 +261,7 @@ for (let k = 0; k < 8; k++) for (let r = 0; r < 2; r++) {
   }
 }
 // ── 5. 하나의 플랫폼 위에, 모두에게 좋은 고객센터
-tl.to("#grid, #convo, #frame, #frameT", { y: "-=60", duration: 1.0, ease: "power3.inOut" }, 23.0);
+tl.to("#grid, #convo, #frame", { y: "-=60", duration: 1.0, ease: "power3.inOut" }, 23.0);
 tl.fromTo("#plate", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", immediateRender: false }, 23.6);
 CAP("k5", 23.2, null);
 """
