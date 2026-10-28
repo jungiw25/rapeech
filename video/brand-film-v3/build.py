@@ -242,27 +242,42 @@ gsap.utils.toArray(".pill").forEach((el, i) => tl.fromTo(el, { opacity: 0, y: 10
 FOUT([".pill", ".con", "#cvl"], 6.5, 0.4);
 tl.to("#cvG", { scale: 0.12, opacity: 0, transformOrigin: "50% 50%", duration: 0.5, ease: "power3.in" }, 6.7);"""
     if MODE == "b":
+        # 앞 장면(9개 상담 그래픽)을 칸별로 잘라, 가운데 한 점으로 모은 뒤 그 점이 네트워크(스위치)로 들어감
+        cells = [(cx, cy) for cy in (167, 357, 547) for cx in (400, 940, 1480)]
         convai = """
-tl.to("#prev", { y: -1080, duration: 1.4, ease: "power2.inOut" }, 5.6);
-// 앞 장면이 위로 빠지는 동안, 화면 아래에서 점이 같은 속도로 따라 올라옴(앞 장면 글자·그래픽보다 늘 아래)
-FIN(["#bridge", "#bdot"], 5.6, 0.05);
-tl.fromTo("#bridge", { attr: { y1: 1100, y2: 1120 } }, { attr: { y1: 1100, y2: 430 }, duration: 1.4, ease: "power2.inOut", immediateRender: false }, 5.6);
-tl.fromTo("#bdot", { y: 1120 }, { y: 430, duration: 1.4, ease: "power2.inOut", immediateRender: false }, 5.6);
-tl.set("#dot", { x: 960, y: 430, scale: 1, opacity: 1 }, 7.0);
-tl.set("#bdot", { opacity: 0 }, 7.0);
-// 선은 다음 자막이 나오기 전에 점 쪽으로 감겨 들어감
-tl.to("#bridge", { attr: { y1: 430 }, duration: 0.45, ease: "power2.inOut" }, 6.95);
-tl.set("#bridge", { opacity: 0 }, 7.4);
+FOUT("#pvLow", 5.6, 0.45);
+tl.to("#pvLow", { y: 24, duration: 0.45, ease: "power2.in" }, 5.6);
+FOUT("#pvFrame", 5.7, 0.45);
+tl.to("#pvFrame", { scale: 0.94, transformOrigin: "960px 365px", duration: 0.5, ease: "power2.in" }, 5.7);
 """
-        body = body.replace("assets/flow_last.png", "assets/convai_last.png")
-        # 앞 장면 아래 가장자리가 경계선으로 보이지 않게 부드럽게 사라지게 함(글자는 863px 위라 영향 없음)
-        body = body.replace('<img id="prev" class="layer"', '<img id="prev" class="layer" style="-webkit-mask-image:linear-gradient(#000 900px,transparent 1080px);mask-image:linear-gradient(#000 900px,transparent 1080px)"')
-        body = body.replace('<div id="blackout"', '<svg class="layer" viewBox="0 0 1920 1080"><line id="bridge" x1="960" y1="1100" x2="960" y2="1120" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>'
-                            '<g id="bdot" transform="translate(960 1120)"><circle r="14" fill="#fff" opacity=".22"/><circle r="6.5" fill="#fff"/></g></svg><div id="blackout"')
+        order = sorted(range(9), key=lambda i: -abs(cells[i][0] - 960) - abs(cells[i][1] - 430))
+        for k, i in enumerate(order):
+            cx, cy = cells[i]
+            t0 = 5.85 + k * 0.05
+            convai += (f'tl.to("#pc{i}", {{ x: {960 - cx}, y: {430 - cy}, scale: 0.04, transformOrigin: "{cx}px {cy}px", '
+                       f'duration: 0.95, ease: "power3.in" }}, {t0:.2f});\n'
+                       f'tl.to("#pc{i}", {{ opacity: 0, duration: 0.2, ease: "sine.in" }}, {t0 + 0.75:.2f});\n')
+        convai += """
+tl.fromTo("#mglow", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.5, ease: "sine.out", immediateRender: false }, 6.5);
+tl.to("#mglow", { opacity: 0, scale: 1.4, duration: 0.8, ease: "sine.inOut" }, 7.05);
+tl.set("#dot", { x: 960, y: 430 }, 6.8);
+tl.fromTo("#dot", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)", immediateRender: false }, 6.85);
+"""
+        pv = []
+        pv.append('<img id="pvLow" class="layer" src="assets/convai_last.png" style="clip-path:inset(655px 0px 0px 0px)" />')
+        pv.append('<img id="pvFrame" class="layer" src="assets/convai_last.png" style="clip-path:path(evenodd,\'M128 68 H1792 V662 H128 Z M152 92 V638 H1768 V92 Z\')" />')
+        for i, (cx, cy) in enumerate(cells):
+            l, r, t, b = cx - 262, cx + 262, cy - 88, cy + 88   # 칸 경계를 부드럽게 흐려 사각 테두리가 안 보이게
+            m = (f"linear-gradient(90deg,transparent {l}px,#000 {l + 26}px,#000 {r - 26}px,transparent {r}px),"
+                 f"linear-gradient(transparent {t}px,#000 {t + 22}px,#000 {b - 22}px,transparent {b}px)")
+            pv.append(f'<div id="pc{i}" class="layer" style="mix-blend-mode:lighten"><img class="layer" src="assets/convai_last.png" '
+                      f'style="-webkit-mask-image:{m};mask-image:{m};-webkit-mask-composite:source-in;mask-composite:intersect" /></div>')
+        pv.append('<div id="mglow" style="position:absolute;left:760px;top:230px;width:400px;height:400px;border-radius:50%;'
+                  'background:radial-gradient(closest-side,rgba(214,120,255,.55),rgba(140,80,255,.18) 45%,rgba(120,60,255,0));opacity:0"></div>')
+        body = body.replace('<img id="prev" class="layer" src="assets/flow_last.png" />', "\n".join(pv))
     js = js.replace("__CONVAI__", convai)
     if MODE == "b":
         js = js.replace('tl.fromTo("#dot", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out", immediateRender: false }, 7.1);', "")
-        js = js.replace('gsap.set(["#cvG"', 'gsap.set(["#bridge", "#bdot", "#cvG"')
     return page("Rapeech brand film v3 (rest)", body, js, DUR, css,
                 audio=f'<audio id="sfx" class="clip" src="assets/rest_sfx.wav" data-start="0" data-duration="{DUR}" data-track-index="2" data-volume="1"></audio>')
 
@@ -285,7 +300,7 @@ def sound(out):
         add(buf, sweep(220 if up else 900, 900 if up else 220, d, partials=((1, 1), (2, 0.3)), a=0.1, r=0.2, rise=up), t, g)
 
     if MODE == "b":
-        whoosh(5.6, False, 0.045, 1.1)
+        whoosh(5.8, False, 0.04, 1.0); add(buf, pop(700, 340, 0.12), 6.85, 0.09); add(buf, bell(93, 0.8, 0.3), 6.88, 0.05)
     else:
         whoosh(0.0, False, 0.045, 1.1); add(buf, pop(760, 380, 0.14), 0.85, 0.08)
     if MODE != "b":
