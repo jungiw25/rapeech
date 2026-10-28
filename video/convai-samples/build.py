@@ -20,14 +20,14 @@ FLOW_CUT = 32.6
 CSS = """
 .bub { position: relative; flex: none; padding: 16px 28px; border-radius: 30px; font-size: 28px; font-weight: 700; white-space: nowrap; }
 .q { background: #fff; color: #1b1530; }
-.a { background: #2a2250; color: #fff; }
-.think { background: #2a2250; color: #fff; letter-spacing: .3em; }
+.a { background: #15102a; color: #fff; border: 1.5px solid rgba(255,79,216,.75); }
+.think { background: #15102a; border: 1.5px solid rgba(255,255,255,.3); color: #fff; letter-spacing: .3em; }
 .who2 { flex: none; white-space: nowrap; font-size: 18px; font-weight: 600; letter-spacing: .2em; color: #b5abd8; margin-bottom: 10px; }
-.plate { position: absolute; height: 74px; border-radius: 18px; background: #1d1736;
+.plate { position: absolute; height: 74px; border-radius: 18px; background: #15102a; border: 1.5px solid rgba(255,255,255,.4);
   display: flex; align-items: center; justify-content: center; gap: 18px; font-size: 34px; font-weight: 800; color: #fff; }
-.plate small { font-size: 22px; font-weight: 600; letter-spacing: 0; color: #b5abd8; }
+.plate small { font-size: 18px; font-weight: 600; letter-spacing: .14em; color: #b5abd8; }
 """
-CHECK = ('<svg class="ck" width="30" height="30" viewBox="0 0 30 30" style="margin-left:12px;vertical-align:-6px"><circle cx="15" cy="15" r="14" fill="#9d79ff"/>'
+CHECK = ('<svg class="ck" width="30" height="30" viewBox="0 0 30 30" style="margin-left:12px;vertical-align:-6px"><circle cx="15" cy="15" r="14" fill="#ff4fd8"/>'
          '<path d="M9 15.5 l4.5 4.5 l8 -9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>')
 
 
@@ -139,8 +139,8 @@ def build_b():
 
     def nd(nid, xy, text):
         x, y = xy
-        return (f'<g id="{nid}"><circle cx="{x}" cy="{y}" r="70" fill="#1d1736"/>'
-                f'<circle id="{nid}R" cx="{x}" cy="{y}" r="70" fill="none" stroke="#9d79ff" stroke-width="3" transform="rotate(-90 {x} {y})"/>'
+        return (f'<g id="{nid}"><circle cx="{x}" cy="{y}" r="70" fill="#1a1233" stroke="#fff" stroke-opacity=".4" stroke-width="1.5"/>'
+                f'<circle id="{nid}R" cx="{x}" cy="{y}" r="70" fill="none" stroke="#ff4fd8" stroke-width="2.5" transform="rotate(-90 {x} {y})"/>'
                 f'<text class="ntxt" x="{x}" y="{y + 9}" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="26" fill="#fff">{text}</text></g>')
 
     def paths(pre, w=2, op=".7"):
@@ -150,14 +150,15 @@ def build_b():
         return "".join(f'<path id="{pre}{k}" d="{d}" fill="none" stroke="#fff" stroke-opacity="{op}" stroke-width="{w}"/>' for k, d in (("1", l1), ("2", l2), ("3", l3)))
 
     x3, y3 = P["n3"]
-    counselor = (f'<g id="n3"><circle cx="{x3}" cy="{y3}" r="74" fill="#1d1736"/>'
-                 f'<circle id="n3R" cx="{x3}" cy="{y3}" r="74" fill="none" stroke="#9d79ff" stroke-width="3" transform="rotate(-90 {x3} {y3})"/>'
+    counselor = (f'<g id="n3"><circle cx="{x3}" cy="{y3}" r="74" fill="#1a1233" stroke="#fff" stroke-opacity=".4" stroke-width="1.5"/>'
+                 f'<circle id="n3R" cx="{x3}" cy="{y3}" r="74" fill="none" stroke="#ff4fd8" stroke-width="2.5" transform="rotate(-90 {x3} {y3})"/>'
                  f'<image href="assets/agent.png" x="{x3 - 56}" y="{y3 - 60}" width="112" height="112"/>'
                  f'<text class="ntxt" x="{x3}" y="{y3 + 112}" text-anchor="middle" font-family="Pretendard" font-weight="700" font-size="26" fill="#fff">상담사</text></g>')
     card = ('<g id="card"><rect x="-86" y="-24" width="172" height="48" rx="12" fill="#fff"/>'
-            '<rect x="-70" y="-10" width="20" height="20" rx="4" fill="#9d79ff"/>'
+            '<rect x="-70" y="-10" width="20" height="20" rx="4" fill="#ff4fd8"/>'
             '<text x="-40" y="8" font-family="Pretendard" font-weight="800" font-size="20" fill="#1b1530">대화 요약</text></g>')
     convo = ('<g id="convo">'
+             f'<circle id="cglow" cx="{cx}" cy="{cy - 30}" r="130" fill="url(#avg)"/>'
              f'<image id="cust" href="assets/customer.png" x="{cx - 110}" y="{cy - 140}" width="220" height="220"/>'
              + paths("l") + nd("n1", P["n1"], "콜봇") + nd("n2", P["n2"], "AI 에이전트") + counselor
              + '<circle id="d1" r="7" fill="#fff"/><circle id="d2" r="7" fill="#fff"/><circle id="d3" r="7" fill="#fff"/>' + card + '</g>')
@@ -172,15 +173,15 @@ def build_b():
             cells += (f'<g class="cell" transform="translate({tx:.1f} {ty:.1f}) scale({S})">'
                       f'<image href="assets/customer.png" x="{cx - 110}" y="{cy - 140}" width="220" height="220"/>'
                       + paths(f"c{k}p", 3, ".55")
-                      + "".join(f'<circle cx="{P[n][0]}" cy="{P[n][1]}" r="70" fill="#1d1736" stroke="#9d79ff" stroke-width="5"/>' for n in ("n1", "n2"))
-                      + f'<circle cx="{x3}" cy="{y3}" r="74" fill="#1d1736" stroke="#9d79ff" stroke-width="5"/>'
+                      + "".join(f'<circle cx="{P[n][0]}" cy="{P[n][1]}" r="70" fill="#1a1233" stroke="#ff4fd8" stroke-width="4"/>' for n in ("n1", "n2"))
+                      + f'<circle cx="{x3}" cy="{y3}" r="74" fill="#1a1233" stroke="#ff4fd8" stroke-width="4"/>'
                       f'<image href="assets/agent.png" x="{x3 - 56}" y="{y3 - 60}" width="112" height="112"/>'
                       f'<circle class="cd" id="cd{k}" r="16" fill="#fff"/><rect class="cc" id="cc{k}" x="-50" y="-16" width="100" height="32" rx="8" fill="#fff"/></g>')
             k += 1
     svg = ('<svg class="layer" viewBox="0 0 1920 1080">'
            '<defs><radialGradient id="avg"><stop offset="0" stop-color="#6a4dff" stop-opacity=".3"/><stop offset="1" stop-color="#6a4dff" stop-opacity="0"/></radialGradient></defs>'
-           '<rect id="frame" x="140" y="140" width="1640" height="570" rx="24" fill="#140f28"/>'
            f'<g id="grid">{cells}</g>{convo}'
+           '<rect id="frame" x="140" y="140" width="1640" height="570" rx="24" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="1.5"/>'
            '</svg>')
     dom = (at(620, 255, '<div class="bub q" id="q1">카드 분실 신고할게요</div>')
            + at(1540, 250, f'<div class="bub a" id="a1">신고 완료됐어요{CHECK}</div>')
@@ -245,9 +246,9 @@ FOUT(["#q3", "#a3"], 17.5, 0.4);
 tl.to("#convo", { scale: 0.3, x: 960 - 1000 * 0.3, y: 420 - 480 * 0.3, svgOrigin: "0 0", duration: 1.4, ease: "power3.inOut" }, 17.8);
 FIN("#grid", 18.7, 0.05);
 gsap.utils.toArray(".cell").forEach((el, i) => tl.fromTo(el, { opacity: 0 }, { opacity: 0.8, duration: 0.6, ease: "sine.out", immediateRender: false }, 18.7 + i * 0.07));
-FIN("#frame", 19.0, 1.0, "sine.inOut");
+FIN("#frame", 19.0, 0.05); DR("#frame", 19.0, 1.0);
 // 넓게 물러나면 가운데 대화의 이름표·빛이 서서히 사라져 나머지 8개와 같아짐
-tl.to(".ntxt", { opacity: 0, duration: 0.9, ease: "sine.inOut" }, 18.4);
+tl.to(".ntxt, #cglow", { opacity: 0, duration: 0.9, ease: "sine.inOut" }, 18.4);
 CAP("k4", 18.4, 22.9);
 for (let k = 0; k < 8; k++) for (let r = 0; r < 2; r++) {
   const t = 19.4 + k * 0.17 + r * 1.5, m = (k + r) % 3;

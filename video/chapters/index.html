@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=1920, height=1080" /><title>Rapeech chapters</title>
+<script src="assets/gsap.min.js"></script>
+<style>@font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c0916; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
+.layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.vig { background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,.10), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,.45)); }
+.bar { position: absolute; width: 12px; height: 220px; margin-top: -110px; border-radius: 6px; box-shadow: 0 0 14px currentColor; }
+.who { position: relative; flex: none; height: 40px; padding: 0 18px; border-radius: 20px; font-size: 20px; font-weight: 700; line-height: 40px; white-space: nowrap; }
+.cap { position: absolute; left: 0; top: 790px; width: 1920px; text-align: center; }
+.tag { overflow: hidden; font-size: 20px; font-weight: 600; letter-spacing: 0.24em; color: #b5abd8; padding-bottom: 4px; }
+.ct { overflow: hidden; margin-top: 16px; font-size: 52px; font-weight: 800; color: #fff; letter-spacing: -0.03em; padding-bottom: 8px; white-space: nowrap; }
+.tag span, .ct span.cw { display: inline-block; }
+.g { background: linear-gradient(100deg, #ff4fd8, #b25cff 55%, #7a6bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mono { font-weight: 600; font-size: 19px; letter-spacing: 0.2em; color: #b5abd8; white-space: nowrap; }
+.dlab { font-family: "Pretendard"; font-weight: 600; font-size: 20px; letter-spacing: 3px; fill: #cfc6ec; }
+.cwrap { position: absolute; width: 0; display: flex; flex-direction: column; align-items: center; }
+.val { font-weight: 700; font-size: 30px; color: #fff; letter-spacing: -0.02em; white-space: nowrap; margin-top: 10px; }
+.pill { position: relative; flex: none; height: 64px; padding: 0 30px; border-radius: 32px; font-size: 28px; font-weight: 700; color: #fff; line-height: 60px; white-space: nowrap;
+  background: rgba(20,15,42,.9); border: 2px solid rgba(157,121,255,.6); }
+
+.still { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.field { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+  background: linear-gradient(115deg, #3c24f3 0%, #a518a4 55%, #ff03c8 100%); }
+.kick { position: absolute; left: 160px; top: 330px; overflow: hidden; font-size: 38px; font-weight: 700; color: rgba(255,255,255,.82); padding-bottom: 6px; }
+.ttl { position: absolute; left: 152px; top: 400px; overflow: hidden; font-size: 132px; font-weight: 800; line-height: 1.04; letter-spacing: -0.04em; color: #fff; padding-bottom: 12px; }
+.kick span, .ttl span { display: inline-block; }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="7.199999999999999" data-fps="60" data-width="1920" data-height="1080">
+<img class="still" id="in0" src="assets/in0.png" /><img class="still" id="out0" src="assets/out0.png" /><div class="field" id="f0"><div class="kick"><span class="t0">AI 콜봇</span></div><div class="ttl"><span class="t0">목소리로 시작하는<br>상담</span></div></div><img class="still" id="in1" src="assets/in1.png" /><img class="still" id="out1" src="assets/out1.png" /><div class="field" id="f1"><div class="kick"><span class="t1">ConvAI</span></div><div class="ttl"><span class="t1">상담사와<br>함께 일하는 AI</span></div></div><img class="still" id="in2" src="assets/in2.png" /><img class="still" id="out2" src="assets/out2.png" /><div class="field" id="f2"><div class="kick"><span class="t2">네트워크 인프라</span></div><div class="ttl"><span class="t2">대화가 흐르는<br>길까지</span></div></div>
+<audio id="sfx" class="clip" src="assets/ch_sfx.wav" data-start="0" data-duration="7.199999999999999" data-track-index="2" data-volume="1"></audio>
+</div>
+<script>
+
+const tl = gsap.timeline({ paused: true });
+const hsh = (a, b) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+const prep = (el) => { const L = el.getTotalLength(); el.setAttribute("stroke-dasharray", `${L} ${L}`); el.setAttribute("stroke-dashoffset", L); return L; };
+const DR = (sel, t, d, e = "power2.inOut", s = 0) => gsap.utils.toArray(sel).forEach((el, i) => {
+  const L = prep(el);
+  tl.fromTo(el, { attr: { "stroke-dashoffset": L } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e, immediateRender: false }, t + i * s);
+});
+// 게이지가 d초 동안 차고, 다 차면 반짝(안쪽 흰빛 + 퍼지는 고리 + 게이지 잠깐 굵게)
+const GAUGE = (id, t, d = 0.9) => {
+  DR("#" + id + "-ring", t, d, "power2.inOut");
+  const r = +document.getElementById(id + "-fr").getAttribute("r");
+  tl.fromTo("#" + id + "-fin", { opacity: 0 }, { opacity: 0.55, duration: 0.08, ease: "none", immediateRender: false }, t + d);
+  tl.to("#" + id + "-fin", { opacity: 0, duration: 0.6, ease: "power2.out" }, t + d + 0.08);
+  tl.fromTo("#" + id + "-fr", { opacity: 0.9, attr: { r } }, { opacity: 0, attr: { r: r + 34 }, duration: 0.8, ease: "power2.out", immediateRender: false }, t + d);
+  tl.fromTo("#" + id + "-ring", { attr: { "stroke-width": 4 } }, { attr: { "stroke-width": 7 }, duration: 0.12, ease: "power2.out", yoyo: true, repeat: 1, immediateRender: false }, t + d);
+};
+const CAP = (id, a, b) => {
+  tl.fromTo("#" + id, { opacity: 1 }, { opacity: 1, duration: 0.01, immediateRender: false }, a);
+  tl.fromTo("." + id + "-l", { yPercent: 120 }, { yPercent: 0, duration: 1.0, ease: "expo.out", stagger: 0.08 }, a);
+  if (b) tl.to("." + id + "-l", { yPercent: -120, duration: 0.45, ease: "power2.in", stagger: 0.04 }, b);
+};
+const FIN = (sel, t, d = 0.6, e = "power2.out") => tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: d, ease: e, immediateRender: false }, t);
+const FOUT = (sel, t, d = 0.5, e = "sine.inOut") => tl.to(sel, { opacity: 0, duration: d, ease: e }, t);
+const speak = (sel, t0, t1, seed, step = 0.24) => gsap.utils.toArray(sel).forEach((el, k) => {
+  let t = t0, s = 0;
+  while (t < t1) { tl.to(el, { scaleY: 0.2 + 0.8 * hsh(k + seed, ++s) * Math.sin(Math.PI * (k + 0.5) / 7), duration: step, ease: "sine.inOut" }, t); t += step; }
+});
+// 선 꾸밈: 시작 점 + 끝으로 갈수록 진해지는 그라데이션 + 끝의 방향 화살표(가는 꺾쇠). 점·화살표 클래스는 "dk-<선 id>"
+let __dg = 0;
+const DECOR = (sel, o = {}) => gsap.utils.toArray(sel).forEach((p) => {
+  const NS = "http://www.w3.org/2000/svg", L = p.getTotalLength(), a = p.getPointAtLength(0), b = p.getPointAtLength(L), c = p.getPointAtLength(Math.max(0, L - 8));
+  const svg = p.ownerSVGElement;
+  let defs = svg.querySelector("defs"); if (!defs) { defs = document.createElementNS(NS, "defs"); svg.prepend(defs); }
+  const g = document.createElementNS(NS, "linearGradient"), id = "dg" + (__dg++), end = o.end || "#ff8be6";
+  g.setAttribute("id", id); g.setAttribute("gradientUnits", "userSpaceOnUse");
+  g.setAttribute("x1", a.x); g.setAttribute("y1", a.y); g.setAttribute("x2", b.x); g.setAttribute("y2", b.y);
+  g.innerHTML = '<stop offset="0" stop-color="#ffffff" stop-opacity=".2"/><stop offset=".55" stop-color="#d9c6ff" stop-opacity=".6"/><stop offset="1" stop-color="' + end + '" stop-opacity=".95"/>';
+  defs.appendChild(g);
+  p.setAttribute("stroke", "url(#" + id + ")"); p.removeAttribute("stroke-opacity"); p.setAttribute("stroke-linecap", "round");
+  if (o.w) p.setAttribute("stroke-width", o.w);
+  const ang = Math.atan2(b.y - c.y, b.x - c.x) * 180 / Math.PI, s = o.size || 9, cls = "dk-" + (p.id || "x");
+  const ar = document.createElementNS(NS, "path");
+  ar.setAttribute("d", `M${-s} ${-s * 0.72} L0 0 L${-s} ${s * 0.72}`);
+  ar.setAttribute("fill", "none"); ar.setAttribute("stroke", end); ar.setAttribute("stroke-width", o.aw || 2.4);
+  ar.setAttribute("stroke-linecap", "round"); ar.setAttribute("stroke-linejoin", "round");
+  ar.setAttribute("transform", `translate(${b.x} ${b.y}) rotate(${ang})`); ar.setAttribute("class", cls);
+  const st = document.createElementNS(NS, "circle");
+  st.setAttribute("cx", a.x); st.setAttribute("cy", a.y); st.setAttribute("r", o.dot || 3.4); st.setAttribute("fill", "#fff"); st.setAttribute("fill-opacity", ".6"); st.setAttribute("class", cls);
+  p.after(ar); p.after(st);
+  if (o.hidden !== false) gsap.set([ar, st], { opacity: 0 });
+});
+// 점이 지나간 자리까지만 선이 그려짐(점과 선이 같은 진행값)
+const ALONG = (pathSel, dotSel, t, d, e = "power2.inOut", drawLine = true) => {
+  const p = document.querySelector(pathSel), L = drawLine ? prep(p) : p.getTotalLength(), q = { v: 0 };
+  tl.fromTo(q, { v: 0 }, { v: 1, duration: d, ease: e, immediateRender: false, onUpdate: () => {
+    const pt = p.getPointAtLength(q.v * L); gsap.set(dotSel, { x: pt.x, y: pt.y });
+    if (drawLine) p.setAttribute("stroke-dashoffset", L * (1 - q.v));
+  } }, t);
+};
+
+const D = 2.4, N = 3;
+
+for (let k = 0; k < N; k++) {
+  const t = k * D;
+  gsap.set(["#in" + k, "#out" + k, "#f" + k], { opacity: 0 });
+  // 앞 장면의 마지막 화면 위로 그라데이션 면이 왼쪽에서 들어옴
+  tl.set("#in" + k, { opacity: 1 }, t);
+  tl.set("#f" + k, { opacity: 1 }, t);
+  tl.fromTo("#f" + k, { clipPath: "inset(0px 1920px 0px 0px)" }, { clipPath: "inset(0px 0px 0px 0px)", duration: 0.55, ease: "power3.inOut", immediateRender: false }, t);
+  tl.set("#in" + k, { opacity: 0 }, t + 0.56);
+  tl.set("#out" + k, { opacity: 1 }, t + 0.56);
+  // 제목은 줄 마스크로 올라옴(작은 말 먼저, 큰 제목이 이어서)
+  tl.fromTo(".t" + k, { yPercent: 115 }, { yPercent: 0, duration: 0.9, ease: "expo.out", stagger: 0.12, immediateRender: false }, t + 0.32);
+  // 면이 오른쪽으로 빠지며 다음 장면의 첫 화면이 드러남
+  tl.to("#f" + k, { clipPath: "inset(0px 0px 0px 1920px)", duration: 0.5, ease: "power3.inOut" }, t + D - 0.52);
+  tl.set(["#out" + k, "#f" + k], { opacity: 0 }, t + D);
+}
+
+window.__timelines = window.__timelines || {};
+window.__timelines["main"] = tl;
+</script>
+</body></html>
