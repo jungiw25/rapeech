@@ -16,7 +16,7 @@ cards = [
     ("업무 처리", "카드 사용 정지", True),
     ("음성 응답", "답변을 목소리로", False),
 ]
-CHECK = '<svg width="34" height="34" viewBox="0 0 34 34" style="margin-left:14px;vertical-align:-5px"><circle cx="17" cy="17" r="16" fill="url(#fck)"/><path d="M10 17.5 l5 5 l9 -11" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="fck" x1="0" y1="0" x2="34" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs></svg>'
+CHECK = '<svg class="f-ck" width="34" height="34" viewBox="0 0 34 34" style="margin-left:14px;vertical-align:-5px"><circle cx="17" cy="17" r="16" fill="url(#fck)"/><path d="M10 17.5 l5 5 l9 -11" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="fck" x1="0" y1="0" x2="34" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs></svg>'
 card_html = ""
 for i, (lab, val, ok) in enumerate(cards):
     chars = "".join(f'<b class="f-c{i}" style="display:inline-block;font-weight:700">{"&nbsp;" if c == " " else c}</b>' for c in val)
@@ -40,7 +40,7 @@ cust = f'''
       {"".join(f'<rect x="{PHX - 11 + j * 8}" y="{PHY - 8 - (6, 12, 8)[j]}" width="5" height="{2 * (6, 12, 8)[j]}" rx="2.5" fill="#fff"/>' for j in range(3))}
       <rect x="{PHX - 7}" y="{PHY + 36}" width="14" height="3" rx="1.5" fill="#fff" opacity=".7"/>
     </g>
-    <g id="f-rings">{"".join(f'<path class="f-ring" d="M{PHX + 40 + j * 20} {PHY - 26 - j * 10} q {16 + j * 6} {26 + j * 10} 0 {52 + j * 20}" fill="none" stroke="#ff4fd8" stroke-width="4" stroke-linecap="round"/>' for j in range(3))}</g>
+    <g id="f-rings">{"".join(f'<path class="f-ring" d="M{PHX + 31} {PHY - 52 - (20 + j * 16)} A {20 + j * 16} {20 + j * 16} 0 0 1 {PHX + 31 + 20 + j * 16} {PHY - 52}" fill="none" stroke="#ff4fd8" stroke-width="4" stroke-linecap="round"/>' for j in range(3))}</g>
     <g id="f-ok" class="o"><circle cx="{CUST + 90}" cy="{LY - 180}" r="22" fill="url(#flow-g)"/><path d="M{CUST + 80} {LY - 180} l7 7 l12 -14" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
   </g>'''
 
@@ -143,6 +143,7 @@ flow_js = """
       gsap.set("#f-pk", { x: 300, y: LY, opacity: 0 });
       gsap.set("#f-rpk", { opacity: 0 });
       gsap.set(".f-card", { opacity: 0 });
+      gsap.set(".f-ck", { opacity: 0 });
       gsap.set(["#f-cbub", "#f-bbub", "#f-bar"], { opacity: 0 });
       gsap.set(["#f-agent"], { opacity: 0 });
       gsap.set("#f-world", { transformOrigin: "0px 0px" });
@@ -170,10 +171,10 @@ flow_js = """
       tl.to("#f-phone", { rotation: 0, svgOrigin: "__PX__ __PY__", duration: 0.2, ease: "sine.out" }, 6.72);
       for (let k = 0; k < 8; k++) tl.to("#f-phone", { rotation: k % 2 ? 7 : -7, svgOrigin: "__PX__ __PY__", duration: 0.09, ease: "sine.inOut" }, 7.05 + k * 0.09);
       tl.to("#f-phone", { rotation: 0, svgOrigin: "__PX__ __PY__", duration: 0.2, ease: "sine.out" }, 7.77);
-      tl.fromTo(".f-ring", { opacity: 0, x: -10 }, { opacity: 1, x: 6, duration: 0.5, ease: "sine.out", stagger: 0.1 }, 6.0);
-      tl.to(".f-ring", { opacity: 0, x: 16, duration: 0.5, ease: "sine.in", stagger: 0.1 }, 6.6);
-      tl.fromTo(".f-ring", { opacity: 0, x: -10 }, { opacity: 1, x: 6, duration: 0.5, ease: "sine.out", stagger: 0.1, immediateRender: false }, 7.12);
-      tl.to(".f-ring", { opacity: 0, x: 16, duration: 0.5, ease: "sine.in", stagger: 0.1 }, 7.65);
+      tl.fromTo(".f-ring", { opacity: 0, x: -6, y: 6 }, { opacity: 1, x: 4, y: -4, duration: 0.5, ease: "sine.out", stagger: 0.1 }, 6.0);
+      tl.to(".f-ring", { opacity: 0, x: 11, y: -11, duration: 0.5, ease: "sine.in", stagger: 0.1 }, 6.6);
+      tl.fromTo(".f-ring", { opacity: 0, x: -6, y: 6 }, { opacity: 1, x: 4, y: -4, duration: 0.5, ease: "sine.out", stagger: 0.1, immediateRender: false }, 7.12);
+      tl.to(".f-ring", { opacity: 0, x: 11, y: -11, duration: 0.5, ease: "sine.in", stagger: 0.1 }, 7.65);
       // 고객의 말
       tl.fromTo("#f-cbub", { opacity: 0, y: 20, scale: 0.9, filter: "blur(10px)" }, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.9, ease: "power3.out" }, 7.8);
       tl.to("#f-cbub", { opacity: 0.35, duration: 0.8, ease: "sine.inOut" }, 11.0);
@@ -197,6 +198,9 @@ flow_js = """
         tl.fromTo("#f-np" + i, { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 2.4, duration: 1.1, ease: "power2.out" }, t);
         tl.fromTo("#f-card" + i, { opacity: 0, y: 26, filter: "blur(12px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.9, ease: "power3.out" }, t + 0.15);
         tl.fromTo(".f-c" + i, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, ease: "power2.out", stagger: 0.045 }, t + 0.45);
+        // 체크 표시는 글자가 다 나타난 다음 순서로
+        const ck = document.querySelector("#f-card" + i + " .f-ck");
+        if (ck) tl.fromTo(ck, { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)", immediateRender: false }, t + 0.45 + gsap.utils.toArray(".f-c" + i).length * 0.045 + 0.35);
       };
       // 출발: 노드에서 같은 원으로 다시 나와 캡슐로 늘어나며 이동
       const depart = (i, t) => {

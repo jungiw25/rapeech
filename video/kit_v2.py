@@ -93,6 +93,30 @@ const speak = (sel, t0, t1, seed, step = 0.24) => gsap.utils.toArray(sel).forEac
   let t = t0, s = 0;
   while (t < t1) { tl.to(el, { scaleY: 0.2 + 0.8 * hsh(k + seed, ++s) * Math.sin(Math.PI * (k + 0.5) / 7), duration: step, ease: "sine.inOut" }, t); t += step; }
 });
+// 선 꾸밈: 시작 점 + 끝으로 갈수록 진해지는 그라데이션 + 끝의 방향 화살표(가는 꺾쇠). 점·화살표 클래스는 "dk-<선 id>"
+let __dg = 0;
+const DECOR = (sel, o = {}) => gsap.utils.toArray(sel).forEach((p) => {
+  const NS = "http://www.w3.org/2000/svg", L = p.getTotalLength(), a = p.getPointAtLength(0), b = p.getPointAtLength(L), c = p.getPointAtLength(Math.max(0, L - 8));
+  const svg = p.ownerSVGElement;
+  let defs = svg.querySelector("defs"); if (!defs) { defs = document.createElementNS(NS, "defs"); svg.prepend(defs); }
+  const g = document.createElementNS(NS, "linearGradient"), id = "dg" + (__dg++), end = o.end || "#ff8be6";
+  g.setAttribute("id", id); g.setAttribute("gradientUnits", "userSpaceOnUse");
+  g.setAttribute("x1", a.x); g.setAttribute("y1", a.y); g.setAttribute("x2", b.x); g.setAttribute("y2", b.y);
+  g.innerHTML = '<stop offset="0" stop-color="#ffffff" stop-opacity=".2"/><stop offset=".55" stop-color="#d9c6ff" stop-opacity=".6"/><stop offset="1" stop-color="' + end + '" stop-opacity=".95"/>';
+  defs.appendChild(g);
+  p.setAttribute("stroke", "url(#" + id + ")"); p.removeAttribute("stroke-opacity"); p.setAttribute("stroke-linecap", "round");
+  if (o.w) p.setAttribute("stroke-width", o.w);
+  const ang = Math.atan2(b.y - c.y, b.x - c.x) * 180 / Math.PI, s = o.size || 9, cls = "dk-" + (p.id || "x");
+  const ar = document.createElementNS(NS, "path");
+  ar.setAttribute("d", `M${-s} ${-s * 0.72} L0 0 L${-s} ${s * 0.72}`);
+  ar.setAttribute("fill", "none"); ar.setAttribute("stroke", end); ar.setAttribute("stroke-width", o.aw || 2.4);
+  ar.setAttribute("stroke-linecap", "round"); ar.setAttribute("stroke-linejoin", "round");
+  ar.setAttribute("transform", `translate(${b.x} ${b.y}) rotate(${ang})`); ar.setAttribute("class", cls);
+  const st = document.createElementNS(NS, "circle");
+  st.setAttribute("cx", a.x); st.setAttribute("cy", a.y); st.setAttribute("r", o.dot || 3.4); st.setAttribute("fill", "#fff"); st.setAttribute("fill-opacity", ".6"); st.setAttribute("class", cls);
+  p.after(ar); p.after(st);
+  if (o.hidden !== false) gsap.set([ar, st], { opacity: 0 });
+});
 // 점이 지나간 자리까지만 선이 그려짐(점과 선이 같은 진행값)
 const ALONG = (pathSel, dotSel, t, d, e = "power2.inOut", drawLine = true) => {
   const p = document.querySelector(pathSel), L = drawLine ? prep(p) : p.getTotalLength(), q = { v: 0 };

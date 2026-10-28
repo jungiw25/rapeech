@@ -27,7 +27,7 @@ CSS = """
   display: flex; align-items: center; justify-content: center; gap: 18px; font-size: 34px; font-weight: 800; color: #fff; }
 .plate small { font-size: 18px; font-weight: 600; letter-spacing: .14em; color: #b5abd8; }
 """
-CHECK = ('<svg width="30" height="30" viewBox="0 0 30 30" style="margin-left:12px;vertical-align:-6px"><circle cx="15" cy="15" r="14" fill="#ff4fd8"/>'
+CHECK = ('<svg class="ck" width="30" height="30" viewBox="0 0 30 30" style="margin-left:12px;vertical-align:-6px"><circle cx="15" cy="15" r="14" fill="#ff4fd8"/>'
          '<path d="M9 15.5 l4.5 4.5 l8 -9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>')
 
 
@@ -202,6 +202,14 @@ B_JS = """
 gsap.set(["#convo", "#grid", ".cell", "#frame", "#frameT", "#n1", "#n2", "#n3", "#l1", "#l2", "#l3", "#d1", "#d2", "#d3", "#card", "#cust",
   "#q1", "#a1", "#q2", "#th", "#a2", "#q3", "#a3", "#plate", ".cap", ".cd", ".cc"], { opacity: 0 });
 ["n1R", "n2R", "n3R"].forEach((id) => prep(document.getElementById(id)));
+// 선 꾸밈(그라데이션 + 시작 점 + 방향 화살표)
+DECOR("#l1, #l2, #l3");
+DECOR(".cell path", { hidden: false, w: 4, size: 24, aw: 6, dot: 9 });
+FIN(".dk-l1", 3.45, 0.3); FIN(".dk-l2", 8.65, 0.3); FIN(".dk-l3", 15.75, 0.3);
+// 체크 표시는 말풍선 글자가 나온 다음에
+gsap.set(".ck", { opacity: 0 });
+tl.fromTo("#a1 .ck", { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)", immediateRender: false }, 4.6);
+tl.fromTo("#a2 .ck", { opacity: 0, scale: 0.3, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(2)", immediateRender: false }, 10.3);
 // ── 1. 간단한 문의 → 콜봇이 바로 처리
 FIN("#convo", 0.9, 0.05);
 tl.fromTo("#cust", { opacity: 0, scale: 0.85, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.9, ease: "power3.out", immediateRender: false }, 0.9);

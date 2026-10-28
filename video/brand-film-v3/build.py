@@ -94,8 +94,8 @@ def sites_svg():
 def build():
     cx, cy = 960, 430
     svg = f'''<svg class="layer" id="main" viewBox="0 0 1920 1080">
-  <defs><clipPath id="vennA"><circle cx="830" cy="440" r="200"/></clipPath>
-  <linearGradient id="lensg" x1="890" y1="0" x2="1030" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff3fcf"/><stop offset="1" stop-color="#6a4dff"/></linearGradient>
+  <defs><clipPath id="vennA"><circle cx="820" cy="440" r="240"/></clipPath>
+  <linearGradient id="lensg" x1="860" y1="0" x2="1060" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff3fcf"/><stop offset="1" stop-color="#6a4dff"/></linearGradient>
   <radialGradient id="fillA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff4fd8" stop-opacity=".05"/><stop offset="1" stop-color="#ff4fd8" stop-opacity=".2"/></radialGradient>
   <radialGradient id="fillB" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#5a5cff" stop-opacity=".05"/><stop offset="1" stop-color="#5a5cff" stop-opacity=".22"/></radialGradient></defs>
   <g id="cvG"><circle cx="{cx}" cy="{cy}" r="76" fill="#15102a" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/>
@@ -111,21 +111,21 @@ def build():
   {icons()}
   {"".join(f'<g class="mk" id="mk{i}"><circle cx="{x}" cy="{MY}" r="16" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/><circle class="mkf" id="mkf{i}" cx="{x}" cy="{MY}" r="0" fill="#fff"/></g>' for i, x in enumerate(MX))}
   <g id="venn">
-    <g id="gA"><circle cx="830" cy="440" r="200" fill="url(#fillA)"/>
-      <circle class="vring" cx="830" cy="440" r="200" fill="none" stroke="#ff6fdc" stroke-opacity=".85" stroke-width="2"/>
-      <circle id="dA" cx="830" cy="440" r="184" fill="none" stroke="#ff6fdc" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="2 10"/>
-      <g id="cA"><g class="vic">{"".join(f'<rect x="{722 + k * 12}" y="{392 - h / 2}" width="6" height="{h}" rx="3" fill="#ff8be6"/>' for k, h in enumerate((14, 26, 40, 30, 44, 22, 12)))}</g>
-      <text class="vt" x="764" y="460" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">대화형</text>
-      <text class="vt" x="764" y="498" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">AI</text></g></g>
-    <g id="gB"><circle cx="1090" cy="440" r="200" fill="url(#fillB)"/>
-      <circle class="vring" cx="1090" cy="440" r="200" fill="none" stroke="#8a8cff" stroke-opacity=".85" stroke-width="2"/>
-      <circle id="dB" cx="1090" cy="440" r="184" fill="none" stroke="#8a8cff" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="2 10"/>
-      <g id="cB"><g class="vic"><path d="M1132 372 L1176 392 L1214 370 M1176 392 L1170 414" fill="none" stroke="#a9abff" stroke-width="2"/>
-        <circle cx="1132" cy="372" r="6" fill="#a9abff"/><circle cx="1176" cy="392" r="7" fill="#a9abff"/><circle cx="1214" cy="370" r="6" fill="#a9abff"/><circle cx="1170" cy="414" r="5" fill="#a9abff"/></g>
-      <text class="vt" x="1170" y="460" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">네트워크</text>
-      <text class="vt" x="1170" y="498" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">인프라</text></g></g>
-    <circle id="lens" cx="1090" cy="440" r="200" fill="url(#lensg)" clip-path="url(#vennA)"/>
-    <text id="tL" x="960" y="451" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">라피치</text></g>
+    <g id="gA"><circle cx="820" cy="440" r="240" fill="url(#fillA)"/>
+      <circle class="vring" cx="820" cy="440" r="240" fill="none" stroke="#ff6fdc" stroke-opacity=".85" stroke-width="2"/>
+      <circle id="dA" cx="820" cy="440" r="222" fill="none" stroke="#ff6fdc" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="2 10"/>
+      <g id="cA"><g class="vic">{"".join(f'<rect x="{676 + k * 13}" y="{384 - h / 2}" width="7" height="{h}" rx="3.5" fill="#ff8be6"/>' for k, h in enumerate((16, 30, 46, 34, 50, 26, 14)))}</g>
+      <text class="vt" x="718" y="458" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="34" fill="#fff">대화형</text>
+      <text class="vt" x="718" y="500" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="34" fill="#fff">AI</text></g></g>
+    <g id="gB"><circle cx="1100" cy="440" r="240" fill="url(#fillB)"/>
+      <circle class="vring" cx="1100" cy="440" r="240" fill="none" stroke="#8a8cff" stroke-opacity=".85" stroke-width="2"/>
+      <circle id="dB" cx="1100" cy="440" r="222" fill="none" stroke="#8a8cff" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="2 10"/>
+      <g id="cB"><g class="vic"><path d="M1160 362 L1206 384 L1248 360 M1206 384 L1199 410" fill="none" stroke="#a9abff" stroke-width="2.2"/>
+        <circle cx="1160" cy="362" r="7" fill="#a9abff"/><circle cx="1206" cy="384" r="8" fill="#a9abff"/><circle cx="1248" cy="360" r="7" fill="#a9abff"/><circle cx="1199" cy="410" r="6" fill="#a9abff"/></g>
+      <text class="vt" x="1202" y="458" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="34" fill="#fff">네트워크</text>
+      <text class="vt" x="1202" y="500" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="34" fill="#fff">인프라</text></g></g>
+    <circle id="lens" cx="1100" cy="440" r="240" fill="url(#lensg)" clip-path="url(#vennA)"/>
+    <text id="tL" x="960" y="453" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="38" fill="#fff">라피치</text></g>
   <g id="dot"><circle r="14" fill="#fff" opacity=".22"/><circle r="6.5" fill="#fff"/></g>
 </svg>'''
     pills = "".join(f'<div style="position:absolute;left:{x}px;top:{y - 32}px;width:0;display:flex;justify-content:center"><div class="pill" id="p{i}">{t}</div></div>'
@@ -139,6 +139,7 @@ def build():
 <div class="layer">{dom}</div>
 {caps}
 <img id="prev" class="layer" src="assets/flow_last.png" />
+<img id="symEnd" src="assets/symbol_purple.svg" style="position:absolute;left:{960 - 75}px;top:{540 - 80.36:.2f}px;width:150px;height:160.71px;opacity:0" />
 <div id="blackout" class="layer" style="background:#0c0916"></div>'''
     css = ".pill { background: #15102a; border: 1.5px solid rgba(255,255,255,.35); }"
     js = f"""
@@ -162,7 +163,8 @@ tl.to("#dot", {{ opacity: 0, duration: 0.25, ease: "power2.in" }}, N + 1.05);
 FOUT("#drop", N + 1.2, 0.6);
 tl.to("#pl7", {{ attr: {{ fill: "#ff4fd8" }}, duration: 0.2 }}, N + 1.1);
 gsap.utils.toArray(".pled").forEach((el, i) => {{ if (i !== 7) tl.to(el, {{ attr: {{ fill: i % 2 ? "#9d79ff" : "#5a5cff" }}, duration: 0.15 }}, N + 1.15 + (7 - i) * 0.035); }});
-DR(".cab", N + 1.05, 0.6, "power2.out", 0.06);
+DECOR(".cab", {{ size: 10 }}); DR(".cab", N + 1.05, 0.6, "power2.out", 0.06);
+FIN(".dk-cab0, .dk-cab1, .dk-cab2", N + 1.6, 0.3);
 gsap.utils.toArray(".cab").forEach((c, r) => {{
   const L = c.getTotalLength(), q = {{ p: 0 }}, pu = document.getElementById("pu" + r);
   gsap.set(pu, {{ opacity: 0 }});
@@ -179,7 +181,8 @@ FIN("#sites", 11.35, 0.05);
 gsap.set([".bdet", ".lpu"], {{ opacity: 0 }});
 DR(".bld", 11.4, 1.0, "power2.inOut", 0.25);
 FIN(".bdet", 12.2, 0.6);
-FIN(".lnk", 12.5, 0.05); DR(".lnk", 12.5, 0.5, "power2.out", 0.1);
+DECOR(".lnk", {{ size: 9 }}); FIN(".lnk", 12.5, 0.05); DR(".lnk", 12.5, 0.5, "power2.out", 0.1);
+FIN(".dk-lk0, .dk-lk1", 12.95, 0.3);
 [["#lk0", "#lp0"], ["#lk1", "#lp1"]].forEach(([p, d], i) => {{
   for (let r = 0; r < 2; r++) {{ FIN(d, 12.9 + i * 0.15 + r * 0.8, 0.05); ALONG(p, d, 12.9 + i * 0.15 + r * 0.8, 0.6, "power1.inOut", false); FOUT(d, 13.45 + i * 0.15 + r * 0.8, 0.1); }}
 }});
@@ -205,24 +208,27 @@ FOUT(["#gd", "#trk", ".mk", ".mkl", ".ic", "#dot"], 21.3, 0.5);
 // ── 4. 두 원(AI, NI)이 겹치고, 겹친 자리가 라피치
 FIN("#venn", 21.8, 0.05);
 gsap.set(["#lens", "#tL", ".vt", ".vic"], {{ opacity: 0 }});
-tl.fromTo("#gA", {{ x: -170, opacity: 0 }}, {{ x: -170, opacity: 1, duration: 0.6, ease: "sine.out", immediateRender: false }}, 21.8);
-tl.fromTo("#gB", {{ x: 170, opacity: 0 }}, {{ x: 170, opacity: 1, duration: 0.6, ease: "sine.out", immediateRender: false }}, 21.95);
-gsap.set("#gA", {{ x: -170 }}); gsap.set("#gB", {{ x: 170 }});
+tl.fromTo("#gA", {{ x: -200, opacity: 0 }}, {{ x: -200, opacity: 1, duration: 0.6, ease: "sine.out", immediateRender: false }}, 21.8);
+tl.fromTo("#gB", {{ x: 200, opacity: 0 }}, {{ x: 200, opacity: 1, duration: 0.6, ease: "sine.out", immediateRender: false }}, 21.95);
+gsap.set("#gA", {{ x: -200 }}); gsap.set("#gB", {{ x: 200 }});
 DR(".vring", 21.85, 1.0, "power2.inOut", 0.12);
 tl.fromTo(".vic", {{ opacity: 0, y: 8 }}, {{ opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.12, immediateRender: false }}, 22.3);
 tl.fromTo(".vt", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.6, stagger: 0.06, immediateRender: false }}, 22.45);
-tl.fromTo("#dA", {{ rotation: 0, svgOrigin: "830 440" }}, {{ rotation: 60, svgOrigin: "830 440", duration: 6.6, ease: "none" }}, 21.8);
-tl.fromTo("#dB", {{ rotation: 0, svgOrigin: "1090 440" }}, {{ rotation: -60, svgOrigin: "1090 440", duration: 6.6, ease: "none" }}, 21.8);
-gsap.set("#cA", {{ x: 66 }}); gsap.set("#cB", {{ x: -80 }});
+tl.fromTo("#dA", {{ rotation: 0, svgOrigin: "820 440" }}, {{ rotation: 60, svgOrigin: "820 440", duration: 6.6, ease: "none" }}, 21.8);
+tl.fromTo("#dB", {{ rotation: 0, svgOrigin: "1100 440" }}, {{ rotation: -60, svgOrigin: "1100 440", duration: 6.6, ease: "none" }}, 21.8);
+gsap.set("#cA", {{ x: 102 }}); gsap.set("#cB", {{ x: -102 }});
 tl.to("#cA", {{ x: 0, duration: 1.2, ease: "power3.inOut" }}, 23.0);
 tl.to("#cB", {{ x: 0, duration: 1.2, ease: "power3.inOut" }}, 23.0);
 tl.to("#gA", {{ x: 0, duration: 1.2, ease: "power3.inOut" }}, 23.0);
 tl.to("#gB", {{ x: 0, duration: 1.2, ease: "power3.inOut" }}, 23.0);
 FIN("#lens", 24.15, 0.6, "sine.out");
 FIN("#tL", 24.35, 0.5);
-CAP("c7", 24.4, 28.2);
+CAP("c7", 24.4, 27.0);
+tl.to(["#cA", "#cB", "#tL"], {{ opacity: 0, duration: 0.45, ease: "sine.in" }}, 26.9);
+tl.to(["#gA", "#gB"], {{ opacity: 0, duration: 0.7, ease: "sine.inOut" }}, 27.1);
+tl.to("#lens", {{ scaleX: 0.35, scaleY: 0.42, opacity: 0, svgOrigin: "960 440", duration: 0.8, ease: "power3.inOut" }}, 27.3);
+tl.fromTo("#symEnd", {{ opacity: 0, scale: 0.55, y: -100, transformOrigin: "50% 50%" }}, {{ opacity: 1, scale: 1, y: 0, duration: 1.0, ease: "power3.inOut", immediateRender: false }}, 27.4);
 // ── 5. 어둡게 정리 → 아웃트로
-FIN("#blackout", 28.4, 0.8, "sine.inOut");
 """
     convai = """tl.to("#prev", { scale: 0.06, opacity: 0, transformOrigin: "960px 540px", duration: 1.1, ease: "power3.in" }, 0.0);
 tl.fromTo("#cvG", { opacity: 0, scale: 0.6, y: 110, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, y: 110, duration: 0.8, ease: "power3.out", immediateRender: false }, 0.75);
@@ -306,7 +312,7 @@ if __name__ == "__main__":
     if MODE == "b":
         HERE = HERE.parent / "brand-film-v3b"
         HERE.mkdir(exist_ok=True)
-    a = setup_project(HERE, "brand-film-v3" + MODE)
+    a = setup_project(HERE, "brand-film-v3" + MODE, [(FILM / "assets" / "brand" / "symbol_purple.svg", "symbol_purple.svg")])
     if MODE == "b":
         subprocess.run(["ffmpeg", "-v", "error", "-y", "-sseof", "-0.02", "-i", str(REPO / "video" / "convai-samples" / "b" / "out" / "raw.mp4"), "-frames:v", "1", "-update", "1", str(a / "convai_last.png")], check=True)
     subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", f"{12 + FLOW_CUT:.3f}", "-i", str(FILM / "out" / "raw.mp4"), "-frames:v", "1", str(a / "flow_last.png")], check=True)
