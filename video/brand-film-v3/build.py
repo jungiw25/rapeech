@@ -244,16 +244,21 @@ tl.to("#cvG", { scale: 0.12, opacity: 0, transformOrigin: "50% 50%", duration: 0
     if MODE == "b":
         convai = """
 tl.to("#prev", { y: -1080, duration: 1.4, ease: "power2.inOut" }, 5.6);
+// 앞 장면이 위로 빠지는 동안, 화면 아래에서 점이 같은 속도로 따라 올라옴(앞 장면 글자·그래픽보다 늘 아래)
 FIN(["#bridge", "#bdot"], 5.6, 0.05);
-tl.fromTo("#bridge", { attr: { y1: 742, y2: 742 } }, { attr: { y1: -338, y2: 430 }, duration: 1.4, ease: "power2.inOut", immediateRender: false }, 5.6);
-tl.fromTo("#bdot", { y: 742 }, { y: 430, duration: 1.4, ease: "power2.inOut", immediateRender: false }, 5.6);
+tl.fromTo("#bridge", { attr: { y1: 1100, y2: 1120 } }, { attr: { y1: 1100, y2: 430 }, duration: 1.4, ease: "power2.inOut", immediateRender: false }, 5.6);
+tl.fromTo("#bdot", { y: 1120 }, { y: 430, duration: 1.4, ease: "power2.inOut", immediateRender: false }, 5.6);
 tl.set("#dot", { x: 960, y: 430, scale: 1, opacity: 1 }, 7.0);
 tl.set("#bdot", { opacity: 0 }, 7.0);
-FOUT("#bridge", 7.5, 0.5);
+// 선은 다음 자막이 나오기 전에 점 쪽으로 감겨 들어감
+tl.to("#bridge", { attr: { y1: 430 }, duration: 0.45, ease: "power2.inOut" }, 6.95);
+tl.set("#bridge", { opacity: 0 }, 7.4);
 """
         body = body.replace("assets/flow_last.png", "assets/convai_last.png")
-        body = body.replace('<div id="blackout"', '<svg class="layer" viewBox="0 0 1920 1080"><line id="bridge" x1="960" y1="742" x2="960" y2="742" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>'
-                            '<g id="bdot" transform="translate(960 742)"><circle r="14" fill="#fff" opacity=".22"/><circle r="6.5" fill="#fff"/></g></svg><div id="blackout"')
+        # 앞 장면 아래 가장자리가 경계선으로 보이지 않게 부드럽게 사라지게 함(글자는 863px 위라 영향 없음)
+        body = body.replace('<img id="prev" class="layer"', '<img id="prev" class="layer" style="-webkit-mask-image:linear-gradient(#000 900px,transparent 1080px);mask-image:linear-gradient(#000 900px,transparent 1080px)"')
+        body = body.replace('<div id="blackout"', '<svg class="layer" viewBox="0 0 1920 1080"><line id="bridge" x1="960" y1="1100" x2="960" y2="1120" stroke="#fff" stroke-opacity=".7" stroke-width="2"/>'
+                            '<g id="bdot" transform="translate(960 1120)"><circle r="14" fill="#fff" opacity=".22"/><circle r="6.5" fill="#fff"/></g></svg><div id="blackout"')
     js = js.replace("__CONVAI__", convai)
     if MODE == "b":
         js = js.replace('tl.fromTo("#dot", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out", immediateRender: false }, 7.1);', "")
