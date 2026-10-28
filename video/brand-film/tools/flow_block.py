@@ -16,7 +16,7 @@ cards = [
     ("업무 처리", "카드 사용 정지", True),
     ("음성 응답", "답변을 목소리로", False),
 ]
-CHECK = '<svg class="f-ck" width="34" height="34" viewBox="0 0 34 34" style="margin-left:14px;vertical-align:-5px"><circle cx="17" cy="17" r="16" fill="url(#fck)"/><path d="M10 17.5 l5 5 l9 -11" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="fck" x1="0" y1="0" x2="34" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs></svg>'
+CHECK = '<svg class="f-ck" width="34" height="34" viewBox="0 0 34 34" style="margin-left:14px;vertical-align:-5px"><circle cx="17" cy="17" r="16" fill="url(#fck)"/><path d="M10 17.5 l5 5 l9 -11" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="fck" x1="0" y1="0" x2="34" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#9d79ff"/><stop offset="1" stop-color="#9d79ff"/></linearGradient></defs></svg>'
 card_html = ""
 for i, (lab, val, ok) in enumerate(cards):
     chars = "".join(f'<b class="f-c{i}" style="display:inline-block;font-weight:700">{"&nbsp;" if c == " " else c}</b>' for c in val)
@@ -40,14 +40,14 @@ cust = f'''
       {"".join(f'<rect x="{PHX - 11 + j * 8}" y="{PHY - 8 - (6, 12, 8)[j]}" width="5" height="{2 * (6, 12, 8)[j]}" rx="2.5" fill="#fff"/>' for j in range(3))}
       <rect x="{PHX - 7}" y="{PHY + 36}" width="14" height="3" rx="1.5" fill="#fff" opacity=".7"/>
     </g>
-    <g id="f-rings">{"".join(f'<path class="f-ring" d="M{PHX + 31} {PHY - 52 - (20 + j * 16)} A {20 + j * 16} {20 + j * 16} 0 0 1 {PHX + 31 + 20 + j * 16} {PHY - 52}" fill="none" stroke="#ff4fd8" stroke-width="4" stroke-linecap="round"/>' for j in range(3))}</g>
+    <g id="f-rings">{"".join(f'<path class="f-ring" d="M{PHX + 31} {PHY - 52 - (20 + j * 16)} A {20 + j * 16} {20 + j * 16} 0 0 1 {PHX + 31 + 20 + j * 16} {PHY - 52}" fill="none" stroke="#9d79ff" stroke-width="4" stroke-linecap="round"/>' for j in range(3))}</g>
     <g id="f-ok" class="o"><circle cx="{CUST + 90}" cy="{LY - 180}" r="22" fill="url(#flow-g)"/><path d="M{CUST + 80} {LY - 180} l7 7 l12 -14" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
   </g>'''
 
 nodes = "".join(
     f'''<g class="f-node" id="f-n{i}">
-      <circle class="f-npulse o" id="f-np{i}" cx="{x}" cy="{LY}" r="36" fill="none" stroke="#ff4fd8" stroke-width="3"/>
-      <circle cx="{x}" cy="{LY}" r="30" fill="#1c1730" stroke="#4a4166" stroke-width="3"/>
+      <circle class="f-npulse o" id="f-np{i}" cx="{x}" cy="{LY}" r="36" fill="none" stroke="#9d79ff" stroke-width="3"/>
+      <circle cx="{x}" cy="{LY}" r="30" fill="#1d1736"/>
       <circle class="f-nfill o" id="f-nf{i}" cx="{x}" cy="{LY}" r="30" fill="url(#flow-g)" filter="url(#flow-glow)"/>
       <circle class="f-ncore o" id="f-nc{i}" cx="{x}" cy="{LY}" r="11" fill="#fff"/>
     </g>''' for i, x in enumerate(ST[:4]))
@@ -55,14 +55,14 @@ nodes = "".join(
 # AI 콜봇(마지막 단계)
 bx = ST[4]
 bot = f'''<g id="f-bot">
-    <circle class="f-npulse o" id="f-np4" cx="{bx}" cy="{LY}" r="74" fill="none" stroke="#ff4fd8" stroke-width="3"/>
-    <circle cx="{bx}" cy="{LY}" r="66" fill="#1c1730" stroke="#4a4166" stroke-width="3"/>
+    <circle class="f-npulse o" id="f-np4" cx="{bx}" cy="{LY}" r="74" fill="none" stroke="#9d79ff" stroke-width="3"/>
+    <circle cx="{bx}" cy="{LY}" r="66" fill="#1d1736"/>
     <circle class="o" id="f-nf4" cx="{bx}" cy="{LY}" r="66" fill="url(#flow-g)" filter="url(#flow-glow)"/>
     <path d="M{bx - 40} {LY + 4} a40 40 0 0 1 80 0" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
     <rect x="{bx - 50}" y="{LY - 6}" width="16" height="30" rx="7" fill="#fff"/><rect x="{bx + 34}" y="{LY - 6}" width="16" height="30" rx="7" fill="#fff"/>
     <path d="M{bx + 42} {LY + 24} q 0 22 -28 24" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
     <text x="{bx}" y="{LY + 22}" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="34" fill="#fff">AI</text>
-    {"".join(f'<rect class="f-bw o" x="{bx + 96 + j * 16}" y="{LY - 40}" width="8" height="80" rx="4" fill="{G[min(11, 4 + j)]}"/>' for j in range(6))}
+    {"".join(f'<rect class="f-bw o" x="{bx + 96 + j * 16}" y="{LY - 40}" width="8" height="80" rx="4" fill="#9d79ff"/>' for j in range(6))}
   </g>'''
 
 # 상담사(복잡한 상담 연결)
@@ -82,14 +82,14 @@ ret = '<path id="f-ret" d="__RETD__" fill="none" stroke="url(#flow-g)" stroke-wi
 retpk = '<g id="f-rpk"><circle r="16" fill="#fff" filter="url(#flow-glows)"/></g>'
 
 world_svg = (f'<svg width="5200" height="1400" viewBox="0 0 5200 1400" style="position:absolute;left:0;top:0;overflow:visible">'
-             f'<defs><linearGradient id="flow-g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient>'
+             f'<defs><linearGradient id="flow-g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9d79ff"/><stop offset="1" stop-color="#9d79ff"/></linearGradient>'
              f'<linearGradient id="f-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f1ff"/><stop offset="1" stop-color="#b3a2f0"/></linearGradient>'
-             f'<radialGradient id="f-avglow"><stop offset="0" stop-color="#6a4dff" stop-opacity=".35"/><stop offset="1" stop-color="#6a4dff" stop-opacity="0"/></radialGradient>'
-             f'<linearGradient id="flow-rail" x1="300" y1="0" x2="4600" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient>'
-             f'<filter id="flow-glow" filterUnits="userSpaceOnUse" x="-500" y="-500" width="6400" height="2400"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'
-             f'<filter id="flow-glows" filterUnits="userSpaceOnUse" x="-500" y="-500" width="6400" height="2400"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
-             f'<path id="f-railL" d="M{ST[0]} {LY} L{PHX + 40} {LY}" stroke="url(#flow-rail)" stroke-width="6" stroke-linecap="round" filter="url(#flow-glows)" fill="none"/>'
-             f'<path id="f-railR" d="M{ST[0]} {LY} L{bx - 66} {LY}" stroke="url(#flow-rail)" stroke-width="6" stroke-linecap="round" filter="url(#flow-glows)" fill="none"/>'
+             f'<radialGradient id="f-avglow"><stop offset="0" stop-color="#6a4dff" stop-opacity="0"/><stop offset="1" stop-color="#6a4dff" stop-opacity="0"/></radialGradient>'
+             f'<linearGradient id="flow-rail" x1="300" y1="0" x2="4600" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffffff" stop-opacity=".45"/><stop offset="1" stop-color="#ffffff" stop-opacity=".45"/></linearGradient>'
+             f'<filter id="flow-glow" filterUnits="userSpaceOnUse" x="-500" y="-500" width="6400" height="2400"><feGaussianBlur stdDeviation="0" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'
+             f'<filter id="flow-glows" filterUnits="userSpaceOnUse" x="-500" y="-500" width="6400" height="2400"><feGaussianBlur stdDeviation="0" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
+             f'<path id="f-railL" d="M{ST[0]} {LY} L{PHX + 40} {LY}" stroke="url(#flow-rail)" stroke-width="3" stroke-linecap="round" fill="none"/>'
+             f'<path id="f-railR" d="M{ST[0]} {LY} L{bx - 66} {LY}" stroke="url(#flow-rail)" stroke-width="3" stroke-linecap="round" fill="none"/>'
              + agent + ret + nodes + bot + cust + packet + retpk + '</svg>')
 
 # 마지막에 모이는 빛 막대(다음 장면 서버 랙 LED의 확대 모습과 같음)
@@ -113,7 +113,7 @@ cap_html = "".join(say(t, 60, 0, 150, f"f{cid}", extra="width:1920px;text-align:
 flow_css = f"""
     #f-world {{ position: absolute; left: 0; top: 0; width: 5200px; height: 1400px; }}
     .f-wrap {{ position: absolute; width: 0; display: flex; justify-content: center; }}
-    .f-card {{ position: relative; flex: none; text-align: center; padding: 26px 40px; border-radius: 22px; background: rgba(28,23,48,.92); border: 1.5px solid #3a3158; }}
+    .f-card {{ position: relative; flex: none; text-align: center; padding: 26px 40px; border-radius: 22px; background: #1d1736; }}
     .f-cl {{ font-size: 28px; font-weight: 600; color: {SUB}; }}
     .f-cv {{ margin-top: 10px; font-size: 40px; font-weight: 700; color: #fff; letter-spacing: -0.02em; white-space: nowrap; }}
     .f-bub {{ position: relative; flex: none; height: 92px; padding: 0 40px; border-radius: 46px; display: flex; align-items: center; font-size: 38px; font-weight: 700; white-space: nowrap; }}
@@ -127,11 +127,11 @@ flow_body = f"""
         {world_svg}
         {card_html}
         <div class="f-wrap" style="left:{CUST}px;top:{LY - 320}px"><div class="f-bub" id="f-cbub" style="background:#fff;color:{INK}">카드를 잃어버렸어요</div></div>
-        <div class="f-wrap" style="left:{bx}px;top:{LY - 250}px"><div class="f-bub" id="f-bbub" style="background:linear-gradient(100deg,#ff03c8,#a518a4 50%,#3c24f3);color:#fff">본인 확인이 끝나 카드 사용을 정지했어요</div></div>
+        <div class="f-wrap" style="left:{bx}px;top:{LY - 250}px"><div class="f-bub" id="f-bbub" style="background:#9d79ff;color:#fff">본인 확인이 끝나 카드 사용을 정지했어요</div></div>
       </div>
       <img id="f-sym" src="assets/brand/symbol_purple.svg" style="position:absolute;left:{SYM_X:.1f}px;top:{SYM_Y:.1f}px;width:{84 * SYM_S:.1f}px;height:{90 * SYM_S:.1f}px" />
       <img id="f-last" src="assets/intro_last.png" style="position:absolute;left:0;top:0;width:1920px;height:1080px" />
-      <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;overflow:visible"><circle id="f-dot" class="o" cx="960" cy="540" r="16" fill="url(#fdg)"/><defs><linearGradient id="fdg" x1="944" y1="0" x2="976" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs></svg>
+      <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;overflow:visible"><circle id="f-dot" class="o" cx="960" cy="540" r="16" fill="url(#fdg)"/><defs><linearGradient id="fdg" x1="944" y1="0" x2="976" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#9d79ff"/><stop offset="1" stop-color="#9d79ff"/></linearGradient></defs></svg>
       <div id="f-barwrap" style="position:absolute;inset:0">{BAR.replace("__ID__", "f-bar")}</div>
       {cap_html}
 """
