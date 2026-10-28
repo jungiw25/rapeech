@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=1920, height=1080" /><title>Rapeech 시안 A</title><script src="assets/gsap.min.js"></script>
+<style>@font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c0916; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
+.layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.hl { position: absolute; color: #fff; font-weight: 800; letter-spacing: -0.035em; line-height: 1.16; white-space: nowrap; }
+.hl .ln { display: block; overflow: hidden; padding: 0 0.06em 0.12em 0; margin-bottom: -0.12em; }
+.hl .ln > span { display: inline-block; }
+.g { background: linear-gradient(100deg, #ff4fd8, #b25cff 55%, #7a6bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.v { display: inline-block; }
+.mono { position: absolute; font-weight: 600; font-size: 19px; letter-spacing: 0.24em; color: #8e86a8; white-space: nowrap; }
+.val { position: absolute; font-weight: 700; color: #fff; letter-spacing: -0.02em; white-space: nowrap; }
+.cwrap { position: absolute; width: 0; display: flex; flex-direction: column; align-items: center; }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="22.0" data-fps="60" data-width="1920" data-height="1080">
+<canvas id="bg" class="layer" width="1920" height="1080"></canvas>
+<svg class="layer" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="a-g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff4fd8"/><stop offset=".55" stop-color="#b25cff"/><stop offset="1" stop-color="#6a5cff"/></linearGradient>
+    <radialGradient id="a-halo"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".25" stop-color="#ff7be2" stop-opacity=".45"/><stop offset="1" stop-color="#ff4fd8" stop-opacity="0"/></radialGradient>
+    <linearGradient id="a-tail" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#ffd6f6" stop-opacity=".9"/></linearGradient>
+  </defs>
+  <g id="a-s2">
+    <line id="a-guide" x1="160" y1="640" x2="1760" y2="640" stroke="#fff" stroke-opacity=".14" stroke-width="1" stroke-dasharray="2 9"/>
+    <line id="a-trk" x1="160" y1="640" x2="160" y2="640" stroke="#fff" stroke-opacity=".75" stroke-width="2"/>
+    <g id="a-n0"><circle class="a-ring" id="a-r0" cx="400" cy="640" r="15" fill="#0c0916" stroke="#fff" stroke-width="1.5"/><circle id="a-d0" cx="400" cy="640" r="4.5" fill="#fff"/><circle id="a-p0" cx="400" cy="640" r="15" fill="none" stroke="#fff" stroke-width="1"/></g><g id="a-n1"><circle class="a-ring" id="a-r1" cx="800" cy="640" r="15" fill="#0c0916" stroke="#fff" stroke-width="1.5"/><circle id="a-d1" cx="800" cy="640" r="4.5" fill="#fff"/><circle id="a-p1" cx="800" cy="640" r="15" fill="none" stroke="#fff" stroke-width="1"/></g><g id="a-n2"><circle class="a-ring" id="a-r2" cx="1200" cy="640" r="15" fill="#0c0916" stroke="#fff" stroke-width="1.5"/><circle id="a-d2" cx="1200" cy="640" r="4.5" fill="#fff"/><circle id="a-p2" cx="1200" cy="640" r="15" fill="none" stroke="#fff" stroke-width="1"/></g><g id="a-n3"><circle class="a-ring" id="a-r3" cx="1600" cy="640" r="15" fill="#0c0916" stroke="#fff" stroke-width="1.5"/><circle id="a-d3" cx="1600" cy="640" r="4.5" fill="#fff"/><circle id="a-p3" cx="1600" cy="640" r="15" fill="none" stroke="#fff" stroke-width="1"/></g>
+  </g>
+  <circle class="a-wave" cx="160" cy="640" r="10" fill="none" stroke="#fff" stroke-width="1.2"/><circle class="a-wave" cx="160" cy="640" r="10" fill="none" stroke="#fff" stroke-width="1.2"/><circle class="a-wave" cx="160" cy="640" r="10" fill="none" stroke="#fff" stroke-width="1.2"/>
+  <g id="a-stack"><g class="a-plz" id="a-plz0"><g class="a-pl" id="a-pl0"><polygon points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="#150f2c" fill-opacity=".86"/><polygon class="a-edge" points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.3"/><polyline points="986.0,712.0 1325.5,908.0 1325.5,914.7 986.0,718.7 1519.5,796.0 1519.5,802.7" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1"/><polygon class="a-hot" points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="none" stroke="url(#a-g)" stroke-width="2.2" opacity="0"/><g class="a-det"><line x1="1213.9" y1="636.4" x2="1049.1" y2="731.6" stroke="#fff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="3 7"/><line x1="1262.4" y1="664.4" x2="1097.6" y2="759.6" stroke="#fff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="3 7"/><line x1="1310.9" y1="692.4" x2="1146.1" y2="787.6" stroke="#fff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="3 7"/><line x1="1359.4" y1="720.4" x2="1194.5" y2="815.6" stroke="#fff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="3 7"/><line x1="1407.9" y1="748.4" x2="1243.0" y2="843.6" stroke="#fff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="3 7"/><line x1="1456.4" y1="776.4" x2="1291.5" y2="871.6" stroke="#fff" stroke-opacity=".28" stroke-width="1" stroke-dasharray="3 7"/></g><line class="a-lead" x1="1527.5" y1="796.0" x2="1609.5" y2="796.0" stroke="#fff" stroke-opacity=".35" stroke-width="1"/><text class="a-lab" x="1621.5" y="802.0" font-family="Pretendard" font-weight="600" font-size="19" letter-spacing="3" fill="#a69cc8">전산 설계</text></g></g><g class="a-plz" id="a-plz1"><g class="a-pl" id="a-pl1"><polygon points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="#150f2c" fill-opacity=".86"/><polygon class="a-edge" points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.3"/><polyline points="986.0,712.0 1325.5,908.0 1325.5,914.7 986.0,718.7 1519.5,796.0 1519.5,802.7" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1"/><polygon class="a-hot" points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="none" stroke="url(#a-g)" stroke-width="2.2" opacity="0"/><g class="a-det"><polyline class="a-cable" points="1165.5,625.2 1369.1,742.8 1223.6,826.8" fill="none" stroke="url(#a-g)" stroke-width="1.6"/><polyline class="a-cable" points="1126.7,647.6 1354.6,779.2 1247.9,840.8" fill="none" stroke="url(#a-g)" stroke-width="1.6"/><polyline class="a-cable" points="1087.9,670.0 1340.0,815.6 1272.1,854.8" fill="none" stroke="url(#a-g)" stroke-width="1.6"/><polyline class="a-cable" points="1049.1,692.4 1325.5,852.0 1296.4,868.8" fill="none" stroke="url(#a-g)" stroke-width="1.6"/></g><line class="a-lead" x1="1527.5" y1="796.0" x2="1609.5" y2="796.0" stroke="#fff" stroke-opacity=".35" stroke-width="1"/><text class="a-lab" x="1621.5" y="802.0" font-family="Pretendard" font-weight="600" font-size="19" letter-spacing="3" fill="#a69cc8">통합배선</text></g></g><g class="a-plz" id="a-plz2"><g class="a-pl" id="a-pl2"><polygon points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="#150f2c" fill-opacity=".86"/><polygon class="a-edge" points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.3"/><polyline points="986.0,712.0 1325.5,908.0 1325.5,914.7 986.0,718.7 1519.5,796.0 1519.5,802.7" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1"/><polygon class="a-hot" points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="none" stroke="url(#a-g)" stroke-width="2.2" opacity="0"/><g class="a-det"><polygon points="1141.2,656.0 1184.8,681.2 1126.7,714.8 1083.0,689.6" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1"/><polygon points="1201.8,691.0 1245.5,716.2 1187.3,749.8 1143.6,724.6" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1"/><polygon points="1262.4,726.0 1306.1,751.2 1247.9,784.8 1204.2,759.6" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1"/><polygon points="1323.1,761.0 1366.7,786.2 1308.5,819.8 1264.9,794.6" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1"/><polygon points="1383.7,796.0 1427.3,821.2 1369.1,854.8 1325.5,829.6" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1"/></g><line class="a-lead" x1="1527.5" y1="796.0" x2="1609.5" y2="796.0" stroke="#fff" stroke-opacity=".35" stroke-width="1"/><text class="a-lab" x="1621.5" y="802.0" font-family="Pretendard" font-weight="600" font-size="19" letter-spacing="3" fill="#a69cc8">네트워크</text></g></g><g class="a-plz" id="a-plz3"><g class="a-pl" id="a-pl3"><polygon points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="#150f2c" fill-opacity=".86"/><polygon class="a-edge" points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.3"/><polyline points="986.0,712.0 1325.5,908.0 1325.5,914.7 986.0,718.7 1519.5,796.0 1519.5,802.7" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1"/><polygon class="a-hot" points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="none" stroke="url(#a-g)" stroke-width="2.2" opacity="0"/><g class="a-det"><polyline points="1136.4,793.2 1136.4,742.8 1184.8,770.8 1184.8,821.2" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="1.2"/></g><line class="a-lead" x1="1527.5" y1="796.0" x2="1609.5" y2="796.0" stroke="#fff" stroke-opacity=".35" stroke-width="1"/><text class="a-lab" x="1621.5" y="802.0" font-family="Pretendard" font-weight="600" font-size="19" letter-spacing="3" fill="#a69cc8">출입보안</text></g></g><g class="a-plz" id="a-plz4"><g class="a-pl" id="a-pl4"><polygon points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="#150f2c" fill-opacity=".86"/><polygon class="a-edge" points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.3"/><polyline points="986.0,712.0 1325.5,908.0 1325.5,914.7 986.0,718.7 1519.5,796.0 1519.5,802.7" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1"/><polygon class="a-hot" points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="none" stroke="url(#a-g)" stroke-width="2.2" opacity="0"/><g class="a-det"><polyline points="1211.5,637.8 1211.5,598.6 1454.0,738.6 1454.0,777.8" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.2"/></g><line class="a-lead" x1="1527.5" y1="796.0" x2="1609.5" y2="796.0" stroke="#fff" stroke-opacity=".35" stroke-width="1"/><text class="a-lab" x="1621.5" y="802.0" font-family="Pretendard" font-weight="600" font-size="19" letter-spacing="3" fill="#a69cc8">통합관제</text></g></g><g class="a-plz" id="a-plz5"><g class="a-pl" id="a-pl5"><polygon points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="#150f2c" fill-opacity=".86"/><polygon class="a-edge" points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="1.3"/><polyline points="986.0,712.0 1325.5,908.0 1325.5,914.7 986.0,718.7 1519.5,796.0 1519.5,802.7" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="1"/><polygon class="a-hot" points="1180.0,600.0 1519.5,796.0 1325.5,908.0 986.0,712.0" fill="none" stroke="url(#a-g)" stroke-width="2.2" opacity="0"/><g class="a-det"><ellipse cx="1252.7" cy="754.0" rx="34" ry="20" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="1.3"/><path d="M1240.7 754.0 l9 5 l16 -11" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g><line class="a-lead" x1="1527.5" y1="796.0" x2="1609.5" y2="796.0" stroke="#fff" stroke-opacity=".35" stroke-width="1"/><text class="a-lab" x="1621.5" y="802.0" font-family="Pretendard" font-weight="600" font-size="19" letter-spacing="3" fill="#a69cc8">유지보수</text></g></g>
+    <g id="a-ailab" opacity="0"><line x1="1527.5" y1="614.6" x2="1609.5" y2="614.6" stroke="#fff" stroke-opacity=".5"/><text x="1621.5" y="621.6" font-family="Pretendard" font-weight="700" font-size="24" fill="#fff">AI · 대화</text></g>
+    <g id="a-nilab" opacity="0"><line x1="1527.5" y1="782.6" x2="1609.5" y2="782.6" stroke="#fff" stroke-opacity=".5"/><text x="1621.5" y="789.6" font-family="Pretendard" font-weight="700" font-size="24" fill="#fff">NI · 인프라</text></g>
+  </g>
+  <g id="a-cm"><g id="a-cms"><rect id="a-tl" x="-150" y="-1.5" width="150" height="3" fill="url(#a-tail)" opacity="0"/><circle r="30" fill="url(#a-halo)"/><circle r="5.5" fill="#fff"/></g></g>
+</svg>
+<div class="layer"><div class="cwrap" style="left:400px;top:686px"><div class="mono a-sl" id="a-sl0" style="position:relative">01  음성 인식</div><div class="val a-sv" id="a-sv0" style="position:relative;margin-top:14px;font-size:34px"></div></div><div class="cwrap" style="left:800px;top:686px"><div class="mono a-sl" id="a-sl1" style="position:relative">02  의도 파악</div><div class="val a-sv" id="a-sv1" style="position:relative;margin-top:14px;font-size:34px"></div></div><div class="cwrap" style="left:1200px;top:686px"><div class="mono a-sl" id="a-sl2" style="position:relative">03  목소리 인증</div><div class="val a-sv" id="a-sv2" style="position:relative;margin-top:14px;font-size:34px"></div></div><div class="cwrap" style="left:1600px;top:686px"><div class="mono a-sl" id="a-sl3" style="position:relative">04  업무 처리</div><div class="val a-sv" id="a-sv3" style="position:relative;margin-top:14px;font-size:34px"></div></div></div>
+<div class="mono" id="k1" style="left:160px;top:236px">RAPEECH  ·  CONVERSATIONAL AI</div>
+<div class="hl" id="h1" style="left:156px;top:280px;font-size:92px;"><span class="ln"><span class="h1-l">모든 대화는,</span></span><span class="ln"><span class="h1-l"><span class="g">목소리</span>에서 시작합니다.</span></span></div>
+<div class="hl" id="h2" style="left:156px;top:160px;font-size:76px;"><span class="ln"><span class="h2-l">AI 콜봇이 <span class="v h2-v" id="h2-v0">듣고</span>, <span class="v h2-v" id="h2-v1">이해하고</span>,</span></span><span class="ln"><span class="h2-l"><span class="v h2-v" id="h2-v2">확인하고</span>, <span class="v h2-v" id="h2-v3">처리합니다</span>.</span></span></div>
+<div class="hl" id="h3" style="left:156px;top:160px;font-size:76px;"><span class="ln"><span class="h3-l">끊김 없는 대화 뒤에는,</span></span><span class="ln"><span class="h3-l"><span class="g">단단한 인프라</span>가 있습니다.</span></span></div>
+<div class="hl" id="h4" style="left:156px;top:160px;font-size:76px;"><span class="ln"><span class="h4-l">인프라 구축부터 AI 도입까지,</span></span><span class="ln"><span class="h4-l"><span class="g">한 팀이</span> 함께합니다.</span></span></div>
+<audio id="bed" class="clip" src="assets/bed.wav" data-start="0" data-duration="22.0" data-track-index="2" data-volume="0.42" data-fade-in="1.2" data-fade-out="2.2"></audio>
+<audio id="sfx" class="clip" src="assets/sfx.wav" data-start="0" data-duration="22.0" data-track-index="3" data-volume="1"></audio>
+</div>
+<script>
+
+const tl = gsap.timeline({ paused: true });
+const REVEAL = (sel, t, o = {}) => tl.fromTo(sel, { yPercent: 118 }, { yPercent: 0, duration: o.d || 1.15, ease: "expo.out", stagger: o.s ?? 0.09 }, t);
+const HIDE = (sel, t, o = {}) => tl.to(sel, { yPercent: -118, duration: o.d || 0.55, ease: "power3.in", stagger: o.s ?? 0.05 }, t);
+const FADE = (sel, t, a, b, d = 0.6, e = "sine.inOut") => tl.fromTo(sel, { opacity: a }, { opacity: b, duration: d, ease: e, immediateRender: false }, t);
+const SYL = "가각간갈감강개거건검겨경고공과관구국군그근글기나남내너노누는다단달대더도동두라락란람랑래러로루르리마만말매머모목무문미바반발방배버번보복본부분비사산살상새서선설성세소속손수순스시신실심아안알애야약양어언업에여역연열영오온와완요용우운울원위유으은을음의이인일자작잔장재저전절점정제조종주중지진차찬창채처천철청초총추축출치친카타탑태터토통트파판패포표프피하학한할함합해행허현형호화확환활회효후휘흐희";
+const hsh = (a, b) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+const KEEP = " “”,.·";
+function scrambleText(text, p, d) {
+  if (p <= 0) return "";
+  const n = text.length, f = Math.floor(p * d * 24);
+  let out = "";
+  for (let i = 0; i < n; i++) {
+    const c = text[i], r = 0.3 + 0.7 * i / n;
+    if (p >= r || KEEP.includes(c)) out += (p >= r - 0.5 ? c : (KEEP.includes(c) ? c : ""));
+    else if (p >= r - 0.5) out += SYL[Math.floor(hsh(i + 1, f + 7) * SYL.length)];
+  }
+  return out;
+}
+const SCRAMBLE = (el, text, t, d = 1.0) => { const o = { p: 0 }; el.textContent = ""; tl.fromTo(o, { p: 0 }, { p: 1, duration: d, ease: "none", onUpdate() { el.textContent = scrambleText(text, o.p, d); } }, t); };
+const DRAWS = (sel, t, d = 1.0, e = "power2.inOut", s = 0) => gsap.utils.toArray(sel).forEach((el, i) => {
+  const L = el.getTotalLength(); el.setAttribute("stroke-dasharray", `${L} ${L}`);
+  tl.fromTo(el, { attr: { "stroke-dashoffset": L } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e }, t + i * s);
+});
+
+
+const ARR = [5.4, 7.2, 9.0, 10.8], DEP = [4.2, 5.9, 7.7, 9.5], SX = [400, 800, 1200, 1600], STEPS = ["“카드를 잃어버렸어요”", "카드 분실 신고", "본인 확인 완료", "카드 사용 정지"];
+const LY = 640, K = 56;
+
+gsap.set("#k1", { opacity: 0 });
+REVEAL(".h1-l", 0.9); FADE("#k1", 0.7, 0, 1, 0.8); HIDE(".h1-l", 3.75); FADE("#k1", 3.75, 1, 0, 0.4);
+REVEAL(".h2-l", 4.35); gsap.set(".h2-v", { opacity: 0.22 });
+ARR.forEach((t, i) => tl.to("#h2-v" + i, { opacity: 1, duration: 0.5, ease: "sine.out" }, t + 0.05));
+HIDE(".h2-l", 12.0);
+REVEAL(".h3-l", 13.2); HIDE(".h3-l", 16.55);
+REVEAL(".h4-l", 17.7);
+
+// ── 1. 목소리: 점 하나와 퍼지는 가는 고리
+gsap.set("#a-cm", { x: 160, y: LY });
+gsap.set("#a-cms", { svgOrigin: "0 0", scale: 0, opacity: 0 });
+tl.fromTo("#a-cms", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.9, ease: "power3.out", immediateRender: false }, 0.5);
+gsap.set(".a-wave", { opacity: 0 });
+gsap.utils.toArray(".a-wave").forEach((el, j) => {
+  for (let r = 0; r < 2; r++) tl.fromTo(el, { attr: { r: 8 }, opacity: 0.7 }, { attr: { r: 90 }, opacity: 0, duration: 1.6, ease: "power2.out", immediateRender: false }, 1.0 + r * 1.4 + j * 0.28);
+});
+// ── 2. 선은 점이 지나간 자리까지만 정확히(점과 선이 같은 트윈 시간·이징)
+FADE("#a-guide", 4.0, 0, 1, 0.8);
+gsap.set(["#a-r0", "#a-r1", "#a-r2", "#a-r3", "#a-d0", "#a-d1", "#a-d2", "#a-d3", "#a-p0", "#a-p1", "#a-p2", "#a-p3", ".a-sl"], { opacity: 0 });
+for (let i = 0; i < 4; i++) {
+  const d = ARR[i] - DEP[i];
+  tl.to("#a-cm", { x: SX[i], duration: d, ease: "power2.inOut" }, DEP[i]);
+  tl.to("#a-trk", { attr: { x2: SX[i] }, duration: d, ease: "power2.inOut" }, DEP[i]);
+  tl.fromTo("#a-tl", { opacity: 0 }, { opacity: 1, duration: d * 0.5, ease: "sine.in", yoyo: true, repeat: 1, immediateRender: false }, DEP[i]);
+  const t = ARR[i];
+  tl.fromTo("#a-r" + i, { opacity: 0, scale: 0.4, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 0.7, ease: "expo.out" }, t - 0.05);
+  tl.fromTo("#a-d" + i, { opacity: 0 }, { opacity: 1, duration: 0.3 }, t + 0.1);
+  tl.fromTo("#a-p" + i, { opacity: 0.8, scale: 1, transformOrigin: "50% 50%" }, { opacity: 0, scale: 3.2, duration: 1.1, ease: "power2.out", immediateRender: false }, t);
+  tl.fromTo("#a-sl" + i, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, t + 0.1);
+  SCRAMBLE(document.getElementById("a-sv" + i), STEPS[i], t + 0.2, 0.95);
+  if (i < 3) tl.to(["#a-sl" + i, "#a-sv" + i], { opacity: 0.38, duration: 0.6, ease: "sine.inOut" }, ARR[i + 1] - 0.3);
+}
+// ── 3. 전환: 모든 것이 물러나고 점만 데이터센터의 맨 아래 판으로
+tl.to(["#a-s2", ".a-sl", ".a-sv"], { opacity: 0, duration: 0.7, ease: "sine.inOut" }, 12.0);
+tl.to("#a-cm", { x: 1252.7, y: 754.0, duration: 1.0, ease: "power3.inOut" }, 12.15);
+tl.to("#a-cms", { scale: 0, opacity: 0, duration: 0.45, ease: "power2.in" }, 13.1);
+gsap.set(".a-pl", { opacity: 0 });
+for (let f = 0; f < 6; f++) gsap.set("#a-plz" + f, { y: -f * K });
+for (let f = 0; f < 6; f++) {
+  const t = 13.1 + f * 0.36;
+  tl.fromTo("#a-pl" + f, { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "none" }, t);
+  tl.fromTo("#a-pl" + f, { y: 26 }, { y: 0, duration: 1.0, ease: "expo.out" }, t);
+  DRAWS("#a-pl" + f + " .a-edge", t, 0.9, "power2.inOut");
+  tl.fromTo("#a-pl" + f + " .a-det", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "sine.out" }, t + 0.45);
+  tl.fromTo("#a-pl" + f + " .a-lab", { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, t + 0.35);
+  DRAWS("#a-pl" + f + " .a-lead", t + 0.3, 0.5, "power2.out");
+}
+DRAWS(".a-cable", 13.75, 0.9, "power2.inOut", 0.08);
+// ── 4. 여섯 층이 두 층으로 모임: 아래 3층은 인프라, 위 3층은 AI
+tl.to([".a-lab", ".a-lead"], { opacity: 0, duration: 0.4, ease: "sine.in" }, 16.6);
+const Z = [0, 0.12, 0.24, 3.0, 3.12, 3.24];
+for (let f = 0; f < 6; f++) tl.to("#a-plz" + f, { y: -Z[f] * K, duration: 1.3, ease: "power3.inOut" }, 16.85 + (f < 3 ? 0 : 0.08));
+tl.to(".a-det", { opacity: 0.35, duration: 0.6 }, 16.85);
+FADE("#a-ailab", 18.2, 0, 1, 0.6); FADE("#a-nilab", 18.35, 0, 1, 0.6);
+// 빛 하나가 위에서 AI 층을 지나 인프라 층에 닿음 → 두 층 테두리에 브랜드 빛
+tl.fromTo("#a-cm", { x: 1252.7, y: 234.0 }, { x: 1252.7, y: 572.6, duration: 0.7, ease: "power2.in", immediateRender: false }, 18.3);
+tl.fromTo("#a-cms", { scale: 1, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, immediateRender: false }, 18.3);
+tl.to("#a-cm", { y: 740.6, duration: 0.55, ease: "power2.inOut" }, 19.0);
+tl.to(["#a-pl3 .a-hot", "#a-pl4 .a-hot", "#a-pl5 .a-hot"], { opacity: 1, duration: 0.5, ease: "sine.out", stagger: 0.05 }, 18.95);
+tl.to(["#a-pl0 .a-hot", "#a-pl1 .a-hot", "#a-pl2 .a-hot"], { opacity: 1, duration: 0.5, ease: "sine.out", stagger: 0.05 }, 19.5);
+tl.to("#a-cms", { scale: 2.2, opacity: 0, duration: 0.9, ease: "power2.out" }, 19.55);
+
+// ── 배경: 아주 느린 그라데이션 + 고운 필름 질감(시드 고정, 시간으로만 결정)
+const cv = document.getElementById("bg"), cx = cv.getContext("2d");
+const NZ = [];
+for (let n = 0; n < 6; n++) {
+  const c = document.createElement("canvas"); c.width = 960; c.height = 540;
+  const x = c.getContext("2d"), im = x.createImageData(960, 540);
+  for (let i = 0; i < im.data.length; i += 4) { const v = Math.floor(hsh(i >> 2, n * 7919) * 255); im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
+  x.putImageData(im, 0, 0); NZ.push(c);
+}
+const BL = [
+  [0.72, 0.42, 0.62, [92, 40, 200], 0.55, 0.11, 0.07, 0.0],
+  [0.18, 0.88, 0.55, [150, 20, 130], 0.42, 0.08, 0.09, 1.7],
+  [0.95, 0.95, 0.5, [40, 30, 170], 0.40, 0.07, 0.06, 3.1],
+];
+function drawBg(t) {
+  cx.globalCompositeOperation = "source-over"; cx.globalAlpha = 1;
+  cx.fillStyle = "#0c0916"; cx.fillRect(0, 0, 1920, 1080);
+  for (const [x, y, r, c, a, ax, ay, ph] of BL) {
+    const px = (x + ax * Math.sin(t * 0.21 + ph)) * 1920, py = (y + ay * Math.cos(t * 0.17 + ph)) * 1080, R = r * 1920;
+    const g = cx.createRadialGradient(px, py, 0, px, py, R);
+    g.addColorStop(0, `rgba(${c[0]},${c[1]},${c[2]},${a})`); g.addColorStop(1, `rgba(${c[0]},${c[1]},${c[2]},0)`);
+    cx.fillStyle = g; cx.fillRect(0, 0, 1920, 1080);
+  }
+  const v = cx.createRadialGradient(960, 540, 300, 960, 540, 1150);
+  v.addColorStop(0, "rgba(0,0,0,0)"); v.addColorStop(1, "rgba(0,0,0,0.55)");
+  cx.fillStyle = v; cx.fillRect(0, 0, 1920, 1080);
+  cx.globalAlpha = 0.055; cx.drawImage(NZ[Math.floor(t * 24) % NZ.length], 0, 0, 1920, 1080);
+  cx.globalAlpha = 1;
+}
+window.addEventListener("hf-seek", (e) => drawBg(e.detail.time));
+drawBg(0);
+
+window.__timelines = window.__timelines || {};
+window.__timelines["main"] = tl;
+</script>
+</body></html>

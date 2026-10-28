@@ -1,0 +1,131 @@
+{
+  "meta": {
+    "id": "01-ai-dangjik",
+    "title": "밤에 구청에 전화하면, 이제 AI가 받습니다",
+    "date": "2026-10-21",
+    "status": "review",
+    "sources": [
+      {"name": "파이낸셜뉴스", "date": "2026-10-19", "title": "화성특례시, AI당직봇 본격 가동", "url": "https://www.fnnews.com/news/202610191051559416"},
+      {"name": "아이뉴스24", "date": "2026-10-19", "title": "화성시 AI당직봇 운영", "url": "https://m.inews24.com/v/2016441"},
+      {"name": "파이낸셜뉴스", "date": "2026-10-20", "title": "성남시, AI 당직 보이스 봇 도입", "url": "https://www.fnnews.com/news/202610200928125382"},
+      {"name": "헤럴드경제", "date": "2026-10-06", "title": "마포구, 서울 자치구 최초 AI 당직 보이스봇", "url": "https://www.heraldk.com/article/2026100517010475374"},
+      {"name": "정보통신신문", "date": "2026-01-29", "title": "라피치 ConvAI 우수조달물품 지정", "url": "https://www.koit.co.kr/news/articleView.html?idxno=205212"},
+      {"name": "라피치 연혁", "date": "2026-10-20", "title": "rapeech.com 회사 연혁", "url": "https://rapeech.com/content/history"}
+    ]
+  },
+  "slides": [
+    {
+      "part": "cover", "label": "AI NEWS / WEEKLY", "dur": 5.0,
+      "kicker": "26.10.19 — 10.22",
+      "title": ["밤에 구청 전화,", "이제 [AI]가", "받습니다"],
+      "blocks": [
+        {"type": "chips", "items": ["[AI당직봇]", "24시간 응대", "라피치 사례"]},
+        {"type": "box", "text": "공공 AI 음성봇 · 라피치 이야기", "sub": "1분 만에 읽는 이번 주 AI 소식"}
+      ]
+    },
+    {
+      "part": "news", "label": "THEME 1 / PUBLIC AI",
+      "badge": {"stars": 3, "text": "이번 주 핵심"},
+      "title": ["화성시 당직실,", "[AI]가 먼저 받는다"],
+      "blocks": [
+        {"type": "tiles", "items": [
+          {"value": "5곳", "label": "시청+4개 구청 당직실"},
+          {"value": "44개", "label": "AI가 맡는 당직 업무"},
+          {"value": "100개", "label": "분야별 응대 시나리오"},
+          {"value": "24시간", "label": "주말·공휴일 운영"}
+        ]}
+      ],
+      "caption": ["2026년 10월 19일부터 본격 가동", "평일은 오후 6시 ~ 다음 날 오전 9시"],
+      "source": "파이낸셜뉴스 · 2026.10.19"
+    },
+    {
+      "part": "news", "label": "THEME 1 / PUBLIC AI",
+      "badge": {"stars": 3, "text": "처리 방식"},
+      "title": ["단순 문의는 AI,", "[긴급]은 사람에게"],
+      "blocks": [
+        {"type": "table", "title": "AI당직봇이 전화를 나누는 법", "rows": [
+          ["주정차·환경·동물", "AI가 접수·안내"],
+          ["화재·범죄", "119·112 안내 후 [당직자 연결]"],
+          ["\"직원 연결해줘\"", "바로 당직자 연결"],
+          ["통화 내용", "실시간 [요약]해 화면 표시"]
+        ]}
+      ],
+      "caption": ["당직자는 긴급 상황 대응에 더 집중"],
+      "source": "아이뉴스24 · 2026.10.19"
+    },
+    {
+      "part": "news", "label": "THEME 1 / PUBLIC AI",
+      "badge": {"stars": 2, "text": "확산 중"},
+      "title": ["옆 동네도", "[AI 당직] 시작"],
+      "blocks": [
+        {"type": "timeline", "items": [
+          {"year": "10월", "text": "서울 마포구, 서울 자치구 최초 [AI 당직 보이스봇] 시범 운영 (2027년 1월 정식)"},
+          {"year": "10.19", "text": "경기 화성시, [AI당직봇] 본격 가동"},
+          {"year": "10.22", "text": "경기 성남시, 시청 당직실에 [AI 당직 보이스 봇] 도입"}
+        ]}
+      ],
+      "caption": ["야간 민원 전화, AI 음성봇이 표준이 되는 중"],
+      "source": "헤럴드경제 2026.10.06 · 파이낸셜뉴스 2026.10.20"
+    },
+    {
+      "part": "insight", "label": "INSIGHT",
+      "badge": {"stars": 3, "text": "이번 주 포인트"},
+      "title": ["전화 민원,", "[말로] 해결하는 시대"],
+      "blocks": [
+        {"type": "compare",
+         "before": {"label": "BEFORE", "title": "지금까지", "items": ["야간엔 당직자가 모든 전화 응대", "단순 문의에 긴급 전화가 밀림", "통화 내용은 손으로 기록"]},
+         "after": {"label": "AFTER", "title": "AI 음성봇과 함께", "items": ["단순 문의는 AI가 [24시간] 안내", "긴급 전화는 바로 사람에게", "통화는 [자동 요약]"]}}
+      ],
+      "caption": ["핵심은 사람과 AI의 [역할 분담]"]
+    },
+    {
+      "part": "rapeech", "label": "RAPEECH / CASE",
+      "badge": {"stars": 3, "text": "라피치 사례"},
+      "title": ["라피치도", "[말로 하는] ARS를", "만들어요"],
+      "blocks": [
+        {"type": "bullets", "title": "국내 대형 보험사 고객센터", "items": [
+          "[말로하는 ARS] 구축 계약 (2026년 5월)",
+          "번호를 차례로 누르는 대신, 용건을 [말로] 하면 바로 안내",
+          "같은 흐름: 전화 응대를 음성 AI로 더 빠르게"
+        ]}
+      ],
+      "caption": ["※ 위 지자체 사례와는 별개의 라피치 프로젝트입니다"],
+      "source": "라피치 공시 · 2026.05"
+    },
+    {
+      "part": "rapeech", "label": "RAPEECH / CONVAI", "in_cards": false,
+      "badge": {"stars": 2, "text": "검증된 기술"},
+      "title": ["공공이 먼저", "알아본 [ConvAI]"],
+      "blocks": [
+        {"type": "timeline", "title": "라피치 대화형 AI 플랫폼 ConvAI", "items": [
+          {"year": "2023", "text": "중기부 [우수연구개발 혁신제품] 지정"},
+          {"year": "2024", "text": "조달청 혁신제품 [시범구매] 선정, 복지관 도입"},
+          {"year": "2026", "text": "조달청 [우수조달물품] 지정 (1월)"}
+        ]}
+      ],
+      "source": "정보통신신문 · 2026.01.29"
+    },
+    {
+      "part": "rapeech", "label": "ABOUT RAPEECH",
+      "badge": {"stars": 3, "text": "라피치는"},
+      "title": ["2005년부터,", "[말을 알아듣는] AI"],
+      "blocks": [
+        {"type": "table", "rows": [
+          ["설립", "2005년"],
+          ["콜봇", "NLU 기반 [음성봇]"],
+          ["AI Agent", "LLM 기반 [상담 자동화]"],
+          ["NI", "AI 데이터센터 [네트워크]"]
+        ]}
+      ],
+      "caption": ["인프라 구축부터 AI 도입까지 한 번에"],
+      "source": "rapeech.com"
+    },
+    {
+      "type": "outro", "part": "outro", "label": "AI NEWS / WEEKLY", "dur": 4.8,
+      "title": ["매주 AI 소식,", "[1분]이면 끝"],
+      "sub": "다음 주 소식도 놓치지 않으려면",
+      "button": "팔로우하기",
+      "hint": "좋아요 · 저장 · 공유도 부탁드려요"
+    }
+  ]
+}

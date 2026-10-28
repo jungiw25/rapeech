@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=1920, height=1080" /><title>Rapeech 시안 C</title><script src="assets/gsap.min.js"></script>
+<style>@font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c0916; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
+.layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.hl { position: absolute; color: #fff; font-weight: 800; letter-spacing: -0.035em; line-height: 1.16; white-space: nowrap; }
+.hl .ln { display: block; overflow: hidden; padding: 0 0.06em 0.12em 0; margin-bottom: -0.12em; }
+.hl .ln > span { display: inline-block; }
+.g { background: linear-gradient(100deg, #ff4fd8, #b25cff 55%, #7a6bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.v { display: inline-block; }
+.mono { position: absolute; font-weight: 600; font-size: 19px; letter-spacing: 0.24em; color: #8e86a8; white-space: nowrap; }
+.val { position: absolute; font-weight: 700; color: #fff; letter-spacing: -0.02em; white-space: nowrap; }
+.cwrap { position: absolute; width: 0; display: flex; flex-direction: column; align-items: center; }
+
+html, body, #root { background: #f3eff8; }
+.hl { color: #1b1530; }
+.g { background: linear-gradient(100deg, #e0119d, #8a3cf0 60%, #4a32f0); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mono { color: #5d5480; }
+.c-cw { position: absolute; perspective: 1400px; }
+.c-card { width: 360px; height: 190px; padding: 30px 32px; border-radius: 22px; background: #fff;
+  box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 14px 26px rgba(70,40,140,.14), 0 3px 6px rgba(70,40,140,.10); }
+.c-ico { position: absolute; right: 26px; top: 26px; width: 30px; height: 30px; border-radius: 50%; }
+.c-fw { position: absolute; left: 1040px; width: 520px; height: 74px; perspective: 1600px; }
+.c-fl { position: absolute; inset: 0; border-radius: 16px; display: flex; align-items: center; gap: 12px; padding: 0 28px;
+  box-shadow: 0 10px 20px rgba(70,40,140,.13), 0 2px 4px rgba(70,40,140,.10); }
+.c-led { width: 12px; height: 12px; border-radius: 50%; box-shadow: inset 0 -2px 2px rgba(0,0,0,.12); }
+.c-slot { flex: 1; height: 10px; border-radius: 5px; background: rgba(60,40,120,.08); margin-left: 10px; }
+.c-flab { position: absolute; left: 1588px; font-size: 21px; font-weight: 700; color: #4a4170; white-space: nowrap; }
+.c-glab { position: absolute; left: 1588px; font-size: 26px; font-weight: 800; color: #1b1530; white-space: nowrap; }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="22.0" data-fps="60" data-width="1920" data-height="1080">
+<canvas id="paper" class="layer" width="1920" height="1080"></canvas>
+<svg id="c-waves" class="layer" viewBox="0 0 1920 1080"><defs><filter id="c-sh" x="-10%" y="-30%" width="120%" height="160%"><feDropShadow dx="0" dy="-6" stdDeviation="9" flood-color="#46288c" flood-opacity=".16"/></filter></defs>
+<path id="c-w0" fill="#c9b8f4" filter="url(#c-sh)"/><path id="c-w1" fill="#dccff8" filter="url(#c-sh)"/><path id="c-w2" fill="#ff8de3" filter="url(#c-sh)"/><path id="c-w3" fill="#ebe3fb" filter="url(#c-sh)"/><path id="c-w4" fill="#ffffff" filter="url(#c-sh)"/></svg>
+<div class="layer" id="c-s2">
+  <div id="c-strip" style="position:absolute;left:160px;top:786px;height:12px;width:0;border-radius:6px;background:#e2d6fa;box-shadow:0 4px 8px rgba(70,40,140,.12)"></div>
+  <div id="c-disc" style="position:absolute;left:0;top:774px;width:36px;height:36px;margin-left:-18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffb3ee,#ff4fd8 60%,#d81fb0);box-shadow:0 8px 14px rgba(200,20,160,.28)"></div>
+  <div class="c-cw" style="left:160px;top:520px"><div class="c-card" id="c-card0"><div class="c-ico" style="background:#ff5cd6"></div><div class="mono" style="position:relative;font-size:18px">01  음성 인식</div><div class="val" id="c-v0" style="position:relative;margin-top:22px;font-size:34px;color:#1b1530"></div></div></div><div class="c-cw" style="left:580px;top:520px"><div class="c-card" id="c-card1"><div class="c-ico" style="background:#9d6bff"></div><div class="mono" style="position:relative;font-size:18px">02  의도 파악</div><div class="val" id="c-v1" style="position:relative;margin-top:22px;font-size:34px;color:#1b1530"></div></div></div><div class="c-cw" style="left:1000px;top:520px"><div class="c-card" id="c-card2"><div class="c-ico" style="background:#5a5cff"></div><div class="mono" style="position:relative;font-size:18px">03  목소리 인증</div><div class="val" id="c-v2" style="position:relative;margin-top:22px;font-size:34px;color:#1b1530"></div></div></div><div class="c-cw" style="left:1420px;top:520px"><div class="c-card" id="c-card3"><div class="c-ico" style="background:#ff5cd6"></div><div class="mono" style="position:relative;font-size:18px">04  업무 처리</div><div class="val" id="c-v3" style="position:relative;margin-top:22px;font-size:34px;color:#1b1530"></div></div></div>
+</div>
+<div class="layer" id="c-bld"><div class="c-fw" style="top:818px"><div class="c-fl" id="c-fl0" style="background:#ffffff"><span class="c-led" style="background:#e4dcf7"></span><span class="c-led" style="background:#9d6bff"></span><span class="c-led" style="background:#5a5cff"></span><span class="c-led" style="background:#ff5cd6"></span><span class="c-led" style="background:#e4dcf7"></span><span class="c-led" style="background:#5a5cff"></span><span class="c-led" style="background:#ff5cd6"></span><span class="c-slot"></span></div></div><div class="c-flab" id="c-lb0" style="top:840px">전산 설계</div><div class="c-fw" style="top:736px"><div class="c-fl" id="c-fl1" style="background:#f1ebfc"><span class="c-led" style="background:#9d6bff"></span><span class="c-led" style="background:#e4dcf7"></span><span class="c-led" style="background:#ff5cd6"></span><span class="c-led" style="background:#9d6bff"></span><span class="c-led" style="background:#5a5cff"></span><span class="c-led" style="background:#e4dcf7"></span><span class="c-led" style="background:#9d6bff"></span><span class="c-slot"></span></div></div><div class="c-flab" id="c-lb1" style="top:758px">통합배선</div><div class="c-fw" style="top:654px"><div class="c-fl" id="c-fl2" style="background:#ffffff"><span class="c-led" style="background:#5a5cff"></span><span class="c-led" style="background:#ff5cd6"></span><span class="c-led" style="background:#e4dcf7"></span><span class="c-led" style="background:#5a5cff"></span><span class="c-led" style="background:#ff5cd6"></span><span class="c-led" style="background:#9d6bff"></span><span class="c-led" style="background:#e4dcf7"></span><span class="c-slot"></span></div></div><div class="c-flab" id="c-lb2" style="top:676px">네트워크</div><div class="c-fw" style="top:572px"><div class="c-fl" id="c-fl3" style="background:#f1ebfc"><span class="c-led" style="background:#ff5cd6"></span><span class="c-led" style="background:#9d6bff"></span><span class="c-led" style="background:#5a5cff"></span><span class="c-led" style="background:#e4dcf7"></span><span class="c-led" style="background:#9d6bff"></span><span class="c-led" style="background:#5a5cff"></span><span class="c-led" style="background:#ff5cd6"></span><span class="c-slot"></span></div></div><div class="c-flab" id="c-lb3" style="top:594px">출입보안</div><div class="c-fw" style="top:490px"><div class="c-fl" id="c-fl4" style="background:#ffffff"><span class="c-led" style="background:#e4dcf7"></span><span class="c-led" style="background:#5a5cff"></span><span class="c-led" style="background:#ff5cd6"></span><span class="c-led" style="background:#9d6bff"></span><span class="c-led" style="background:#e4dcf7"></span><span class="c-led" style="background:#ff5cd6"></span><span class="c-led" style="background:#9d6bff"></span><span class="c-slot"></span></div></div><div class="c-flab" id="c-lb4" style="top:512px">통합관제</div><div class="c-fw" style="top:408px"><div class="c-fl" id="c-fl5" style="background:#f1ebfc"><span class="c-led" style="background:#5a5cff"></span><span class="c-led" style="background:#e4dcf7"></span><span class="c-led" style="background:#9d6bff"></span><span class="c-led" style="background:#5a5cff"></span><span class="c-led" style="background:#ff5cd6"></span><span class="c-led" style="background:#e4dcf7"></span><span class="c-led" style="background:#5a5cff"></span><span class="c-slot"></span></div></div><div class="c-flab" id="c-lb5" style="top:430px">유지보수</div>
+  <div class="c-glab" id="c-gai" style="top:470px">AI · 대화</div><div class="c-glab" id="c-gni" style="top:760px">NI · 인프라</div>
+  <div id="c-drop" style="position:absolute;left:1300px;top:0;width:64px;height:64px;margin-left:-32px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffc2f1,#ff4fd8 58%,#cc1aa6);box-shadow:0 12px 20px rgba(200,20,160,.3)"></div>
+</div>
+<div class="mono" id="k1" style="left:160px;top:236px">RAPEECH  ·  CONVERSATIONAL AI</div>
+<div class="hl" id="h1" style="left:156px;top:280px;font-size:92px;"><span class="ln"><span class="h1-l">모든 대화는,</span></span><span class="ln"><span class="h1-l"><span class="g">목소리</span>에서 시작합니다.</span></span></div>
+<div class="hl" id="h2" style="left:156px;top:160px;font-size:76px;"><span class="ln"><span class="h2-l">AI 콜봇이 <span class="v h2-v" id="h2-v0">듣고</span>, <span class="v h2-v" id="h2-v1">이해하고</span>,</span></span><span class="ln"><span class="h2-l"><span class="v h2-v" id="h2-v2">확인하고</span>, <span class="v h2-v" id="h2-v3">처리합니다</span>.</span></span></div>
+<div class="hl" id="h3" style="left:156px;top:160px;font-size:76px;"><span class="ln"><span class="h3-l">끊김 없는 대화 뒤에는,</span></span><span class="ln"><span class="h3-l"><span class="g">단단한 인프라</span>가 있습니다.</span></span></div>
+<div class="hl" id="h4" style="left:156px;top:160px;font-size:76px;"><span class="ln"><span class="h4-l">인프라 구축부터 AI 도입까지,</span></span><span class="ln"><span class="h4-l"><span class="g">한 팀이</span> 함께합니다.</span></span></div>
+<audio id="bed" class="clip" src="assets/bed.wav" data-start="0" data-duration="22.0" data-track-index="2" data-volume="0.42" data-fade-in="1.2" data-fade-out="2.2"></audio>
+<audio id="sfx" class="clip" src="assets/sfx.wav" data-start="0" data-duration="22.0" data-track-index="3" data-volume="1"></audio>
+</div>
+<script>
+
+const tl = gsap.timeline({ paused: true });
+const REVEAL = (sel, t, o = {}) => tl.fromTo(sel, { yPercent: 118 }, { yPercent: 0, duration: o.d || 1.15, ease: "expo.out", stagger: o.s ?? 0.09 }, t);
+const HIDE = (sel, t, o = {}) => tl.to(sel, { yPercent: -118, duration: o.d || 0.55, ease: "power3.in", stagger: o.s ?? 0.05 }, t);
+const FADE = (sel, t, a, b, d = 0.6, e = "sine.inOut") => tl.fromTo(sel, { opacity: a }, { opacity: b, duration: d, ease: e, immediateRender: false }, t);
+const SYL = "가각간갈감강개거건검겨경고공과관구국군그근글기나남내너노누는다단달대더도동두라락란람랑래러로루르리마만말매머모목무문미바반발방배버번보복본부분비사산살상새서선설성세소속손수순스시신실심아안알애야약양어언업에여역연열영오온와완요용우운울원위유으은을음의이인일자작잔장재저전절점정제조종주중지진차찬창채처천철청초총추축출치친카타탑태터토통트파판패포표프피하학한할함합해행허현형호화확환활회효후휘흐희";
+const hsh = (a, b) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+const KEEP = " “”,.·";
+function scrambleText(text, p, d) {
+  if (p <= 0) return "";
+  const n = text.length, f = Math.floor(p * d * 24);
+  let out = "";
+  for (let i = 0; i < n; i++) {
+    const c = text[i], r = 0.3 + 0.7 * i / n;
+    if (p >= r || KEEP.includes(c)) out += (p >= r - 0.5 ? c : (KEEP.includes(c) ? c : ""));
+    else if (p >= r - 0.5) out += SYL[Math.floor(hsh(i + 1, f + 7) * SYL.length)];
+  }
+  return out;
+}
+const SCRAMBLE = (el, text, t, d = 1.0) => { const o = { p: 0 }; el.textContent = ""; tl.fromTo(o, { p: 0 }, { p: 1, duration: d, ease: "none", onUpdate() { el.textContent = scrambleText(text, o.p, d); } }, t); };
+const DRAWS = (sel, t, d = 1.0, e = "power2.inOut", s = 0) => gsap.utils.toArray(sel).forEach((el, i) => {
+  const L = el.getTotalLength(); el.setAttribute("stroke-dasharray", `${L} ${L}`);
+  tl.fromTo(el, { attr: { "stroke-dashoffset": L } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e }, t + i * s);
+});
+
+const ARR = [5.4, 7.2, 9.0, 10.8], DEP = [4.2, 5.9, 7.7, 9.5], VALS = ["“카드를 잃어버렸어요”", "카드 분실 신고", "본인 확인 완료", "카드 사용 정지"];
+const cl = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v)); const seg = (t, a, b) => cl((t - a) / (b - a));
+const io = (x) => x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; const io3 = (x) => x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const lerp = (a, b, u) => a + (b - a) * u;
+
+gsap.set("#k1", { opacity: 0 });
+REVEAL(".h1-l", 0.9); FADE("#k1", 0.7, 0, 1, 0.8); HIDE(".h1-l", 3.75); FADE("#k1", 3.75, 1, 0, 0.4);
+REVEAL(".h2-l", 4.35); gsap.set(".h2-v", { opacity: 0.22 });
+ARR.forEach((t, i) => tl.to("#h2-v" + i, { opacity: 1, duration: 0.5, ease: "sine.out" }, t + 0.05));
+HIDE(".h2-l", 12.0);
+REVEAL(".h3-l", 13.2); HIDE(".h3-l", 16.55);
+REVEAL(".h4-l", 17.7);
+
+const SX = [340, 760, 1180, 1600];
+// ── 2. 종이 원반이 지나간 자리까지만 종이 띠가 깔림, 도착하면 카드가 팝업북처럼 일어섬
+gsap.set("#c-disc", { x: 160, opacity: 0 });
+tl.fromTo("#c-disc", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)", immediateRender: false }, 3.9);
+gsap.set(".c-card", { rotationX: -96, transformOrigin: "50% 100%", opacity: 0 });
+for (let i = 0; i < 4; i++) {
+  const d = ARR[i] - DEP[i];
+  tl.to("#c-disc", { x: SX[i], duration: d, ease: "power2.inOut" }, DEP[i]);
+  tl.to("#c-strip", { width: SX[i] - 160, duration: d, ease: "power2.inOut" }, DEP[i]);
+  tl.to("#c-disc", { scaleY: 0.8, scaleX: 1.18, duration: 0.12, ease: "power2.out", yoyo: true, repeat: 1 }, ARR[i] - 0.05);
+  tl.fromTo("#c-card" + i, { rotationX: -96, opacity: 0 }, { rotationX: 0, opacity: 1, duration: 1.0, ease: "back.out(1.5)", immediateRender: false }, ARR[i] - 0.15);
+  SCRAMBLE(document.getElementById("c-v" + i), VALS[i], ARR[i] + 0.3, 0.8);
+}
+tl.to(".c-card", { rotationX: -96, opacity: 0, duration: 0.6, ease: "power2.in", stagger: 0.06 }, 11.95);
+tl.to(["#c-strip", "#c-disc"], { opacity: 0, duration: 0.5 }, 12.1);
+// ── 3. 종이 층이 아래부터 하나씩 일어서며 건물이 됨
+gsap.set(".c-fl", { rotationX: 96, transformOrigin: "50% 100%", opacity: 0 });
+gsap.set([".c-flab", "#c-gai", "#c-gni", "#c-drop"], { opacity: 0 });
+for (let f = 0; f < 6; f++) {
+  const t = 13.0 + f * 0.36;
+  tl.fromTo("#c-fl" + f, { rotationX: 96, opacity: 0 }, { rotationX: 0, opacity: 1, duration: 0.95, ease: "back.out(1.6)", immediateRender: false }, t);
+  tl.fromTo("#c-lb" + f, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, t + 0.3);
+}
+// ── 4. 위 세 층은 AI(분홍 종이), 아래 세 층은 인프라로 나뉘고, 목소리 원반이 말랑하게 내려앉음
+tl.to(".c-flab", { opacity: 0, duration: 0.4 }, 16.6);
+[3, 4, 5].forEach((f, j) => { tl.to("#c-fl" + f, { backgroundColor: ["#ffe3f6", "#ffd3f1", "#ffc2ec"][j], duration: 0.8, ease: "sine.inOut" }, 17.0); tl.to("#c-fl" + f, { y: -30, duration: 0.9, ease: "power3.inOut" }, 17.0); });
+[0, 1, 2].forEach((f, j) => tl.to("#c-fl" + f, { backgroundColor: ["#dcd0fa", "#e6dcfb", "#efe8fd"][j], duration: 0.8, ease: "sine.inOut" }, 17.0));
+tl.fromTo("#c-gai", { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 18.1);
+tl.fromTo("#c-gni", { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 18.25);
+tl.fromTo("#c-drop", { y: -120, opacity: 1 }, { y: 312, opacity: 1, duration: 0.75, ease: "power2.in", immediateRender: false }, 18.2);
+tl.fromTo("#c-drop", { scaleX: 1, scaleY: 1 }, { scaleX: 1.3, scaleY: 0.7, transformOrigin: "50% 100%", duration: 0.12, ease: "power2.out", immediateRender: false }, 18.95);
+tl.to("#c-drop", { scaleX: 1, scaleY: 1, duration: 0.9, ease: "elastic.out(1, 0.35)" }, 19.07);
+tl.to("#c-drop", { y: 300, duration: 0.5, ease: "power2.out", yoyo: true, repeat: 1 }, 19.07);
+
+// ── 배경: 종이 결(한 번만 그림) + 1장면의 종이 물결(시간 t로만 결정)
+const pc = document.getElementById("paper").getContext("2d");
+pc.fillStyle = "#f3eff8"; pc.fillRect(0, 0, 1920, 1080);
+const nz = pc.createImageData(1920, 1080);
+for (let i = 0; i < nz.data.length; i += 4) { const v = 120 + Math.floor(hsh(i >> 2, 99) * 135); nz.data[i] = nz.data[i + 1] = nz.data[i + 2] = v; nz.data[i + 3] = 10; }
+const tmpc = document.createElement("canvas"); tmpc.width = 1920; tmpc.height = 1080; tmpc.getContext("2d").putImageData(nz, 0, 0);
+pc.drawImage(tmpc, 0, 0);
+const WB = [690, 745, 800, 850, 905], WA = [46, 40, 30, 36, 28], WK = [0.0042, 0.0051, 0.0068, 0.0047, 0.0058], WW = [0.9, -1.1, 1.6, -0.8, 1.2];
+function drawWaves(t) {
+  for (let L = 0; L < 5; L++) {
+    const rise = (1 - io3(seg(t, 0.15 + L * 0.12, 1.45 + L * 0.12))) * 480 + io3(seg(t, 3.6 + (4 - L) * 0.06, 4.6 + (4 - L) * 0.06)) * 520;
+    const env = 0.75 + 0.25 * Math.sin(t * 1.3 + L);
+    let d = `M-40 1120 L-40 ${WB[L] + rise}`;
+    for (let x = -40; x <= 1960; x += 40) d += ` L${x} ${(WB[L] + rise + WA[L] * env * Math.sin(x * WK[L] + t * WW[L] + L * 1.7)).toFixed(1)}`;
+    d += " L1960 1120 Z";
+    document.getElementById("c-w" + L).setAttribute("d", d);
+  }
+}
+window.addEventListener("hf-seek", (e) => drawWaves(e.detail.time));
+drawWaves(0);
+
+window.__timelines = window.__timelines || {};
+window.__timelines["main"] = tl;
+</script>
+</body></html>

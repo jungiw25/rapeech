@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=1920, height=1080" /><title>Rapeech intro v2</title>
+<script src="assets/gsap.min.js"></script>
+<style>@font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c0916; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
+.layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.vig { background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,.10), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,.45)); }
+#line { position: absolute; left: 330px; top: 419px; width: 1260px; height: 2px; background: linear-gradient(90deg, rgba(255,3,200,0), #ff03c8 20%, #a518a4 50%, #3c24f3 80%, rgba(60,36,243,0)); transform-origin: 50% 50%; }
+.bar { position: absolute; top: 420px; width: 12px; height: 220px; margin-top: -110px; border-radius: 6px; box-shadow: 0 0 14px currentColor; }
+.who { position: relative; flex: none; height: 40px; padding: 0 18px; border-radius: 20px; font-size: 20px; font-weight: 700; line-height: 40px; white-space: nowrap; }
+.cap { position: absolute; left: 0; top: 760px; width: 1920px; text-align: center; }
+.tag { overflow: hidden; font-size: 20px; font-weight: 600; letter-spacing: 0.24em; color: #b5abd8; padding-bottom: 4px; }
+.ct { overflow: hidden; margin-top: 16px; font-size: 52px; font-weight: 800; color: #fff; letter-spacing: -0.03em; padding-bottom: 8px; }
+.tag span, .ct span[class^="cl"] { display: inline-block; }
+.g { background: linear-gradient(100deg, #ff4fd8, #b25cff 55%, #7a6bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.dlab { font-family: "Pretendard"; font-weight: 600; font-size: 20px; letter-spacing: 3px; fill: #cfc6ec; }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="12" data-fps="60" data-width="1920" data-height="1080">
+  <div id="front" class="layer">
+    <div class="layer vig"></div>
+    <div id="line"></div>
+    <svg id="talk" class="layer" viewBox="0 0 1920 1080">
+  <defs><linearGradient id="ring" x1="886" y1="0" x2="1034" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient>
+  <radialGradient id="nodeg" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#2a1f55"/><stop offset="1" stop-color="#140f2a"/></radialGradient>
+  <filter id="gl2" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <linearGradient id="stream" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff4fd8" stop-opacity="0"/><stop offset="1" stop-color="#ffd2f5"/></linearGradient></defs>
+  <line id="axL" x1="868" y1="420" x2="868" y2="420" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>
+  <line id="axR" x1="1052" y1="420" x2="1052" y2="420" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>
+  <rect id="streamIn" x="-90" y="418" width="90" height="4" rx="2" fill="url(#stream)"/>
+  <g id="node"><circle cx="960" cy="420" r="74" fill="url(#nodeg)" stroke="#fff" stroke-opacity=".25" stroke-width="1.5"/>
+    <circle id="ringFill" cx="960" cy="420" r="86" fill="none" stroke="url(#ring)" stroke-width="5" stroke-linecap="round" transform="rotate(-90 960 420)" filter="url(#gl2)"/>
+    <circle id="flashIn" cx="960" cy="420" r="74" fill="#fff"/>
+    <circle id="flashRing" cx="960" cy="420" r="86" fill="none" stroke="#fff" stroke-width="2"/>
+    <text x="960" y="433" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="38" fill="#fff">AI</text></g>
+</svg>
+    <div style="position:absolute;left:495px;top:270px;width:0;display:flex;justify-content:center"><div class="who" id="who0" style="background:#fff;color:#1b1530">고객</div></div>
+    <div style="position:absolute;left:1425px;top:270px;width:0;display:flex;justify-content:center"><div class="who" id="who1" style="background:linear-gradient(100deg,#ff03c8,#a518a4 50%,#3c24f3);color:#fff">AI 콜봇</div></div>
+    <div class="bar cb" style="left:354px;background:#ff03c8;color:#ff03c8"></div><div class="bar cb" style="left:384px;background:#e807c3;color:#e807c3"></div><div class="bar cb" style="left:414px;background:#d10bbd;color:#d10bbd"></div><div class="bar cb" style="left:444px;background:#ba0fb8;color:#ba0fb8"></div><div class="bar cb" style="left:474px;background:#a518a4;color:#a518a4"></div><div class="bar cb" style="left:504px;background:#8f1ab8;color:#8f1ab8"></div><div class="bar cb" style="left:534px;background:#ff03c8;color:#ff03c8"></div><div class="bar cb" style="left:564px;background:#e807c3;color:#e807c3"></div><div class="bar cb" style="left:594px;background:#d10bbd;color:#d10bbd"></div><div class="bar cb" style="left:624px;background:#ba0fb8;color:#ba0fb8"></div><div class="bar ab" style="left:1284px;background:#7a1dcc;color:#7a1dcc"></div><div class="bar ab" style="left:1314px;background:#661fdc;color:#661fdc"></div><div class="bar ab" style="left:1344px;background:#5422e6;color:#5422e6"></div><div class="bar ab" style="left:1374px;background:#4823ee;color:#4823ee"></div><div class="bar ab" style="left:1404px;background:#4024f1;color:#4024f1"></div><div class="bar ab" style="left:1434px;background:#3c24f3;color:#3c24f3"></div><div class="bar ab" style="left:1464px;background:#7a1dcc;color:#7a1dcc"></div><div class="bar ab" style="left:1494px;background:#661fdc;color:#661fdc"></div><div class="bar ab" style="left:1524px;background:#5422e6;color:#5422e6"></div><div class="bar ab" style="left:1554px;background:#4823ee;color:#4823ee"></div>
+    <svg id="ni" class="layer" viewBox="0 0 1920 1080">
+  <defs><filter id="gl" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <path id="drop" d="M960 420 C 960 470, 790 380, 801 452" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>
+  <g id="sw"><rect id="swb" x="390" y="425" width="500" height="80" rx="12" fill="#120d24" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/><rect class="port" x="420" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl0" cx="437" cy="440" r="4" fill="#3a3158"/><rect class="port" x="472" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl1" cx="489" cy="440" r="4" fill="#3a3158"/><rect class="port" x="524" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl2" cx="541" cy="440" r="4" fill="#3a3158"/><rect class="port" x="576" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl3" cx="593" cy="440" r="4" fill="#3a3158"/><rect class="port" x="628" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl4" cx="645" cy="440" r="4" fill="#3a3158"/><rect class="port" x="680" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl5" cx="697" cy="440" r="4" fill="#3a3158"/><rect class="port" x="732" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl6" cx="749" cy="440" r="4" fill="#3a3158"/><rect class="port" x="784" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/><circle class="pled" id="pl7" cx="801" cy="440" r="4" fill="#3a3158"/></g>
+  <path class="cab" id="cab0" d="M890 465 C 1010 465, 1060 350, 1180 350" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/><path class="cab" id="cab1" d="M890 465 C 1010 465, 1060 460, 1360 460" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/><path class="cab" id="cab2" d="M890 465 C 1010 465, 1060 570, 1540 570" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/><g id="racks"><rect class="rk" x="1180" y="300" width="140" height="300" rx="10" fill="#120d24" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/><rect class="rslot" x="1196" y="561" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="531" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="501" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="471" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="441" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="411" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="381" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="351" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1196" y="321" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rk" x="1360" y="300" width="140" height="300" rx="10" fill="#120d24" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/><rect class="rslot" x="1376" y="561" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="531" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="501" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="471" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="441" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="411" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="381" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="351" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1376" y="321" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rk" x="1540" y="300" width="140" height="300" rx="10" fill="#120d24" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/><rect class="rslot" x="1556" y="561" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="531" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="501" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="471" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="441" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="411" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="381" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="351" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/><rect class="rslot" x="1556" y="321" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/></g><rect class="rled r0" data-j="0" x="1204" y="568" width="36" height="4" rx="2" fill="#d10bbd"/><rect class="rled r0" data-j="1" x="1204" y="538" width="53" height="4" rx="2" fill="#ba0fb8"/><rect class="rled r0" data-j="2" x="1204" y="508" width="70" height="4" rx="2" fill="#a518a4"/><rect class="rled r0" data-j="3" x="1204" y="478" width="43" height="4" rx="2" fill="#d10bbd"/><rect class="rled r0" data-j="4" x="1204" y="448" width="60" height="4" rx="2" fill="#ba0fb8"/><rect class="rled r0" data-j="5" x="1204" y="418" width="77" height="4" rx="2" fill="#a518a4"/><rect class="rled r0" data-j="6" x="1204" y="388" width="50" height="4" rx="2" fill="#d10bbd"/><rect class="rled r0" data-j="7" x="1204" y="358" width="67" height="4" rx="2" fill="#ba0fb8"/><rect class="rled r0" data-j="8" x="1204" y="328" width="40" height="4" rx="2" fill="#a518a4"/><rect class="rled r1" data-j="0" x="1384" y="568" width="43" height="4" rx="2" fill="#7a1dcc"/><rect class="rled r1" data-j="1" x="1384" y="538" width="60" height="4" rx="2" fill="#661fdc"/><rect class="rled r1" data-j="2" x="1384" y="508" width="77" height="4" rx="2" fill="#5422e6"/><rect class="rled r1" data-j="3" x="1384" y="478" width="50" height="4" rx="2" fill="#7a1dcc"/><rect class="rled r1" data-j="4" x="1384" y="448" width="67" height="4" rx="2" fill="#661fdc"/><rect class="rled r1" data-j="5" x="1384" y="418" width="40" height="4" rx="2" fill="#5422e6"/><rect class="rled r1" data-j="6" x="1384" y="388" width="57" height="4" rx="2" fill="#7a1dcc"/><rect class="rled r1" data-j="7" x="1384" y="358" width="74" height="4" rx="2" fill="#661fdc"/><rect class="rled r1" data-j="8" x="1384" y="328" width="47" height="4" rx="2" fill="#5422e6"/><rect class="rled r2" data-j="0" x="1564" y="568" width="50" height="4" rx="2" fill="#4024f1"/><rect class="rled r2" data-j="1" x="1564" y="538" width="67" height="4" rx="2" fill="#3c24f3"/><rect class="rled r2" data-j="2" x="1564" y="508" width="40" height="4" rx="2" fill="#3c24f3"/><rect class="rled r2" data-j="3" x="1564" y="478" width="57" height="4" rx="2" fill="#4024f1"/><rect class="rled r2" data-j="4" x="1564" y="448" width="74" height="4" rx="2" fill="#3c24f3"/><rect class="rled r2" data-j="5" x="1564" y="418" width="47" height="4" rx="2" fill="#3c24f3"/><rect class="rled r2" data-j="6" x="1564" y="388" width="64" height="4" rx="2" fill="#4024f1"/><rect class="rled r2" data-j="7" x="1564" y="358" width="37" height="4" rx="2" fill="#3c24f3"/><rect class="rled r2" data-j="8" x="1564" y="328" width="54" height="4" rx="2" fill="#3c24f3"/><circle class="pulse" id="pu0" r="7" fill="#fff" filter="url(#gl)"/><circle class="pulse" id="pu1" r="7" fill="#fff" filter="url(#gl)"/><circle class="pulse" id="pu2" r="7" fill="#fff" filter="url(#gl)"/>
+  <text class="dlab" id="dl0" x="640" y="550" text-anchor="middle">스위치</text>
+  <text class="dlab" id="dl1" x="1430" y="640" text-anchor="middle">서버 랙 · AI 데이터센터</text>
+</svg>
+<svg class="layer" viewBox="0 0 1920 1080"><defs><radialGradient id="dotg"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#ff8be6" stop-opacity=".8"/><stop offset="1" stop-color="#ff4fd8" stop-opacity="0"/></radialGradient></defs>
+  <g id="dot"><circle r="34" fill="url(#dotg)"/><circle r="8" fill="#fff"/></g></svg>
+    <div class="cap" id="cap0"><div class="tag"><span class="cl0">대화형 AI</span></div><div class="ct"><span class="cl0">고객의 목소리를 <span class="g">AI 콜봇이 알아듣고</span> 답합니다</span></div></div><div class="cap" id="cap1"><div class="tag"><span class="cl1">네트워크 인프라</span></div><div class="ct"><span class="cl1">그 대화가 흐르는 <span class="g">네트워크 인프라</span>까지</span></div></div>
+  </div>
+  <video id="logo" class="clip layer" src="assets/intro.mp4" data-start="6.95" data-duration="5.05" data-media-start="6.95" data-track-index="0" data-has-audio="true" data-volume="1" playsinline style="z-index: 5"></video>
+  <audio id="sfx" class="clip" src="assets/front_sfx.wav" data-start="0" data-duration="12" data-track-index="2" data-volume="1"></audio>
+</div>
+<script>
+const tl = gsap.timeline({ paused: true });
+const CAPS = [[1.25, 4.25], [4.65, null]], LY = 420, CX = 960, BR = 74;
+const hsh = (a, b) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+const DR = (sel, t, d, e = "power2.inOut", s = 0) => gsap.utils.toArray(sel).forEach((el, i) => {
+  const L = el.getTotalLength(); el.setAttribute("stroke-dasharray", `${L} ${L}`);
+  tl.fromTo(el, { attr: { "stroke-dashoffset": L } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e }, t + i * s);
+});
+// 말하는 파형: 정해진 높이 사이를 부드럽게 오감(시드 고정)
+const speak = (sel, t0, t1, seed, step = 0.24) => gsap.utils.toArray(sel).forEach((el, k) => {
+  let t = t0, s = 0;
+  while (t < t1) { tl.to(el, { scaleY: 0.2 + 0.8 * hsh(k + seed, ++s) * Math.sin(Math.PI * (k + 0.5) / 10), duration: step, ease: "sine.inOut" }, t); t += step; }
+});
+gsap.set(".bar", { scaleY: 0.05, opacity: 0 });
+gsap.set(["#who0", "#who1", "#ni", ".cap", ".dlab", "#streamIn"], { opacity: 0 });
+gsap.set("#node", { scale: 0, transformOrigin: "960px 420px" });
+// ── 0. 선 하나가 천천히 그어짐
+tl.fromTo("#line", { scaleX: 0 }, { scaleX: 1, duration: 1.1, ease: "power2.inOut" }, 0.0);
+// ── 1. 선이 가운데에서 열리며 AI 콜봇 노드가 생기고, 양쪽은 대화의 축이 됨
+tl.to("#line", { opacity: 0, duration: 0.6, ease: "sine.inOut" }, 1.05);
+tl.to("#node", { scale: 1, duration: 0.9, ease: "power3.out" }, 1.0);
+tl.fromTo("#axL", { attr: { x1: 868 } }, { attr: { x1: 330 }, duration: 0.9, ease: "power2.out" }, 1.05);
+tl.fromTo("#axR", { attr: { x2: 1052 } }, { attr: { x2: 1590 }, duration: 0.9, ease: "power2.out" }, 1.05);
+// 고객의 목소리(왼쪽)
+tl.fromTo("#who0", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", immediateRender: false }, 1.35);
+tl.fromTo(".cb", { opacity: 0, scaleY: 0.05 }, { opacity: 1, scaleY: 0.3, duration: 0.5, ease: "power2.out", stagger: 0.03, immediateRender: false }, 1.4);
+speak(".cb", 1.9, 3.2, 0);
+tl.to(".cb", { scaleY: 0.08, duration: 0.5, ease: "sine.inOut" }, 3.25);
+// 목소리가 선을 타고 AI 콜봇으로 들어가며 고리가 차오름(=인식)
+tl.fromTo("#streamIn", { x: 330, opacity: 0 }, { x: 868, opacity: 1, duration: 1.0, ease: "power1.in", immediateRender: false }, 1.95);
+tl.to("#streamIn", { opacity: 0, duration: 0.2 }, 2.95);
+DR("#ringFill", 2.0, 1.4, "power2.inOut");
+// 게이지가 다 차면 띠링과 함께 반짝(크기는 그대로)
+gsap.set(["#flashIn", "#flashRing"], { opacity: 0 });
+tl.fromTo("#flashIn", { opacity: 0 }, { opacity: 0.55, duration: 0.08, ease: "none", immediateRender: false }, 3.38);
+tl.to("#flashIn", { opacity: 0, duration: 0.6, ease: "power2.out" }, 3.46);
+tl.fromTo("#flashRing", { opacity: 0.9, attr: { r: 86 } }, { opacity: 0, attr: { r: 120 }, duration: 0.8, ease: "power2.out", immediateRender: false }, 3.38);
+tl.fromTo("#ringFill", { attr: { "stroke-width": 5 } }, { attr: { "stroke-width": 8 }, duration: 0.12, ease: "power2.out", yoyo: true, repeat: 1, immediateRender: false }, 3.38);
+// AI 콜봇이 목소리로 답함(오른쪽)
+tl.fromTo("#who1", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out", immediateRender: false }, 3.35);
+tl.fromTo(".ab", { opacity: 0, scaleY: 0.05 }, { opacity: 1, scaleY: 0.3, duration: 0.5, ease: "power2.out", stagger: 0.03, immediateRender: false }, 3.4);
+speak(".ab", 3.9, 4.4, 50);
+// ── 2. 대화가 빛 하나로 모여 케이블 → 스위치 포트 → 서버 랙
+tl.to([".cb", ".ab"], { x: (k, el) => CX - parseFloat(el.style.left) - 6, scaleY: 0.05, opacity: 0, duration: 0.6, ease: "power3.inOut" }, 4.35);
+tl.to(["#who0", "#who1", "#axL", "#axR"], { opacity: 0, duration: 0.45, ease: "sine.inOut" }, 4.35);
+tl.to("#node", { scale: 0.12, opacity: 0, duration: 0.55, ease: "power3.in" }, 4.45);
+gsap.set("#dot", { x: CX, y: LY, scale: 0, opacity: 0 });
+tl.fromTo("#dot", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "power2.out", immediateRender: false }, 4.85);
+tl.fromTo("#ni", { opacity: 0 }, { opacity: 1, duration: 0.3, immediateRender: false }, 4.75);
+DR("#swb", 4.8, 0.8); DR(".port", 5.0, 0.5, "power2.out", 0.03);
+DR(".rk", 4.9, 0.9, "power2.inOut", 0.12); DR(".rslot", 5.2, 0.5, "power2.out", 0.008);
+const drop = document.getElementById("drop"), DL = drop.getTotalLength();
+drop.setAttribute("stroke-dasharray", `${DL} ${DL}`); drop.setAttribute("stroke-dashoffset", DL);
+const pd = { p: 0 }, putDot = () => { const pt = drop.getPointAtLength(pd.p * DL); gsap.set("#dot", { x: pt.x, y: pt.y }); drop.setAttribute("stroke-dashoffset", DL * (1 - pd.p)); };
+tl.fromTo(pd, { p: 0 }, { p: 1, duration: 0.75, ease: "power2.inOut", onUpdate: putDot, immediateRender: false }, 5.15);
+tl.to("#dot", { scale: 0.4, opacity: 0, duration: 0.3, ease: "power2.in" }, 5.85);
+tl.to("#drop", { opacity: 0, duration: 0.6, ease: "sine.inOut" }, 6.0);
+tl.to("#pl7", { attr: { fill: "#ff4fd8" }, duration: 0.2 }, 5.9);
+gsap.utils.toArray(".pled").forEach((el, i) => { if (i !== 7) tl.to(el, { attr: { fill: i % 2 ? "#9d79ff" : "#5a5cff" }, duration: 0.15 }, 5.95 + (7 - i) * 0.035); });
+DR(".cab", 5.85, 0.6, "power2.out", 0.06);
+gsap.utils.toArray(".cab").forEach((c, r) => {
+  const L = c.getTotalLength(), q = { p: 0 }, pu = document.getElementById("pu" + r);
+  gsap.set(pu, { opacity: 0 });
+  tl.fromTo(q, { p: 0 }, { p: 1, duration: 0.6, ease: "power1.inOut", immediateRender: false, onUpdate: () => { const pt = c.getPointAtLength(q.p * L); gsap.set(pu, { x: pt.x, y: pt.y, opacity: q.p < 0.97 ? 1 : 0 }); } }, 6.0 + r * 0.08);
+});
+gsap.set(".rled", { opacity: 0.12 });
+gsap.utils.toArray(".rled").forEach((el) => { const r = +el.classList[1].slice(1), j = +el.dataset.j; tl.to(el, { opacity: 1, duration: 0.15, ease: "none" }, 6.45 + r * 0.06 + j * 0.03); });
+tl.fromTo(".dlab", { opacity: 0 }, { opacity: 1, duration: 0.5, stagger: 0.15, immediateRender: false }, 5.7);
+// ── 한글 소제목: 두 번만 바뀜(줄 마스크로 천천히)
+CAPS.forEach(([a, b], i) => {
+  tl.fromTo("#cap" + i, { opacity: 1 }, { opacity: 1, duration: 0.01, immediateRender: false }, a);
+  tl.fromTo(".cl" + i, { yPercent: 120 }, { yPercent: 0, duration: 1.0, ease: "expo.out", stagger: 0.08 }, a);
+  if (b) tl.to(".cl" + i, { yPercent: -120, duration: 0.45, ease: "power2.in", stagger: 0.04 }, b);
+});
+// ── 6.95 원형 와이프: 기존 인트로(로고)가 가운데서 열림(기존 인트로와 같은 곡선)
+gsap.set("#logo", { clipPath: "circle(0px at 960px 540px)" });
+tl.fromTo("#logo", { clipPath: "circle(0px at 960px 540px)" }, { clipPath: "circle(1200px at 960px 540px)", duration: 0.55, ease: "power2.out", immediateRender: false }, 6.95);
+window.__timelines = window.__timelines || {};
+window.__timelines["main"] = tl;
+</script>
+</body></html>

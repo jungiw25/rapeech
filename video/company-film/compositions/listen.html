@@ -1,0 +1,130 @@
+<template>
+  <style>
+    @font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+    #root { position: absolute; inset: 0; background: #faf9fd; overflow: hidden; font-family: "Pretendard", sans-serif; }
+    #l-verbs { position: absolute; left: 160px; top: 250px; }
+    .l-verb { font-size: 128px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.32; color: #d9d4e6; }
+    #l-tag { position: absolute; left: 960px; top: 300px; width: 820px; text-align: center; font-size: 36px; font-weight: 600; color: #6b6380; }
+    #l-tag span { position: absolute; left: 0; right: 0; }
+    .l-bar { position: absolute; top: 380px; width: 14px; height: 320px; border-radius: 7px; }
+    #l-said { position: absolute; left: 960px; top: 492px; width: 820px; text-align: center; font-size: 68px; font-weight: 700; color: #1b1530; letter-spacing: -0.02em; white-space: nowrap; }
+    #l-said b { font-weight: 700; display: inline-block; }
+    #l-key { position: relative; display: inline-block; }
+    #l-ul { position: absolute; left: 0; right: 0; bottom: -12px; height: 12px; border-radius: 6px; background: linear-gradient(90deg, #ff03c8, #a518a4 55%, #3c24f3); }
+    #l-intent { position: absolute; left: 960px; top: 640px; width: 820px; text-align: center; font-size: 42px; font-weight: 600; color: #6b6380; }
+    .grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #3c24f3); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 800; }
+    #l-answer { position: absolute; left: 990px; top: 560px; width: 760px; height: 140px; }
+    #l-bub { position: absolute; inset: 0; border-radius: 70px; background: linear-gradient(100deg, #ff03c8, #a518a4 50%, #3c24f3); }
+    #l-btail { position: absolute; right: 64px; top: 112px; width: 66px; height: 66px; background: #4122ec; clip-path: polygon(0 0, 100% 0, 96% 100%); }
+    #l-atext { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 48px; font-weight: 700; letter-spacing: -0.02em; }
+  </style>
+  <div id="root" data-composition-id="listen" data-width="1920" data-height="1080">
+    <div id="l-verbs" class="clip" data-start="0" data-duration="7.2" data-track-index="1">
+      <div class="l-verb" id="l-v0">듣고,</div>
+      <div class="l-verb" id="l-v1">이해하고,</div>
+      <div class="l-verb" id="l-v2">답합니다</div>
+    </div>
+
+    <div id="l-tag" class="clip" data-start="0.2" data-duration="7.0" data-track-index="2">
+      <span id="l-t0">고객의 말</span><span id="l-t1">AI가 이해한 것</span><span id="l-t2">AI의 답</span>
+    </div>
+
+    <div id="l-wave" class="clip" data-start="0.2" data-duration="2.1" data-track-index="3" data-layout-allow-overflow>
+      <div class="l-bar" id="l-b0" style="left:1008px;background:#FF03C8"></div>
+      <div class="l-bar" id="l-b1" style="left:1038px;background:#F604C5"></div>
+      <div class="l-bar" id="l-b2" style="left:1068px;background:#ED06C1"></div>
+      <div class="l-bar" id="l-b3" style="left:1098px;background:#E508BD"></div>
+      <div class="l-bar" id="l-b4" style="left:1128px;background:#DC0AB9"></div>
+      <div class="l-bar" id="l-b5" style="left:1158px;background:#D40CB6"></div>
+      <div class="l-bar" id="l-b6" style="left:1188px;background:#CB0EB3"></div>
+      <div class="l-bar" id="l-b7" style="left:1218px;background:#C210AF"></div>
+      <div class="l-bar" id="l-b8" style="left:1248px;background:#BA12AC"></div>
+      <div class="l-bar" id="l-b9" style="left:1278px;background:#B114A8"></div>
+      <div class="l-bar" id="l-b10" style="left:1308px;background:#A916A5"></div>
+      <div class="l-bar" id="l-b11" style="left:1338px;background:#A118A6"></div>
+      <div class="l-bar" id="l-b12" style="left:1368px;background:#9719AC"></div>
+      <div class="l-bar" id="l-b13" style="left:1398px;background:#8C1AB2"></div>
+      <div class="l-bar" id="l-b14" style="left:1428px;background:#821BB8"></div>
+      <div class="l-bar" id="l-b15" style="left:1458px;background:#781CBE"></div>
+      <div class="l-bar" id="l-b16" style="left:1488px;background:#6D1DC4"></div>
+      <div class="l-bar" id="l-b17" style="left:1518px;background:#631FCA"></div>
+      <div class="l-bar" id="l-b18" style="left:1548px;background:#5920D1"></div>
+      <div class="l-bar" id="l-b19" style="left:1578px;background:#4F21D7"></div>
+      <div class="l-bar" id="l-b20" style="left:1608px;background:#4522DE"></div>
+      <div class="l-bar" id="l-b21" style="left:1638px;background:#3F23E7"></div>
+      <div class="l-bar" id="l-b22" style="left:1668px;background:#3D24EE"></div>
+      <div class="l-bar" id="l-b23" style="left:1698px;background:#3C24F3"></div>
+    </div>
+
+    <div id="l-saidbox" class="clip" data-start="2.0" data-duration="5.2" data-track-index="4">
+      <div id="l-said"><span id="l-key"><b>보</b><b>험</b><b>금</b><b>&nbsp;</b><b>청</b><b>구</b><span id="l-ul"></span></span><b>하</b><b>고</b><b>&nbsp;</b><b>싶</b><b>어</b><b>요</b></div>
+      <div id="l-intent">의도 · <span class="grad">보험금 청구</span></div>
+    </div>
+
+    <div id="l-answerbox" class="clip" data-start="4.5" data-duration="2.7" data-track-index="5" data-layout-allow-overflow>
+      <div id="l-answer">
+        <div id="l-btail"></div>
+        <div id="l-bub"></div>
+        <div id="l-atext">네, 청구 접수를 도와드릴게요.</div>
+      </div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      let s = 77;
+      const rnd = () => { s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; };
+      const n = 24;
+      const bars = Array.from({ length: n }, (_, k) => "#l-b" + k);
+      const env = (k) => Math.pow(Math.sin(Math.PI * (k + 0.5) / n), 0.6);
+
+      // 동사: 회색으로 놓였다가 단계마다 진해짐
+      ["#l-v0", "#l-v1", "#l-v2"].forEach((v, i) => {
+        tl.fromTo(v, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out" }, 0.08 + i * 0.07);
+      });
+      [[0, 0.3], [1, 2.15], [2, 4.35]].forEach(([i, t]) => {
+        tl.to("#l-v" + i, { color: "#1b1530", duration: 0.25, ease: "power2.out" }, t);
+      });
+      tl.set(["#l-t1", "#l-t2"], { opacity: 0 }, 0);
+      tl.fromTo("#l-t0", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14 }, 0.3);
+      [["#l-t0", "#l-t1", 2.1], ["#l-t1", "#l-t2", 4.3]].forEach(([a, b, t]) => {
+        tl.to(a, { opacity: 0, filter: "blur(8px)", duration: 0.13, ease: "power3.in" }, t);
+        tl.fromTo(b, { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.14, ease: "power4.out" }, t + 0.13);
+      });
+      // 1) 듣고
+      bars.forEach((b, k) => {
+        tl.fromTo(b, { scaleY: 0, transformOrigin: "50% 50%" }, { scaleY: 0.15 + 0.3 * env(k), duration: 0.4, ease: "expo.out" }, 0.25 + k * 0.008);
+      });
+      for (let t = 0.75, i = 0; t < 1.85; t += 0.15, i++) {
+        const pause = i % 5 === 4;
+        bars.forEach((b, k) => {
+          const h = pause ? 0.05 + 0.04 * rnd() : (0.12 + 0.85 * rnd()) * env(k);
+          tl.to(b, { scaleY: Math.max(0.05, h), duration: 0.13, ease: "power2.out" }, t);
+        });
+      }
+      // 2) 이해하고
+      bars.forEach((b, k) => {
+        tl.to(b, { scaleY: 0.03, duration: 0.25, ease: "power3.in" }, 1.9 + Math.abs(k - 11.5) * 0.006);
+        tl.to(b, { opacity: 0, duration: 0.1 }, 2.18);
+      });
+      const chars = gsap.utils.toArray("#l-said b");
+      chars.forEach((c, i) => {
+        tl.fromTo(c, { opacity: 0, filter: "blur(4px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.1, ease: "power2.out" }, 2.12 + i * 0.035);
+      });
+      tl.fromTo("#l-ul", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 0.4, ease: "power3.out" }, 2.75);
+      tl.fromTo("#l-intent", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 3.05);
+      // 3) 답합니다
+      tl.to("#l-intent", { opacity: 0, filter: "blur(8px)", duration: 0.13, ease: "power3.in" }, 4.25);
+      tl.to("#l-said", { y: -120, scale: 0.72, color: "#6b6380", duration: 0.45, ease: "power2.inOut" }, 4.3);
+      tl.fromTo("#l-answer", { scaleX: 0.12, scaleY: 0.3, opacity: 0, transformOrigin: "100% 50%" },
+        { scaleX: 1, scaleY: 1, opacity: 1, duration: 0.42, ease: "power3.out" }, 4.55);
+      tl.fromTo("#l-atext", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, 4.85);
+      // 퇴장
+      tl.to(["#l-v0", "#l-v1", "#l-v2", "#l-t2", "#l-said", "#l-answer"], { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power3.in", stagger: 0.03 }, 6.7);
+
+      window.__timelines["listen"] = tl;
+    })();
+  </script>
+</template>

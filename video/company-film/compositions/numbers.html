@@ -1,0 +1,49 @@
+<template>
+  <style>
+    @font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+    @font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+    .grad { background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #3c24f3); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    #root { position: absolute; inset: 0; background: #faf9fd; overflow: hidden; font-family: "Pretendard", sans-serif; }
+    #m-head { position: absolute; left: 160px; top: 190px; font-size: 44px; font-weight: 700; color: #6b6380; }
+    #m-stage { position: absolute; left: 160px; top: 290px; width: 1600px; height: 500px; overflow: hidden; }
+    .m-fact { position: absolute; left: 0; top: 0; width: 1600px; }
+    .m-num { font-size: 300px; font-weight: 900; color: #1b1530; letter-spacing: -0.04em; line-height: 1.05; }
+    .m-lab { margin-top: 6px; font-size: 52px; font-weight: 700; color: #1b1530; letter-spacing: -0.02em; }
+    #m-bar { position: absolute; left: 160px; top: 860px; width: 1600px; height: 8px; border-radius: 4px; background: #e6e1f0; }
+    #m-fill { position: absolute; left: 0; top: 0; width: 1600px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, #ff03c8, #a518a4 55%, #3c24f3); }
+    #m-dark { position: absolute; inset: 0; background: #0c0916; }
+  </style>
+  <div id="root" data-composition-id="numbers" data-width="1920" data-height="1080">
+    <div id="m-main" class="clip" data-start="0" data-duration="6.45" data-track-index="1" data-layout-allow-overflow>
+      <div id="m-head">숫자로 보는 라피치</div>
+      <div id="m-stage">
+        <div class="m-fact" id="m-f0"><div class="m-num">2005</div><div class="m-lab">설립 · 대화형 AI 한길</div></div>
+        <div class="m-fact" id="m-f1"><div class="m-num">144명</div><div class="m-lab">임직원 · 2026년 6월</div></div>
+        <div class="m-fact" id="m-f2"><div class="m-num">7건</div><div class="m-lab">등록 특허</div></div>
+        <div class="m-fact" id="m-f3"><div class="m-num">5개 주</div><div class="m-lab">미국 공장 현장</div></div>
+      </div>
+      <div id="m-bar"><div id="m-fill"></div></div>
+    </div>
+    <div id="m-darkclip" class="clip" data-start="6.0" data-duration="0.45" data-track-index="2" data-layout-allow-overflow>
+      <div id="m-dark"></div>
+    </div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#m-head", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.16, ease: "power4.out" }, 0.05);
+      tl.fromTo("#m-fill", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, duration: 5.7, ease: "none" }, 0.2);
+      const T = [0.15, 1.6, 3.05, 4.5];
+      for (let i = 0; i < 4; i++) {
+        const t = T[i];
+        tl.fromTo("#m-f" + i, { y: 260, opacity: 0, filter: "blur(10px)" }, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.4, ease: "expo.out" }, t);
+        if (i < 3) tl.to("#m-f" + i, { y: -200, opacity: 0, filter: "blur(10px)", duration: 0.22, ease: "power3.in" }, T[i + 1] - 0.12);
+      }
+      tl.fromTo("#m-dark", { scaleY: 0, transformOrigin: "50% 0%" }, { scaleY: 1, duration: 0.4, ease: "power3.inOut" }, 6.02);
+      window.__timelines["numbers"] = tl;
+    })();
+  </script>
+</template>

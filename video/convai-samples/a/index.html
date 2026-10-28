@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko" data-resolution="landscape">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=1920, height=1080" /><title>ConvAI 시안 A</title>
+<script src="assets/gsap.min.js"></script>
+<style>@font-face { font-family: "Pretendard"; font-weight: 900; src: url("assets/fonts/Pretendard-Black.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 800; src: url("assets/fonts/Pretendard-ExtraBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 700; src: url("assets/fonts/Pretendard-Bold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 600; src: url("assets/fonts/Pretendard-SemiBold.otf"); }
+@font-face { font-family: "Pretendard"; font-weight: 500; src: url("assets/fonts/Pretendard-Medium.otf"); }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c0916; }
+#root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
+.layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+.vig { background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,.10), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,.45)); }
+.bar { position: absolute; width: 12px; height: 220px; margin-top: -110px; border-radius: 6px; box-shadow: 0 0 14px currentColor; }
+.who { position: relative; flex: none; height: 40px; padding: 0 18px; border-radius: 20px; font-size: 20px; font-weight: 700; line-height: 40px; white-space: nowrap; }
+.cap { position: absolute; left: 0; top: 760px; width: 1920px; text-align: center; }
+.tag { overflow: hidden; font-size: 20px; font-weight: 600; letter-spacing: 0.24em; color: #b5abd8; padding-bottom: 4px; }
+.ct { overflow: hidden; margin-top: 16px; font-size: 52px; font-weight: 800; color: #fff; letter-spacing: -0.03em; padding-bottom: 8px; white-space: nowrap; }
+.tag span, .ct span.cw { display: inline-block; }
+.g { background: linear-gradient(100deg, #ff4fd8, #b25cff 55%, #7a6bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mono { font-weight: 600; font-size: 19px; letter-spacing: 0.2em; color: #b5abd8; white-space: nowrap; }
+.dlab { font-family: "Pretendard"; font-weight: 600; font-size: 20px; letter-spacing: 3px; fill: #cfc6ec; }
+.cwrap { position: absolute; width: 0; display: flex; flex-direction: column; align-items: center; }
+.val { font-weight: 700; font-size: 30px; color: #fff; letter-spacing: -0.02em; white-space: nowrap; margin-top: 10px; }
+.pill { position: relative; flex: none; height: 64px; padding: 0 30px; border-radius: 32px; font-size: 28px; font-weight: 700; color: #fff; line-height: 60px; white-space: nowrap;
+  background: rgba(20,15,42,.9); border: 2px solid rgba(157,121,255,.6); }
+
+.bub { position: relative; flex: none; padding: 16px 28px; border-radius: 30px; font-size: 28px; font-weight: 700; white-space: nowrap; }
+.q { background: #fff; color: #1b1530; }
+.a { background: #15102a; color: #fff; border: 1.5px solid rgba(255,79,216,.75); }
+.think { background: #15102a; border: 1.5px solid rgba(255,255,255,.3); color: #fff; letter-spacing: .3em; }
+.who2 { flex: none; white-space: nowrap; font-size: 18px; font-weight: 600; letter-spacing: .2em; color: #b5abd8; margin-bottom: 10px; }
+.plate { position: absolute; height: 74px; border-radius: 18px; background: #15102a; border: 1.5px solid rgba(255,255,255,.4);
+  display: flex; align-items: center; justify-content: center; gap: 18px; font-size: 34px; font-weight: 800; color: #fff; }
+.plate small { font-size: 18px; font-weight: 600; letter-spacing: .14em; color: #b5abd8; }
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="17.5" data-fps="60" data-width="1920" data-height="1080">
+<div class="layer vig"></div><svg class="layer" viewBox="0 0 1920 1080">
+  <g id="rings">
+    <circle id="r3" cx="560" cy="440" r="235" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="1.5"/>
+    <circle id="r2" cx="560" cy="440" r="160" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/>
+    <g id="core"><circle cx="560" cy="440" r="90" fill="#1a1233"/><circle id="coreRing" cx="560" cy="440" r="90" fill="none" stroke="#ff4fd8" stroke-width="2.5" transform="rotate(-90 560 440)"/>
+      <text x="560" y="450" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">콜봇</text></g>
+    <text id="t2" x="560" y="324" text-anchor="middle" font-family="Pretendard" font-weight="700" font-size="24" fill="#e6e0f7">AI 에이전트</text>
+    <text id="t3" x="560" y="252" text-anchor="middle" font-family="Pretendard" font-weight="700" font-size="24" fill="#e6e0f7">AICC</text>
+    <circle class="call" id="call0" r="5" fill="#fff"/><circle class="call" id="call1" r="5" fill="#fff"/><circle class="call" id="call2" r="5" fill="#fff"/><circle class="call" id="call3" r="5" fill="#fff"/><circle class="call" id="call4" r="5" fill="#fff"/><circle class="call" id="call5" r="5" fill="#fff"/><circle class="call" id="call6" r="5" fill="#fff"/><circle class="call" id="call7" r="5" fill="#fff"/><circle class="call" id="call8" r="5" fill="#fff"/>
+  </g>
+  <g id="center3"><rect x="1040" y="250" width="600" height="380" rx="20" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="1.5"/>
+    <text x="1070" y="290" font-family="Pretendard" font-weight="600" font-size="20" letter-spacing="4" fill="#b5abd8">고객센터</text>
+    <circle cx="1460" cy="380" r="54" fill="#1a1233" stroke="#ff4fd8" stroke-width="2"/><text x="1460" y="389" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="26" fill="#fff">AI</text>
+    <image href="assets/agent.png" x="1410" y="470" width="100" height="100"/><text x="1460" y="600" text-anchor="middle" font-family="Pretendard" font-weight="600" font-size="18" fill="#cfc6ec">상담사</text>
+    <circle class="cc" id="cc0" r="6" fill="#fff"/><circle class="cc" id="cc1" r="6" fill="#fff"/><circle class="cc" id="cc2" r="6" fill="#fff"/><circle class="cc" id="cc3" r="6" fill="#fff"/><circle class="cc" id="cc4" r="6" fill="#fff"/><circle class="cc" id="cc5" r="6" fill="#fff"/></g>
+</svg><div class="layer"><div  style="position:absolute;left:1320px;top:300px;width:0;height:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="who2">고객</div><div class="bub q" id="q1">카드 분실 신고할게요</div></div><div  style="position:absolute;left:1320px;top:440px;width:0;height:0;display:flex;flex-direction:row;align-items:center;justify-content:center"><div class="bub a" id="a1">분실 신고가 완료됐어요<svg class="ck" width="30" height="30" viewBox="0 0 30 30" style="margin-left:12px;vertical-align:-6px"><circle cx="15" cy="15" r="14" fill="#ff4fd8"/><path d="M9 15.5 l4.5 4.5 l8 -9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div  style="position:absolute;left:1320px;top:290px;width:0;height:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="who2">고객</div><div class="bub q" id="q2">해외에서 잃어버렸는데, 재발급은 어떻게 받나요?</div></div><div  style="position:absolute;left:1320px;top:420px;width:0;height:0;display:flex;flex-direction:row;align-items:center;justify-content:center"><div class="bub think" id="th">• • •</div></div><div  style="position:absolute;left:1320px;top:420px;width:0;height:0;display:flex;flex-direction:row;align-items:center;justify-content:center"><div class="bub a" id="a2">재발급 방법과 기간을 안내해 드릴게요<svg class="ck" width="30" height="30" viewBox="0 0 30 30" style="margin-left:12px;vertical-align:-6px"><circle cx="15" cy="15" r="14" fill="#ff4fd8"/><path d="M9 15.5 l4.5 4.5 l8 -9" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div><div class="plate" id="plate" style="left:660px;top:650px;width:600px">ConvAI<small>대화형 AI 플랫폼</small></div></div><div class="cap" id="k1"><div class="tag"><span class="k1-l">NLU 콜봇</span></div><div class="ct"><span class="cw k1-l">자주 하는 문의는 <span class="g">바로 처리</span>하고</span></div></div><div class="cap" id="k2"><div class="tag"><span class="k2-l">LLM AI 에이전트</span></div><div class="ct"><span class="cw k2-l">복잡한 질문은 <span class="g">맥락을 이해해</span> 답하고</span></div></div><div class="cap" id="k3"><div class="tag"><span class="k3-l">AICC 구축</span></div><div class="ct"><span class="cw k3-l">고객센터 <span class="g">전체를</span> AI로</span></div></div><div class="cap" id="k4"><div class="tag"><span class="k4-l">ConvAI  ·  조달청 우수조달물품 지정 2026</span></div><div class="ct"><span class="cw k4-l">이 모든 것을 하나의 플랫폼, <span class="g">ConvAI</span>로</span></div></div><img id="prev" class="layer" src="assets/flow_last.png" />
+<audio id="sfx" class="clip" src="assets/sfx_a.wav" data-start="0" data-duration="17.5" data-track-index="2" data-volume="1"></audio>
+</div>
+<script>
+
+const tl = gsap.timeline({ paused: true });
+const hsh = (a, b) => { let h = (a * 374761393 + b * 668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+const prep = (el) => { const L = el.getTotalLength(); el.setAttribute("stroke-dasharray", `${L} ${L}`); el.setAttribute("stroke-dashoffset", L); return L; };
+const DR = (sel, t, d, e = "power2.inOut", s = 0) => gsap.utils.toArray(sel).forEach((el, i) => {
+  const L = prep(el);
+  tl.fromTo(el, { attr: { "stroke-dashoffset": L } }, { attr: { "stroke-dashoffset": 0 }, duration: d, ease: e, immediateRender: false }, t + i * s);
+});
+// 게이지가 d초 동안 차고, 다 차면 반짝(안쪽 흰빛 + 퍼지는 고리 + 게이지 잠깐 굵게)
+const GAUGE = (id, t, d = 0.9) => {
+  DR("#" + id + "-ring", t, d, "power2.inOut");
+  const r = +document.getElementById(id + "-fr").getAttribute("r");
+  tl.fromTo("#" + id + "-fin", { opacity: 0 }, { opacity: 0.55, duration: 0.08, ease: "none", immediateRender: false }, t + d);
+  tl.to("#" + id + "-fin", { opacity: 0, duration: 0.6, ease: "power2.out" }, t + d + 0.08);
+  tl.fromTo("#" + id + "-fr", { opacity: 0.9, attr: { r } }, { opacity: 0, attr: { r: r + 34 }, duration: 0.8, ease: "power2.out", immediateRender: false }, t + d);
+  tl.fromTo("#" + id + "-ring", { attr: { "stroke-width": 4 } }, { attr: { "stroke-width": 7 }, duration: 0.12, ease: "power2.out", yoyo: true, repeat: 1, immediateRender: false }, t + d);
+};
+const CAP = (id, a, b) => {
+  tl.fromTo("#" + id, { opacity: 1 }, { opacity: 1, duration: 0.01, immediateRender: false }, a);
+  tl.fromTo("." + id + "-l", { yPercent: 120 }, { yPercent: 0, duration: 1.0, ease: "expo.out", stagger: 0.08 }, a);
+  if (b) tl.to("." + id + "-l", { yPercent: -120, duration: 0.45, ease: "power2.in", stagger: 0.04 }, b);
+};
+const FIN = (sel, t, d = 0.6, e = "power2.out") => tl.fromTo(sel, { opacity: 0 }, { opacity: 1, duration: d, ease: e, immediateRender: false }, t);
+const FOUT = (sel, t, d = 0.5, e = "sine.inOut") => tl.to(sel, { opacity: 0, duration: d, ease: e }, t);
+const speak = (sel, t0, t1, seed, step = 0.24) => gsap.utils.toArray(sel).forEach((el, k) => {
+  let t = t0, s = 0;
+  while (t < t1) { tl.to(el, { scaleY: 0.2 + 0.8 * hsh(k + seed, ++s) * Math.sin(Math.PI * (k + 0.5) / 7), duration: step, ease: "sine.inOut" }, t); t += step; }
+});
+// 선 꾸밈: 시작 점 + 끝으로 갈수록 진해지는 그라데이션 + 끝의 방향 화살표(가는 꺾쇠). 점·화살표 클래스는 "dk-<선 id>"
+let __dg = 0;
+const DECOR = (sel, o = {}) => gsap.utils.toArray(sel).forEach((p) => {
+  const NS = "http://www.w3.org/2000/svg", L = p.getTotalLength(), a = p.getPointAtLength(0), b = p.getPointAtLength(L), c = p.getPointAtLength(Math.max(0, L - 8));
+  const svg = p.ownerSVGElement;
+  let defs = svg.querySelector("defs"); if (!defs) { defs = document.createElementNS(NS, "defs"); svg.prepend(defs); }
+  const g = document.createElementNS(NS, "linearGradient"), id = "dg" + (__dg++), end = o.end || "#ff8be6";
+  g.setAttribute("id", id); g.setAttribute("gradientUnits", "userSpaceOnUse");
+  g.setAttribute("x1", a.x); g.setAttribute("y1", a.y); g.setAttribute("x2", b.x); g.setAttribute("y2", b.y);
+  g.innerHTML = '<stop offset="0" stop-color="#ffffff" stop-opacity=".2"/><stop offset=".55" stop-color="#d9c6ff" stop-opacity=".6"/><stop offset="1" stop-color="' + end + '" stop-opacity=".95"/>';
+  defs.appendChild(g);
+  p.setAttribute("stroke", "url(#" + id + ")"); p.removeAttribute("stroke-opacity"); p.setAttribute("stroke-linecap", "round");
+  if (o.w) p.setAttribute("stroke-width", o.w);
+  const ang = Math.atan2(b.y - c.y, b.x - c.x) * 180 / Math.PI, s = o.size || 9, cls = "dk-" + (p.id || "x");
+  const ar = document.createElementNS(NS, "path");
+  ar.setAttribute("d", `M${-s} ${-s * 0.72} L0 0 L${-s} ${s * 0.72}`);
+  ar.setAttribute("fill", "none"); ar.setAttribute("stroke", end); ar.setAttribute("stroke-width", o.aw || 2.4);
+  ar.setAttribute("stroke-linecap", "round"); ar.setAttribute("stroke-linejoin", "round");
+  ar.setAttribute("transform", `translate(${b.x} ${b.y}) rotate(${ang})`); ar.setAttribute("class", cls);
+  const st = document.createElementNS(NS, "circle");
+  st.setAttribute("cx", a.x); st.setAttribute("cy", a.y); st.setAttribute("r", o.dot || 3.4); st.setAttribute("fill", "#fff"); st.setAttribute("fill-opacity", ".6"); st.setAttribute("class", cls);
+  p.after(ar); p.after(st);
+  if (o.hidden !== false) gsap.set([ar, st], { opacity: 0 });
+});
+// 점이 지나간 자리까지만 선이 그려짐(점과 선이 같은 진행값)
+const ALONG = (pathSel, dotSel, t, d, e = "power2.inOut", drawLine = true) => {
+  const p = document.querySelector(pathSel), L = drawLine ? prep(p) : p.getTotalLength(), q = { v: 0 };
+  tl.fromTo(q, { v: 0 }, { v: 1, duration: d, ease: e, immediateRender: false, onUpdate: () => {
+    const pt = p.getPointAtLength(q.v * L); gsap.set(dotSel, { x: pt.x, y: pt.y });
+    if (drawLine) p.setAttribute("stroke-dashoffset", L * (1 - q.v));
+  } }, t);
+};
+
+
+tl.to("#prev", { scale: 0.06, opacity: 0, transformOrigin: "960px 540px", duration: 1.1, ease: "power3.in" }, 0.0);
+
+const CX = 560, CY = 440;
+gsap.set(["#rings", "#r2", "#r3", "#t2", "#t3", "#center3", ".call", ".cc", "#q1", "#a1", "#q2", "#th", "#a2", "#plate", ".cap"], { opacity: 0 });
+prep(document.getElementById("coreRing"));
+// ── 1. 콜봇: 가장 안쪽 원
+FIN("#rings", 0.8, 0.05);
+tl.fromTo("#core", { scale: 0.3, opacity: 0, transformOrigin: "50% 50%" }, { scale: 1, opacity: 1, duration: 0.8, ease: "power3.out", immediateRender: false }, 0.8);
+DR("#coreRing", 1.2, 0.9, "power2.inOut");
+CAP("k1", 1.4, 5.0);
+// 콜봇은 끝까지 일함: 왼쪽에서 문의(점)가 계속 들어옴
+for (let i = 0; i < 9; i++) {
+  const t = 1.6 + i * 1.4, y = CY + [-40, 30, -10, 50, -55, 15, -30, 40, 0][i];
+  tl.fromTo("#call" + i, { x: CX - 330, y, opacity: 0 }, { x: CX - 70, y: CY + (y - CY) * 0.3, opacity: 1, duration: 1.0, ease: "power1.in", immediateRender: false }, t);
+  tl.to("#call" + i, { opacity: 0, duration: 0.15 }, t + 1.0);
+}
+tl.fromTo("#q1", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 1.8);
+gsap.set(document.querySelector("#q1").previousSibling, { opacity: 0 });
+FIN(document.querySelector("#q1").previousSibling, 1.8, 0.6);
+tl.fromTo("#a1", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 2.9);
+FOUT(["#q1", "#a1", document.querySelector("#q1").previousSibling], 4.9, 0.4);
+// ── 2. AI 에이전트: 바깥 원이 넓어짐(콜봇 원은 그대로 밝게)
+DR("#r2", 5.2, 1.0, "power2.inOut"); FIN("#r2", 5.2, 0.05); FIN("#t2", 5.8, 0.5);
+CAP("k2", 5.4, 9.5);
+gsap.set(document.querySelector("#q2").previousSibling, { opacity: 0 });
+FIN(document.querySelector("#q2").previousSibling, 5.7, 0.6);
+tl.fromTo("#q2", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 5.7);
+tl.fromTo("#th", { opacity: 0 }, { opacity: 1, duration: 0.3, immediateRender: false }, 6.6);
+for (let k = 0; k < 2; k++) tl.to("#th", { opacity: 0.45, duration: 0.25, yoyo: true, repeat: 1, ease: "sine.inOut" }, 6.9 + k * 0.5);
+tl.to("#th", { opacity: 0, duration: 0.2 }, 8.0);
+tl.fromTo("#a2", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false }, 8.1);
+FOUT(["#q2", "#a2", document.querySelector("#q2").previousSibling], 9.4, 0.4);
+// ── 3. AICC: 가장 바깥 원 = 고객센터 전체
+DR("#r3", 9.7, 1.1, "power2.inOut"); FIN("#r3", 9.7, 0.05); FIN("#t3", 10.3, 0.5);
+CAP("k3", 9.9, 13.5);
+FIN("#center3", 10.0, 0.6);
+for (let i = 0; i < 6; i++) {
+  const t = 10.5 + i * 0.4, y0 = 330 + i * 45, toA = i !== 4;
+  tl.fromTo("#cc" + i, { x: 1080, y: y0, opacity: 0 }, { x: toA ? 1400 : 1405, y: toA ? 380 + (i - 2.5) * 6 : 520, opacity: 1, duration: 1.1, ease: "power1.inOut", immediateRender: false }, t);
+  tl.to("#cc" + i, { opacity: 0, duration: 0.2 }, t + 1.1);
+}
+FOUT("#center3", 13.4, 0.4);
+// ── 4. 모두 하나의 플랫폼 위에
+tl.to("#rings", { x: 960 - CX, y: -40, scale: 0.85, transformOrigin: "560px 440px", duration: 1.0, ease: "power3.inOut" }, 13.6);
+tl.fromTo("#plate", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", immediateRender: false }, 14.3);
+CAP("k4", 14.0, null);
+
+window.__timelines = window.__timelines || {};
+window.__timelines["main"] = tl;
+</script>
+</body></html>
