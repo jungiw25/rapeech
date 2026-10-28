@@ -25,6 +25,12 @@
       "skillPath": "skills/hyperframes-registry/SKILL.md",
       "computedHash": "1acf359546af75f92fdcfa7fe685d53f0e85a121f145a4b90f8e4d9e763b8990"
     },
+    "impeccable": {
+      "source": "pbakaus/impeccable",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/impeccable/SKILL.md",
+      "computedHash": "98b89c1e62c446295fbae1409152b8eb7583f846a3a5650d9330492dfcdf8944"
+    },
     "media-use": {
       "source": "heygen-com/hyperframes",
       "sourceType": "github",
