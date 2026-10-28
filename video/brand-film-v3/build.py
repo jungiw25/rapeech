@@ -44,32 +44,32 @@ def icons():
         elif i == 1:  # 구축: 랙
             g = (f'<rect x="{x - 30}" y="{y - 44}" width="60" height="88" rx="6" {LINE}/>'
                  + "".join(f'<rect x="{x - 20}" y="{y - 34 + k * 20}" width="40" height="12" rx="2" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.4"/>' for k in range(4))
-                 + "".join(f'<circle class="icled" cx="{x + 14}" cy="{y - 28 + k * 20}" r="2.5" fill="{G[2 + k * 3]}"/>' for k in range(4)))
+                 + "".join(f'<circle class="icled" cx="{x + 14}" cy="{y - 28 + k * 20}" r="2.5" fill="#9d79ff"/>' for k in range(4)))
         elif i == 2:  # 보안·관제: 방패 + 체크
             g = (f'<path d="M{x} {y - 44} L{x + 36} {y - 30} L{x + 36} {y + 2} C {x + 36} {y + 24}, {x + 18} {y + 38}, {x} {y + 46} C {x - 18} {y + 38}, {x - 36} {y + 24}, {x - 36} {y + 2} L{x - 36} {y - 30} Z" {LINE}/>'
-                 f'<path d="M{x - 14} {y} l10 10 l20 -22" fill="none" stroke="#ff4fd8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>')
+                 f'<path d="M{x - 14} {y} l10 10 l20 -22" fill="none" stroke="#9d79ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>')
         else:         # 운영: 모니터 + 맥박선
             g = (f'<rect x="{x - 46}" y="{y - 36}" width="92" height="60" rx="5" {LINE}/>'
                  f'<path d="M{x - 12} {y + 40} L{x + 12} {y + 40} M{x} {y + 24} L{x} {y + 40}" {LINE}/>'
-                 f'<polyline points="{x - 34},{y - 4} {x - 14},{y - 4} {x - 6},{y - 20} {x + 4},{y + 10} {x + 12},{y - 6} {x + 34},{y - 6}" fill="none" stroke="#ff4fd8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>')
+                 f'<polyline points="{x - 34},{y - 4} {x - 14},{y - 4} {x - 6},{y - 20} {x + 4},{y + 10} {x + 12},{y - 6} {x + 34},{y - 6}" fill="none" stroke="#9d79ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>')
         out.append(f'<g class="ic" id="ic{i}">{g}</g>')
     return "".join(out)
 
 
 def ni_svg():
-    ports = "".join(f'<rect class="port" x="{420 + i * 52}" y="452" width="34" height="26" rx="4" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.4"/>'
+    ports = "".join(f'<rect class="port" x="{420 + i * 52}" y="452" width="34" height="26" rx="4" fill="#0c0916"/>'
                     f'<circle class="pled" id="pl{i}" cx="{437 + i * 52}" cy="440" r="4" fill="#3a3158"/>' for i in range(8))
     racks, rleds = "", ""
     for r, rx in enumerate((1180, 1360, 1540)):
-        racks += f'<rect class="rk" x="{rx}" y="300" width="140" height="300" rx="10" fill="#120d24" stroke="#fff" stroke-opacity=".5" stroke-width="1.5"/>'
+        racks += f'<rect class="rk" x="{rx}" y="300" width="140" height="300" rx="10" fill="#1d1736"/>'
         for j in range(9):
             y = 570 - j * 30
-            racks += f'<rect class="rslot" x="{rx + 16}" y="{y - 9}" width="108" height="18" rx="4" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/>'
-            rleds += f'<rect class="rled r{r}" data-j="{j}" x="{rx + 24}" y="{y - 2}" width="{36 + (j * 17 + r * 7) % 44}" height="4" rx="2" fill="{G[min(11, 2 + r * 4 + j % 3)]}"/>'
+            racks += f'<rect class="rslot" x="{rx + 16}" y="{y - 9}" width="108" height="18" rx="4" fill="#2a2347"/>'
+            rleds += f'<rect class="rled r{r}" data-j="{j}" x="{rx + 24}" y="{y - 2}" width="{36 + (j * 17 + r * 7) % 44}" height="4" rx="2" fill="{"#9d79ff" if j % 3 == 0 else "#cfc6ec"}"/>'
     cables = "".join(f'<path class="cab" id="cab{r}" d="M890 465 C 1010 465, 1060 {350 + r * 110}, {1180 + r * 180} {350 + r * 110}" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>' for r in range(3))
     pulses = "".join(f'<circle class="pulse" id="pu{r}" r="5" fill="#fff"/>' for r in range(3))
     return (f'<g id="niG"><path id="drop" d="M960 430 C 960 480, 790 380, 801 452" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"/>'
-            f'<rect id="swb" x="390" y="425" width="500" height="80" rx="12" fill="#120d24" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/>{ports}'
+            f'<rect id="swb" x="390" y="425" width="500" height="80" rx="12" fill="#1d1736"/>{ports}'
             f'{cables}{racks}{rleds}{pulses}'
             f'<text class="dlab" id="dl0" x="640" y="550" text-anchor="middle">스위치</text>'
             f'<text class="dlab" id="dl1" x="1430" y="640" text-anchor="middle">서버 랙</text></g>')
@@ -82,7 +82,7 @@ def sites_svg():
     b = f'<rect class="bld" x="1000" y="300" width="330" height="360" rx="12" {st}/>{win}'
     roof = "M1420 660 L1420 470 L1495 420 L1495 470 L1570 420 L1570 470 L1645 420 L1645 470 L1720 470 L1720 660 Z"
     cells = "".join(f'<rect class="bdet" x="{1442 + c * 68}" y="530" width="48" height="96" rx="6" fill="none" stroke="#fff" stroke-opacity=".35"/>'
-                    f'<rect class="bdet" x="{1448 + c * 68}" y="{540 + (3 - c) * 12}" width="36" height="{78 - (3 - c) * 12}" rx="3" fill="{G[3 + c * 2]}" opacity=".7"/>' for c in range(4))
+                    f'<rect class="bdet" x="{1448 + c * 68}" y="{540 + (3 - c) * 12}" width="36" height="{78 - (3 - c) * 12}" rx="3" fill="#9d79ff" opacity=".7"/>' for c in range(4))
     c = f'<path class="bld" d="{roof}" {st}/>{cells}'
     links = (f'<path class="lnk" id="lk0" d="M890 600 L1000 600" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>'
              f'<path class="lnk" id="lk1" d="M1330 600 L1420 600" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2"/>'
@@ -95,10 +95,10 @@ def build():
     cx, cy = 960, 430
     svg = f'''<svg class="layer" id="main" viewBox="0 0 1920 1080">
   <defs><clipPath id="vennA"><circle cx="820" cy="440" r="240"/></clipPath>
-  <linearGradient id="lensg" x1="860" y1="0" x2="1060" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff3fcf"/><stop offset="1" stop-color="#6a4dff"/></linearGradient>
-  <radialGradient id="fillA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff4fd8" stop-opacity=".05"/><stop offset="1" stop-color="#ff4fd8" stop-opacity=".2"/></radialGradient>
-  <radialGradient id="fillB" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#5a5cff" stop-opacity=".05"/><stop offset="1" stop-color="#5a5cff" stop-opacity=".22"/></radialGradient></defs>
-  <g id="cvG"><circle cx="{cx}" cy="{cy}" r="76" fill="#15102a" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/>
+  <linearGradient id="lensg" x1="860" y1="0" x2="1060" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#9d79ff"/><stop offset="1" stop-color="#9d79ff"/></linearGradient>
+  <radialGradient id="fillA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#9d79ff" stop-opacity=".14"/><stop offset="1" stop-color="#9d79ff" stop-opacity=".14"/></radialGradient>
+  <radialGradient id="fillB" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffffff" stop-opacity=".06"/><stop offset="1" stop-color="#ffffff" stop-opacity=".06"/></radialGradient></defs>
+  <g id="cvG"><circle cx="{cx}" cy="{cy}" r="76" fill="#1d1736"/>
     <circle id="cvRing" cx="{cx}" cy="{cy}" r="88" fill="none" stroke="#fff" stroke-width="2" transform="rotate(-90 {cx} {cy})"/>
     <text x="{cx}" y="{cy + 10}" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">ConvAI</text></g>
   <path class="con" d="M872 {cy} L606 {cy}" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width="1.5"/>
@@ -112,16 +112,14 @@ def build():
   {"".join(f'<g class="mk" id="mk{i}"><circle cx="{x}" cy="{MY}" r="16" fill="#0c0916" stroke="#fff" stroke-opacity=".55" stroke-width="1.5"/><circle class="mkf" id="mkf{i}" cx="{x}" cy="{MY}" r="0" fill="#fff"/></g>' for i, x in enumerate(MX))}
   <g id="venn">
     <g id="gA"><circle cx="820" cy="440" r="240" fill="url(#fillA)"/>
-      <circle class="vring" cx="820" cy="440" r="240" fill="none" stroke="#ff6fdc" stroke-opacity=".85" stroke-width="2"/>
-      <circle id="dA" cx="820" cy="440" r="222" fill="none" stroke="#ff6fdc" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="2 10"/>
-      <g id="cA"><g class="vic">{"".join(f'<rect x="{676 + k * 13}" y="{384 - h / 2}" width="7" height="{h}" rx="3.5" fill="#ff8be6"/>' for k, h in enumerate((16, 30, 46, 34, 50, 26, 14)))}</g>
+      <circle class="vring" cx="820" cy="440" r="240" fill="none" stroke="#9d79ff" stroke-width="2.5"/>
+      <g id="cA"><g class="vic">{"".join(f'<rect x="{676 + k * 13}" y="{384 - h / 2}" width="7" height="{h}" rx="3.5" fill="#9d79ff"/>' for k, h in enumerate((16, 30, 46, 34, 50, 26, 14)))}</g>
       <text class="vt" x="718" y="458" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="34" fill="#fff">대화형</text>
       <text class="vt" x="718" y="500" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="34" fill="#fff">AI</text></g></g>
     <g id="gB"><circle cx="1100" cy="440" r="240" fill="url(#fillB)"/>
-      <circle class="vring" cx="1100" cy="440" r="240" fill="none" stroke="#8a8cff" stroke-opacity=".85" stroke-width="2"/>
-      <circle id="dB" cx="1100" cy="440" r="222" fill="none" stroke="#8a8cff" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="2 10"/>
-      <g id="cB"><g class="vic"><path d="M1160 362 L1206 384 L1248 360 M1206 384 L1199 410" fill="none" stroke="#a9abff" stroke-width="2.2"/>
-        <circle cx="1160" cy="362" r="7" fill="#a9abff"/><circle cx="1206" cy="384" r="8" fill="#a9abff"/><circle cx="1248" cy="360" r="7" fill="#a9abff"/><circle cx="1199" cy="410" r="6" fill="#a9abff"/></g>
+      <circle class="vring" cx="1100" cy="440" r="240" fill="none" stroke="#fff" stroke-opacity=".6" stroke-width="2.5"/>
+      <g id="cB"><g class="vic"><path d="M1160 362 L1206 384 L1248 360 M1206 384 L1199 410" fill="none" stroke="#ffffff" stroke-width="2.2"/>
+        <circle cx="1160" cy="362" r="7" fill="#ffffff"/><circle cx="1206" cy="384" r="8" fill="#ffffff"/><circle cx="1248" cy="360" r="7" fill="#ffffff"/><circle cx="1199" cy="410" r="6" fill="#ffffff"/></g>
       <text class="vt" x="1202" y="458" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="34" fill="#fff">네트워크</text>
       <text class="vt" x="1202" y="500" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="34" fill="#fff">인프라</text></g></g>
     <circle id="lens" cx="1100" cy="440" r="240" fill="url(#lensg)" clip-path="url(#vennA)"/>
@@ -130,7 +128,7 @@ def build():
 </svg>'''
     pills = "".join(f'<div style="position:absolute;left:{x}px;top:{y - 32}px;width:0;display:flex;justify-content:center"><div class="pill" id="p{i}">{t}</div></div>'
                     for i, (x, y, t) in enumerate(((470, cy, "NLU 콜봇"), (1450, cy, "LLM AI 에이전트"), (cx, cy + 200, "AICC 구축"))))
-    labs = "".join(f'<div class="cwrap mkl" id="mkl{i}" style="left:{x}px;top:{MY + 34}px"><div class="mono">{n}</div><div class="val">{t}</div></div>' for i, (x, (n, t)) in enumerate(zip(MX, STEPS)))
+    labs = "".join(f'<div class="cwrap mkl" id="mkl{i}" style="left:{x}px;top:{MY + 34}px"><div class="val">{t}</div></div>' for i, (x, (n, t)) in enumerate(zip(MX, STEPS)))
     dom = (f'<div class="cwrap" id="cvl" style="left:{cx}px;top:{cy - 172}px"><div class="mono">자체 대화형 AI 플랫폼</div>'
            f'<div class="mono" style="margin-top:10px;font-size:16px;letter-spacing:.12em;color:#8e86a8">조달청 우수조달물품 지정 · 2026</div></div>' + pills + labs)
     caps = "".join(cap_html(c, t, x) for c, t, x in CAPS)
@@ -141,7 +139,7 @@ def build():
 <img id="prev" class="layer" src="assets/flow_last.png" />
 <img id="symEnd" src="assets/symbol_purple.svg" style="position:absolute;left:{960 - 75}px;top:{540 - 80.36:.2f}px;width:150px;height:160.71px;opacity:0" />
 <div id="blackout" class="layer" style="background:#0c0916"></div>'''
-    css = ".pill { background: #15102a; border: 1.5px solid rgba(255,255,255,.35); }"
+    css = ".pill { background: #1d1736; }"
     js = f"""
 const MX = {json_dump(MX)}, MY = {MY};
 gsap.set(["#cvG", ".con", ".pill", "#cvl", "#niG", "#sites", "#gd", "#trk", ".ic", ".mk", ".mkl", "#venn", "#dot", ".cap", "#blackout"], {{ opacity: 0 }});
@@ -161,7 +159,7 @@ DR(".rk", N + 0.1, 0.9, "power2.inOut", 0.12); DR(".rslot", N + 0.4, 0.5, "power
 ALONG("#drop", "#dot", N + 0.35, 0.75);
 tl.to("#dot", {{ opacity: 0, duration: 0.25, ease: "power2.in" }}, N + 1.05);
 FOUT("#drop", N + 1.2, 0.6);
-tl.to("#pl7", {{ attr: {{ fill: "#ff4fd8" }}, duration: 0.2 }}, N + 1.1);
+tl.to("#pl7", {{ attr: {{ fill: "#9d79ff" }}, duration: 0.2 }}, N + 1.1);
 gsap.utils.toArray(".pled").forEach((el, i) => {{ if (i !== 7) tl.to(el, {{ attr: {{ fill: i % 2 ? "#9d79ff" : "#5a5cff" }}, duration: 0.15 }}, N + 1.15 + (7 - i) * 0.035); }});
 DECOR(".cab", {{ size: 10 }}); DR(".cab", N + 1.05, 0.6, "power2.out", 0.06);
 FIN(".dk-cab0, .dk-cab1, .dk-cab2", N + 1.6, 0.3);
@@ -214,8 +212,6 @@ gsap.set("#gA", {{ x: -200 }}); gsap.set("#gB", {{ x: 200 }});
 DR(".vring", 21.85, 1.0, "power2.inOut", 0.12);
 tl.fromTo(".vic", {{ opacity: 0, y: 8 }}, {{ opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.12, immediateRender: false }}, 22.3);
 tl.fromTo(".vt", {{ opacity: 0 }}, {{ opacity: 1, duration: 0.6, stagger: 0.06, immediateRender: false }}, 22.45);
-tl.fromTo("#dA", {{ rotation: 0, svgOrigin: "820 440" }}, {{ rotation: 60, svgOrigin: "820 440", duration: 6.6, ease: "none" }}, 21.8);
-tl.fromTo("#dB", {{ rotation: 0, svgOrigin: "1100 440" }}, {{ rotation: -60, svgOrigin: "1100 440", duration: 6.6, ease: "none" }}, 21.8);
 gsap.set("#cA", {{ x: 102 }}); gsap.set("#cB", {{ x: -102 }});
 tl.to("#cA", {{ x: 0, duration: 1.2, ease: "power3.inOut" }}, 23.0);
 tl.to("#cB", {{ x: 0, duration: 1.2, ease: "power3.inOut" }}, 23.0);
@@ -234,7 +230,7 @@ tl.fromTo("#symEnd", {{ opacity: 0, scale: 0.55, y: -100, transformOrigin: "50% 
 tl.fromTo("#cvG", { opacity: 0, scale: 0.6, y: 110, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, y: 110, duration: 0.8, ease: "power3.out", immediateRender: false }, 0.75);
 tl.to("#cvG", { y: 0, duration: 0.8, ease: "power2.inOut" }, 1.55);
 DR("#cvRing", 1.6, 1.1, "power2.inOut");
-tl.to("#cvRing", { attr: { stroke: "#ff4fd8" }, duration: 0.4, ease: "sine.out" }, 2.7);
+tl.to("#cvRing", { attr: { stroke: "#9d79ff" }, duration: 0.4, ease: "sine.out" }, 2.7);
 CAP("c3", 1.4, 6.5);
 tl.fromTo("#cvl", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", immediateRender: false }, 2.4);
 FIN(".con", 2.6, 0.05); DR(".con", 2.6, 0.55, "power2.out", 0.15);
@@ -247,8 +243,10 @@ tl.to("#cvG", { scale: 0.12, opacity: 0, transformOrigin: "50% 50%", duration: 0
         convai = """
 FOUT("#pvLow", 5.6, 0.45);
 tl.to("#pvLow", { y: 24, duration: 0.45, ease: "power2.in" }, 5.6);
-FOUT("#pvFrame", 5.7, 0.45);
-tl.to("#pvFrame", { scale: 0.94, transformOrigin: "960px 365px", duration: 0.5, ease: "power2.in" }, 5.7);
+// 9칸 뒤의 판(한 단계 밝은 면)은 먼저 사라지고, 칸 안에 남은 판 색은 대비를 올려 바탕에 묻히게 함
+FOUT("#pvFrame", 5.6, 0.45);
+gsap.set(".pcimg", { filter: "contrast(1)" });
+tl.fromTo(".pcimg", { filter: "contrast(1)" }, { filter: "contrast(1.3)", duration: 0.45, ease: "sine.inOut", immediateRender: false }, 5.6);
 """
         order = sorted(range(9), key=lambda i: -abs(cells[i][0] - 960) - abs(cells[i][1] - 430))
         for k, i in enumerate(order):
@@ -258,22 +256,18 @@ tl.to("#pvFrame", { scale: 0.94, transformOrigin: "960px 365px", duration: 0.5, 
                        f'duration: 0.95, ease: "power3.in" }}, {t0:.2f});\n'
                        f'tl.to("#pc{i}", {{ opacity: 0, duration: 0.2, ease: "sine.in" }}, {t0 + 0.75:.2f});\n')
         convai += """
-tl.fromTo("#mglow", { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.5, ease: "sine.out", immediateRender: false }, 6.5);
-tl.to("#mglow", { opacity: 0, scale: 1.4, duration: 0.8, ease: "sine.inOut" }, 7.05);
 tl.set("#dot", { x: 960, y: 430 }, 6.8);
 tl.fromTo("#dot", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2)", immediateRender: false }, 6.85);
 """
         pv = []
         pv.append('<img id="pvLow" class="layer" src="assets/convai_last.png" style="clip-path:inset(655px 0px 0px 0px)" />')
-        pv.append('<img id="pvFrame" class="layer" src="assets/convai_last.png" style="clip-path:path(evenodd,\'M128 68 H1792 V662 H128 Z M152 92 V638 H1768 V92 Z\')" />')
+        pv.append('<img id="pvFrame" class="layer" src="assets/convai_last.png" style="clip-path:inset(70px 130px 420px 130px)" />')
         for i, (cx, cy) in enumerate(cells):
             l, r, t, b = cx - 262, cx + 262, cy - 88, cy + 88   # 칸 경계를 부드럽게 흐려 사각 테두리가 안 보이게
             m = (f"linear-gradient(90deg,transparent {l}px,#000 {l + 26}px,#000 {r - 26}px,transparent {r}px),"
                  f"linear-gradient(transparent {t}px,#000 {t + 22}px,#000 {b - 22}px,transparent {b}px)")
-            pv.append(f'<div id="pc{i}" class="layer" style="mix-blend-mode:lighten"><img class="layer" src="assets/convai_last.png" '
+            pv.append(f'<div id="pc{i}" class="layer" style="mix-blend-mode:lighten"><img class="layer pcimg" src="assets/convai_last.png" '
                       f'style="-webkit-mask-image:{m};mask-image:{m};-webkit-mask-composite:source-in;mask-composite:intersect" /></div>')
-        pv.append('<div id="mglow" style="position:absolute;left:760px;top:230px;width:400px;height:400px;border-radius:50%;'
-                  'background:radial-gradient(closest-side,rgba(214,120,255,.55),rgba(140,80,255,.18) 45%,rgba(120,60,255,0));opacity:0"></div>')
         body = body.replace('<img id="prev" class="layer" src="assets/flow_last.png" />', "\n".join(pv))
     js = js.replace("__CONVAI__", convai)
     if MODE == "b":
