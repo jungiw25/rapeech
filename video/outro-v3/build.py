@@ -52,12 +52,9 @@ FIN("#brand", 2.0, 0.01, "none");
 tl.fromTo("#logo", { yPercent: 105 }, { yPercent: 0, duration: 1.2, ease: "expo.out" }, 2.05);
 tl.fromTo("#tag", { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 1.0, ease: "expo.out", immediateRender: false }, 2.6);
 // ── 로고가 위쪽 1/3로: 아래 절반은 유튜브 최종 화면 자리
-tl.to("#brand", { y: -250, scale: 0.8, transformOrigin: "960px 540px", duration: 1.1, ease: "power3.inOut" }, 4.6);
 // ── 아주 느린 배경 빛 + 진행선
 tl.fromTo("#b1", { x: 0, y: 0 }, { x: 220, y: -120, duration: 13, ease: "sine.inOut" }, 2.0);
 tl.fromTo("#b2", { x: 0, y: 0 }, { x: -260, y: 140, duration: 13, ease: "sine.inOut" }, 2.0);
-FIN("#prog", 5.6, 0.5);
-tl.fromTo("#prog", { scaleX: 0 }, { scaleX: 1, duration: 9.4, ease: "none" }, 5.6);
 """
     return page("Rapeech outro v3", body, js, DUR, css,
                 audio=f'<audio id="sfx" class="clip" src="assets/outro_sfx.wav" data-start="0" data-duration="{DUR}" data-track-index="2" data-volume="1"></audio>')

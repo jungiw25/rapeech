@@ -51,16 +51,16 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c091
     <g id="gA"><circle cx="830" cy="440" r="200" fill="url(#fillA)"/>
       <circle class="vring" cx="830" cy="440" r="200" fill="none" stroke="#ff6fdc" stroke-opacity=".85" stroke-width="2"/>
       <circle id="dA" cx="830" cy="440" r="184" fill="none" stroke="#ff6fdc" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="2 10"/>
-      <g class="vic"><rect x="722" y="385.0" width="6" height="14" rx="3" fill="#ff8be6"/><rect x="734" y="379.0" width="6" height="26" rx="3" fill="#ff8be6"/><rect x="746" y="372.0" width="6" height="40" rx="3" fill="#ff8be6"/><rect x="758" y="377.0" width="6" height="30" rx="3" fill="#ff8be6"/><rect x="770" y="370.0" width="6" height="44" rx="3" fill="#ff8be6"/><rect x="782" y="381.0" width="6" height="22" rx="3" fill="#ff8be6"/><rect x="794" y="386.0" width="6" height="12" rx="3" fill="#ff8be6"/></g>
+      <g id="cA"><g class="vic"><rect x="722" y="385.0" width="6" height="14" rx="3" fill="#ff8be6"/><rect x="734" y="379.0" width="6" height="26" rx="3" fill="#ff8be6"/><rect x="746" y="372.0" width="6" height="40" rx="3" fill="#ff8be6"/><rect x="758" y="377.0" width="6" height="30" rx="3" fill="#ff8be6"/><rect x="770" y="370.0" width="6" height="44" rx="3" fill="#ff8be6"/><rect x="782" y="381.0" width="6" height="22" rx="3" fill="#ff8be6"/><rect x="794" y="386.0" width="6" height="12" rx="3" fill="#ff8be6"/></g>
       <text class="vt" x="764" y="460" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">대화형</text>
-      <text class="vt" x="764" y="498" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">AI</text></g>
+      <text class="vt" x="764" y="498" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">AI</text></g></g>
     <g id="gB"><circle cx="1090" cy="440" r="200" fill="url(#fillB)"/>
       <circle class="vring" cx="1090" cy="440" r="200" fill="none" stroke="#8a8cff" stroke-opacity=".85" stroke-width="2"/>
       <circle id="dB" cx="1090" cy="440" r="184" fill="none" stroke="#8a8cff" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="2 10"/>
-      <g class="vic"><path d="M1132 372 L1176 392 L1214 370 M1176 392 L1170 414" fill="none" stroke="#a9abff" stroke-width="2"/>
+      <g id="cB"><g class="vic"><path d="M1132 372 L1176 392 L1214 370 M1176 392 L1170 414" fill="none" stroke="#a9abff" stroke-width="2"/>
         <circle cx="1132" cy="372" r="6" fill="#a9abff"/><circle cx="1176" cy="392" r="7" fill="#a9abff"/><circle cx="1214" cy="370" r="6" fill="#a9abff"/><circle cx="1170" cy="414" r="5" fill="#a9abff"/></g>
       <text class="vt" x="1170" y="460" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">네트워크</text>
-      <text class="vt" x="1170" y="498" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">인프라</text></g>
+      <text class="vt" x="1170" y="498" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">인프라</text></g></g>
     <circle id="lens" cx="1090" cy="440" r="200" fill="url(#lensg)" clip-path="url(#vennA)"/>
     <text id="tL" x="960" y="451" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="30" fill="#fff">라피치</text></g>
   <g id="dot"><circle r="14" fill="#fff" opacity=".22"/><circle r="6.5" fill="#fff"/></g>
@@ -191,6 +191,9 @@ tl.fromTo(".vic", { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.6, ease:
 tl.fromTo(".vt", { opacity: 0 }, { opacity: 1, duration: 0.6, stagger: 0.06, immediateRender: false }, 22.45);
 tl.fromTo("#dA", { rotation: 0, svgOrigin: "830 440" }, { rotation: 60, svgOrigin: "830 440", duration: 6.6, ease: "none" }, 21.8);
 tl.fromTo("#dB", { rotation: 0, svgOrigin: "1090 440" }, { rotation: -60, svgOrigin: "1090 440", duration: 6.6, ease: "none" }, 21.8);
+gsap.set("#cA", { x: 66 }); gsap.set("#cB", { x: -80 });
+tl.to("#cA", { x: 0, duration: 1.2, ease: "power3.inOut" }, 23.0);
+tl.to("#cB", { x: 0, duration: 1.2, ease: "power3.inOut" }, 23.0);
 tl.to("#gA", { x: 0, duration: 1.2, ease: "power3.inOut" }, 23.0);
 tl.to("#gB", { x: 0, duration: 1.2, ease: "power3.inOut" }, 23.0);
 FIN("#lens", 24.15, 0.6, "sine.out");
