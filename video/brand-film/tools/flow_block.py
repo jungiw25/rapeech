@@ -41,7 +41,7 @@ cust = f'''
       <rect x="{PHX - 7}" y="{PHY + 36}" width="14" height="3" rx="1.5" fill="#fff" opacity=".7"/>
     </g>
     <g id="f-rings">{"".join(f'<path class="f-ring" d="M{PHX + 31} {PHY - 52 - (20 + j * 16)} A {20 + j * 16} {20 + j * 16} 0 0 1 {PHX + 31 + 20 + j * 16} {PHY - 52}" fill="none" stroke="#ff4fd8" stroke-width="4" stroke-linecap="round"/>' for j in range(3))}</g>
-    <g id="f-ok" class="o"><circle cx="{CUST + 90}" cy="{LY - 180}" r="22" fill="url(#flow-g)"/><path d="M{CUST + 80} {LY - 180} l7 7 l12 -14" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="f-ok" class="o"><circle cx="{CUST + 256}" cy="{LY - 274}" r="22" fill="url(#flow-g)"/><path d="M{CUST + 246} {LY - 274} l7 7 l12 -14" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
   </g>'''
 
 nodes = "".join(
@@ -265,7 +265,8 @@ PBS2 = 0.08
 PBX2 = 960 - 2410 * PBS2
 PBY2 = 540 - 600 * PBS2
 # 되돌아가는 답(베지어를 점으로 샘플링)
-p0, c1, c2, p3 = (bx - 60, LY - 70), (bx - 900, LY - 640), (CUST + 900, LY - 640), (CUST + 110, LY - 200)
+# 답 말풍선의 왼쪽 끝에서 출발해 고객 말풍선의 오른쪽 끝에 닿음(말풍선 위를 지나지 않게)
+p0, c1, c2, p3 = (bx - 380, LY - 204), (bx - 1100, LY - 680), (CUST + 1000, LY - 680), (CUST + 228, LY - 274)
 RET = []
 N = 72
 for k in range(N + 1):

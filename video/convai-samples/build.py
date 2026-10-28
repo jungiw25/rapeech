@@ -188,7 +188,7 @@ def build_b():
            + at(700, 700, '<div class="bub q" id="q2">해외에서 잃어버렸는데, 재발급은 어떻게 받나요?</div>')
            + at(1500, 610, '<div class="bub think" id="th">• • •</div>')
            + at(1560, 610, f'<div class="bub a" id="a2" style="font-size:24px">재발급 방법을 안내해 드릴게요{CHECK}</div>')
-           + at(800, 470, '<div class="bub q" id="q3">부정 사용이 의심돼요. 상담사와 통화하고 싶어요</div>')
+           + at(640, 250, '<div class="bub q" id="q3">부정 사용이 의심돼요. 상담사와 통화하고 싶어요</div>')
            + at(1600, 260, '<div class="bub a" id="a3" style="font-size:24px">앞선 내용 확인했어요, 바로 도와드릴게요</div>')
            + '<div class="plate" id="plate" style="left:460px;top:668px;width:1000px">ConvAI<small>대화형 AI 플랫폼 · 2026 조달청 우수조달물품</small></div>')
     caps_html = "".join(cap_html(c, t, x) for c, t, x in caps)
