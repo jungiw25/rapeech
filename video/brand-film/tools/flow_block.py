@@ -41,7 +41,9 @@ cust = f'''
       <rect x="{PHX - 7}" y="{PHY + 36}" width="14" height="3" rx="1.5" fill="#fff" opacity=".7"/>
     </g>
     <g id="f-rings">{"".join(f'<path class="f-ring" d="M{PHX + 31} {PHY - 52 - (20 + j * 16)} A {20 + j * 16} {20 + j * 16} 0 0 1 {PHX + 31 + 20 + j * 16} {PHY - 52}" fill="none" stroke="#ff4fd8" stroke-width="4" stroke-linecap="round"/>' for j in range(3))}</g>
-    <g id="f-ok" class="o"><circle cx="{CUST + 256}" cy="{LY - 274}" r="22" fill="url(#flow-g)"/><path d="M{CUST + 246} {LY - 274} l7 7 l12 -14" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="f-hit"><circle id="f-hglow" cx="{CUST - 6}" cy="{LY - 36}" r="150" fill="url(#f-avglow)" opacity="0"/>
+      <circle class="f-hr" cx="{CUST - 6}" cy="{LY - 36}" r="118" fill="none" stroke="url(#flow-g)" stroke-width="4" opacity="0"/>
+      <circle class="f-hr" cx="{CUST - 6}" cy="{LY - 36}" r="118" fill="none" stroke="#fff" stroke-width="2" opacity="0"/></g>
   </g>'''
 
 nodes = "".join(
@@ -139,7 +141,7 @@ SYM_CX, SYM_CY = SYM_X + 42 * SYM_S, SYM_Y + 47 * SYM_S
 flow_js = """
       const ST = __ST__, ARR = __ARR__, TRV = __TRV__, LY = __LY__;
       const CAP = (id, tin, tout) => { IN("." + id + "-w", tin, { y: 0, b: 14, d: 1.0, s: 0.07 }); if (tout) OUT("." + id + "-w", tout, { y: 0, d: 0.6, s: 0.025 }); };
-      gsap.set(["#f-nf0", "#f-nf1", "#f-nf2", "#f-nf3", "#f-nf4", "#f-nc0", "#f-nc1", "#f-nc2", "#f-nc3", ".f-npulse", "#f-ok"], { opacity: 0 });
+      gsap.set(["#f-nf0", "#f-nf1", "#f-nf2", "#f-nf3", "#f-nf4", "#f-nc0", "#f-nc1", "#f-nc2", "#f-nc3", ".f-npulse", ".f-hr"], { opacity: 0 });
       gsap.set("#f-pk", { x: 300, y: LY, opacity: 0 });
       gsap.set("#f-rpk", { opacity: 0 });
       gsap.set(".f-card", { opacity: 0 });
@@ -249,7 +251,10 @@ flow_js = """
         tl.to(ret, { attr: { "stroke-dashoffset": RT + 10 - RL[k] }, duration: d, ease: "none" }, t);
       }
       tl.to("#f-rpk", { opacity: 0, scale: 2, duration: 0.4, ease: "power2.out" }, __RETARR__);
-      tl.fromTo("#f-ok", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.8)" }, __RETARR__);
+      // 도착: 점이 사람에게 닿으면 사람을 감싼 둥근 물결 두 겹이 퍼지고 고객 뒤의 빛이 잠깐 밝아짐(띠링)
+      gsap.utils.toArray(".f-hr").forEach((el, k) => tl.fromTo(el, { opacity: 0.95, scale: 1, svgOrigin: "__HX__ __HY__" }, { opacity: 0, scale: 1.55, svgOrigin: "__HX__ __HY__", duration: 1.1, ease: "power2.out", immediateRender: false }, __RETARR__ + k * 0.14));
+      tl.fromTo("#f-hglow", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "sine.out", immediateRender: false }, __RETARR__);
+      tl.to("#f-hglow", { opacity: 0, duration: 1.0, ease: "sine.inOut" }, __RETARR__ + 0.3);
       DRAW("#f-branch", 29.5, 0.9, "power2.inOut");
       tl.fromTo("#f-agent", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "sine.inOut" }, 29.4);
 
@@ -265,8 +270,8 @@ PBS2 = 0.08
 PBX2 = 960 - 2410 * PBS2
 PBY2 = 540 - 600 * PBS2
 # 되돌아가는 답(베지어를 점으로 샘플링)
-# 답 말풍선의 왼쪽 끝에서 출발해 고객 말풍선의 오른쪽 끝에 닿음(말풍선 위를 지나지 않게)
-p0, c1, c2, p3 = (bx - 380, LY - 204), (bx - 1100, LY - 680), (CUST + 1000, LY - 680), (CUST + 228, LY - 274)
+# 답 말풍선의 왼쪽 끝에서 출발해 고객(사람) 머리 오른쪽 위에 닿음. 고객 말풍선과 휴대폰은 비켜 지나감
+p0, c1, c2, p3 = (bx - 380, LY - 204), (bx - 1100, LY - 680), (CUST + 430, LY - 420), (CUST + 95, LY - 125)
 RET = []
 N = 72
 for k in range(N + 1):
@@ -280,7 +285,7 @@ flow_js = (flow_js.replace("__ST__", json.dumps(ST)).replace("__ARR__", json.dum
            .replace("__PX__", str(PHX)).replace("__PY__", str(PHY))
            .replace("__PBX__", f"{PBX:.1f}").replace("__PBY__", f"{PBY:.1f}").replace("__PBS__", str(PBS))
            .replace("__PBX2__", f"{PBX2:.1f}").replace("__PBY2__", f"{PBY2:.1f}").replace("__PBS2__", str(PBS2))
-           .replace("__RETPTS__", json.dumps(RET)).replace("__RETARR__", str(RET_ARR)))
+           .replace("__RETPTS__", json.dumps(RET)).replace("__HX__", str(CUST - 6)).replace("__HY__", str(LY - 36)).replace("__RETARR__", str(RET_ARR)))
 flow_js = flow_js.replace('      tl.to("#f-rpk", { motionPath: null, duration: 0 }, 28.3);\n', "")
 flow_body = flow_body.replace("__RETD__", "M" + " L".join(f"{x} {y}" for x, y in RET))
 scene("flow", FLOW_DUR, flow_body, flow_js, css=flow_css)
