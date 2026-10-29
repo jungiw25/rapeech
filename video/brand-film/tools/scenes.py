@@ -30,11 +30,11 @@ FONTS = "".join(
 )
 BASE = FONTS + f"""
 #root {{ position: absolute; inset: 0; overflow: hidden; font-family: "Pretendard", sans-serif; background: {DARK}; }}
-.grad {{ color: #9d79ff; }}
+.grad {{ background: linear-gradient(100deg, #ff03c8, #a518a4 55%, #6a4dff); -webkit-background-clip: text; background-clip: text; color: transparent; }}
 .say {{ position: absolute; font-weight: 800; color: #fff; letter-spacing: -0.03em; line-height: 1.16; }}
 .say .w {{ display: inline-block; margin-right: 0.24em; will-change: transform, filter, opacity; }}
 .lab {{ position: absolute; font-weight: 600; color: {SUB}; font-size: 30px; letter-spacing: 0.01em; }}
-.vig {{ position: absolute; inset: -40px; background: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45)); }}
+.vig {{ position: absolute; inset: -40px; background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,0.11), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.45)); }}
 
 """
 

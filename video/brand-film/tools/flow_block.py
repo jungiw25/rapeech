@@ -16,7 +16,7 @@ cards = [
     ("업무 처리", "카드 사용 정지", True),
     ("음성 응답", "답변을 목소리로", False),
 ]
-CHECK = '<svg class="f-ck" width="34" height="34" viewBox="0 0 34 34" style="margin-left:14px;vertical-align:-5px"><circle cx="17" cy="17" r="16" fill="url(#fck)"/><path d="M10 17.5 l5 5 l9 -11" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="fck" x1="0" y1="0" x2="34" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#9d79ff"/><stop offset="1" stop-color="#9d79ff"/></linearGradient></defs></svg>'
+CHECK = '<svg class="f-ck" width="34" height="34" viewBox="0 0 34 34" style="margin-left:14px;vertical-align:-5px"><circle cx="17" cy="17" r="16" fill="url(#fck)"/><path d="M10 17.5 l5 5 l9 -11" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="fck" x1="0" y1="0" x2="34" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs></svg>'
 card_html = ""
 for i, (lab, val, ok) in enumerate(cards):
     chars = "".join(f'<b class="f-c{i}" style="display:inline-block;font-weight:700">{"&nbsp;" if c == " " else c}</b>' for c in val)
@@ -40,14 +40,16 @@ cust = f'''
       {"".join(f'<rect x="{PHX - 11 + j * 8}" y="{PHY - 8 - (6, 12, 8)[j]}" width="5" height="{2 * (6, 12, 8)[j]}" rx="2.5" fill="#fff"/>' for j in range(3))}
       <rect x="{PHX - 7}" y="{PHY + 36}" width="14" height="3" rx="1.5" fill="#fff" opacity=".7"/>
     </g>
-    <g id="f-rings">{"".join(f'<path class="f-ring" d="M{PHX + 31} {PHY - 52 - (20 + j * 16)} A {20 + j * 16} {20 + j * 16} 0 0 1 {PHX + 31 + 20 + j * 16} {PHY - 52}" fill="none" stroke="#9d79ff" stroke-width="4" stroke-linecap="round"/>' for j in range(3))}</g>
-    <g id="f-ok" class="o"><circle cx="{CUST + 90}" cy="{LY - 180}" r="22" fill="url(#flow-g)"/><path d="M{CUST + 80} {LY - 180} l7 7 l12 -14" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g id="f-rings">{"".join(f'<path class="f-ring" d="M{PHX + 31} {PHY - 52 - (20 + j * 16)} A {20 + j * 16} {20 + j * 16} 0 0 1 {PHX + 31 + 20 + j * 16} {PHY - 52}" fill="none" stroke="#ff4fd8" stroke-width="4" stroke-linecap="round"/>' for j in range(3))}</g>
+    <g id="f-hit"><circle id="f-hglow" cx="{CUST - 6}" cy="{LY - 36}" r="150" fill="url(#f-avglow)" opacity="0"/>
+      <circle class="f-hr" cx="{CUST - 6}" cy="{LY - 36}" r="118" fill="none" stroke="url(#flow-g)" stroke-width="4" opacity="0"/>
+      <circle class="f-hr" cx="{CUST - 6}" cy="{LY - 36}" r="118" fill="none" stroke="#fff" stroke-width="2" opacity="0"/></g>
   </g>'''
 
 nodes = "".join(
     f'''<g class="f-node" id="f-n{i}">
-      <circle class="f-npulse o" id="f-np{i}" cx="{x}" cy="{LY}" r="36" fill="none" stroke="#9d79ff" stroke-width="3"/>
-      <circle cx="{x}" cy="{LY}" r="30" fill="#1d1736"/>
+      <circle class="f-npulse o" id="f-np{i}" cx="{x}" cy="{LY}" r="36" fill="none" stroke="#ff4fd8" stroke-width="3"/>
+      <circle cx="{x}" cy="{LY}" r="30" fill="#1c1730" stroke="#4a4166" stroke-width="3"/>
       <circle class="f-nfill o" id="f-nf{i}" cx="{x}" cy="{LY}" r="30" fill="url(#flow-g)" filter="url(#flow-glow)"/>
       <circle class="f-ncore o" id="f-nc{i}" cx="{x}" cy="{LY}" r="11" fill="#fff"/>
     </g>''' for i, x in enumerate(ST[:4]))
@@ -55,14 +57,14 @@ nodes = "".join(
 # AI 콜봇(마지막 단계)
 bx = ST[4]
 bot = f'''<g id="f-bot">
-    <circle class="f-npulse o" id="f-np4" cx="{bx}" cy="{LY}" r="74" fill="none" stroke="#9d79ff" stroke-width="3"/>
-    <circle cx="{bx}" cy="{LY}" r="66" fill="#1d1736"/>
+    <circle class="f-npulse o" id="f-np4" cx="{bx}" cy="{LY}" r="74" fill="none" stroke="#ff4fd8" stroke-width="3"/>
+    <circle cx="{bx}" cy="{LY}" r="66" fill="#1c1730" stroke="#4a4166" stroke-width="3"/>
     <circle class="o" id="f-nf4" cx="{bx}" cy="{LY}" r="66" fill="url(#flow-g)" filter="url(#flow-glow)"/>
     <path d="M{bx - 40} {LY + 4} a40 40 0 0 1 80 0" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/>
     <rect x="{bx - 50}" y="{LY - 6}" width="16" height="30" rx="7" fill="#fff"/><rect x="{bx + 34}" y="{LY - 6}" width="16" height="30" rx="7" fill="#fff"/>
     <path d="M{bx + 42} {LY + 24} q 0 22 -28 24" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
     <text x="{bx}" y="{LY + 22}" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="34" fill="#fff">AI</text>
-    {"".join(f'<rect class="f-bw o" x="{bx + 96 + j * 16}" y="{LY - 40}" width="8" height="80" rx="4" fill="#9d79ff"/>' for j in range(6))}
+    {"".join(f'<rect class="f-bw o" x="{bx + 96 + j * 16}" y="{LY - 40}" width="8" height="80" rx="4" fill="{G[min(11, 4 + j)]}"/>' for j in range(6))}
   </g>'''
 
 # 상담사(복잡한 상담 연결)
@@ -82,14 +84,14 @@ ret = '<path id="f-ret" d="__RETD__" fill="none" stroke="url(#flow-g)" stroke-wi
 retpk = '<g id="f-rpk"><circle r="16" fill="#fff" filter="url(#flow-glows)"/></g>'
 
 world_svg = (f'<svg width="5200" height="1400" viewBox="0 0 5200 1400" style="position:absolute;left:0;top:0;overflow:visible">'
-             f'<defs><linearGradient id="flow-g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9d79ff"/><stop offset="1" stop-color="#9d79ff"/></linearGradient>'
+             f'<defs><linearGradient id="flow-g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient>'
              f'<linearGradient id="f-skin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f1ff"/><stop offset="1" stop-color="#b3a2f0"/></linearGradient>'
-             f'<radialGradient id="f-avglow"><stop offset="0" stop-color="#6a4dff" stop-opacity="0"/><stop offset="1" stop-color="#6a4dff" stop-opacity="0"/></radialGradient>'
-             f'<linearGradient id="flow-rail" x1="300" y1="0" x2="4600" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffffff" stop-opacity=".45"/><stop offset="1" stop-color="#ffffff" stop-opacity=".45"/></linearGradient>'
-             f'<filter id="flow-glow" filterUnits="userSpaceOnUse" x="-500" y="-500" width="6400" height="2400"><feGaussianBlur stdDeviation="0" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'
-             f'<filter id="flow-glows" filterUnits="userSpaceOnUse" x="-500" y="-500" width="6400" height="2400"><feGaussianBlur stdDeviation="0" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
-             f'<path id="f-railL" d="M{ST[0]} {LY} L{PHX + 40} {LY}" stroke="url(#flow-rail)" stroke-width="3" stroke-linecap="round" fill="none"/>'
-             f'<path id="f-railR" d="M{ST[0]} {LY} L{bx - 66} {LY}" stroke="url(#flow-rail)" stroke-width="3" stroke-linecap="round" fill="none"/>'
+             f'<radialGradient id="f-avglow"><stop offset="0" stop-color="#6a4dff" stop-opacity=".35"/><stop offset="1" stop-color="#6a4dff" stop-opacity="0"/></radialGradient>'
+             f'<linearGradient id="flow-rail" x1="300" y1="0" x2="4600" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient>'
+             f'<filter id="flow-glow" filterUnits="userSpaceOnUse" x="-500" y="-500" width="6400" height="2400"><feGaussianBlur stdDeviation="10" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>'
+             f'<filter id="flow-glows" filterUnits="userSpaceOnUse" x="-500" y="-500" width="6400" height="2400"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>'
+             f'<path id="f-railL" d="M{ST[0]} {LY} L{PHX + 40} {LY}" stroke="url(#flow-rail)" stroke-width="6" stroke-linecap="round" filter="url(#flow-glows)" fill="none"/>'
+             f'<path id="f-railR" d="M{ST[0]} {LY} L{bx - 66} {LY}" stroke="url(#flow-rail)" stroke-width="6" stroke-linecap="round" filter="url(#flow-glows)" fill="none"/>'
              + agent + ret + nodes + bot + cust + packet + retpk + '</svg>')
 
 # 마지막에 모이는 빛 막대(다음 장면 서버 랙 LED의 확대 모습과 같음)
@@ -113,7 +115,7 @@ cap_html = "".join(say(t, 60, 0, 150, f"f{cid}", extra="width:1920px;text-align:
 flow_css = f"""
     #f-world {{ position: absolute; left: 0; top: 0; width: 5200px; height: 1400px; }}
     .f-wrap {{ position: absolute; width: 0; display: flex; justify-content: center; }}
-    .f-card {{ position: relative; flex: none; text-align: center; padding: 26px 40px; border-radius: 22px; background: #1d1736; }}
+    .f-card {{ position: relative; flex: none; text-align: center; padding: 26px 40px; border-radius: 22px; background: rgba(28,23,48,.92); border: 1.5px solid #3a3158; }}
     .f-cl {{ font-size: 28px; font-weight: 600; color: {SUB}; }}
     .f-cv {{ margin-top: 10px; font-size: 40px; font-weight: 700; color: #fff; letter-spacing: -0.02em; white-space: nowrap; }}
     .f-bub {{ position: relative; flex: none; height: 92px; padding: 0 40px; border-radius: 46px; display: flex; align-items: center; font-size: 38px; font-weight: 700; white-space: nowrap; }}
@@ -127,11 +129,11 @@ flow_body = f"""
         {world_svg}
         {card_html}
         <div class="f-wrap" style="left:{CUST}px;top:{LY - 320}px"><div class="f-bub" id="f-cbub" style="background:#fff;color:{INK}">카드를 잃어버렸어요</div></div>
-        <div class="f-wrap" style="left:{bx}px;top:{LY - 250}px"><div class="f-bub" id="f-bbub" style="background:#9d79ff;color:#fff">본인 확인이 끝나 카드 사용을 정지했어요</div></div>
+        <div class="f-wrap" style="left:{bx}px;top:{LY - 250}px"><div class="f-bub" id="f-bbub" style="background:linear-gradient(100deg,#ff03c8,#a518a4 50%,#3c24f3);color:#fff">본인 확인이 끝나 카드 사용을 정지했어요</div></div>
       </div>
       <img id="f-sym" src="assets/brand/symbol_purple.svg" style="position:absolute;left:{SYM_X:.1f}px;top:{SYM_Y:.1f}px;width:{84 * SYM_S:.1f}px;height:{90 * SYM_S:.1f}px" />
       <img id="f-last" src="assets/intro_last.png" style="position:absolute;left:0;top:0;width:1920px;height:1080px" />
-      <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;overflow:visible"><circle id="f-dot" class="o" cx="960" cy="540" r="16" fill="url(#fdg)"/><defs><linearGradient id="fdg" x1="944" y1="0" x2="976" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#9d79ff"/><stop offset="1" stop-color="#9d79ff"/></linearGradient></defs></svg>
+      <svg width="1920" height="1080" viewBox="0 0 1920 1080" style="position:absolute;left:0;top:0;overflow:visible"><circle id="f-dot" class="o" cx="960" cy="540" r="16" fill="url(#fdg)"/><defs><linearGradient id="fdg" x1="944" y1="0" x2="976" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff03c8"/><stop offset="1" stop-color="#3c24f3"/></linearGradient></defs></svg>
       <div id="f-barwrap" style="position:absolute;inset:0">{BAR.replace("__ID__", "f-bar")}</div>
       {cap_html}
 """
@@ -139,7 +141,7 @@ SYM_CX, SYM_CY = SYM_X + 42 * SYM_S, SYM_Y + 47 * SYM_S
 flow_js = """
       const ST = __ST__, ARR = __ARR__, TRV = __TRV__, LY = __LY__;
       const CAP = (id, tin, tout) => { IN("." + id + "-w", tin, { y: 0, b: 14, d: 1.0, s: 0.07 }); if (tout) OUT("." + id + "-w", tout, { y: 0, d: 0.6, s: 0.025 }); };
-      gsap.set(["#f-nf0", "#f-nf1", "#f-nf2", "#f-nf3", "#f-nf4", "#f-nc0", "#f-nc1", "#f-nc2", "#f-nc3", ".f-npulse", "#f-ok"], { opacity: 0 });
+      gsap.set(["#f-nf0", "#f-nf1", "#f-nf2", "#f-nf3", "#f-nf4", "#f-nc0", "#f-nc1", "#f-nc2", "#f-nc3", ".f-npulse", ".f-hr"], { opacity: 0 });
       gsap.set("#f-pk", { x: 300, y: LY, opacity: 0 });
       gsap.set("#f-rpk", { opacity: 0 });
       gsap.set(".f-card", { opacity: 0 });
@@ -249,7 +251,10 @@ flow_js = """
         tl.to(ret, { attr: { "stroke-dashoffset": RT + 10 - RL[k] }, duration: d, ease: "none" }, t);
       }
       tl.to("#f-rpk", { opacity: 0, scale: 2, duration: 0.4, ease: "power2.out" }, __RETARR__);
-      tl.fromTo("#f-ok", { opacity: 0, scale: 0.3 }, { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.8)" }, __RETARR__);
+      // 도착: 점이 사람에게 닿으면 사람을 감싼 둥근 물결 두 겹이 퍼지고 고객 뒤의 빛이 잠깐 밝아짐(띠링)
+      gsap.utils.toArray(".f-hr").forEach((el, k) => tl.fromTo(el, { opacity: 0.95, scale: 1, svgOrigin: "__HX__ __HY__" }, { opacity: 0, scale: 1.55, svgOrigin: "__HX__ __HY__", duration: 1.1, ease: "power2.out", immediateRender: false }, __RETARR__ + k * 0.14));
+      tl.fromTo("#f-hglow", { opacity: 0 }, { opacity: 1, duration: 0.25, ease: "sine.out", immediateRender: false }, __RETARR__);
+      tl.to("#f-hglow", { opacity: 0, duration: 1.0, ease: "sine.inOut" }, __RETARR__ + 0.3);
       DRAW("#f-branch", 29.5, 0.9, "power2.inOut");
       tl.fromTo("#f-agent", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "sine.inOut" }, 29.4);
 
@@ -265,7 +270,8 @@ PBS2 = 0.08
 PBX2 = 960 - 2410 * PBS2
 PBY2 = 540 - 600 * PBS2
 # 되돌아가는 답(베지어를 점으로 샘플링)
-p0, c1, c2, p3 = (bx - 60, LY - 70), (bx - 900, LY - 640), (CUST + 900, LY - 640), (CUST + 110, LY - 200)
+# 답 말풍선의 왼쪽 끝에서 출발해 고객(사람) 머리 오른쪽 위에 닿음. 고객 말풍선과 휴대폰은 비켜 지나감
+p0, c1, c2, p3 = (bx - 380, LY - 204), (bx - 1100, LY - 680), (CUST + 430, LY - 420), (CUST + 95, LY - 125)
 RET = []
 N = 72
 for k in range(N + 1):
@@ -279,7 +285,7 @@ flow_js = (flow_js.replace("__ST__", json.dumps(ST)).replace("__ARR__", json.dum
            .replace("__PX__", str(PHX)).replace("__PY__", str(PHY))
            .replace("__PBX__", f"{PBX:.1f}").replace("__PBY__", f"{PBY:.1f}").replace("__PBS__", str(PBS))
            .replace("__PBX2__", f"{PBX2:.1f}").replace("__PBY2__", f"{PBY2:.1f}").replace("__PBS2__", str(PBS2))
-           .replace("__RETPTS__", json.dumps(RET)).replace("__RETARR__", str(RET_ARR)))
+           .replace("__RETPTS__", json.dumps(RET)).replace("__HX__", str(CUST - 6)).replace("__HY__", str(LY - 36)).replace("__RETARR__", str(RET_ARR)))
 flow_js = flow_js.replace('      tl.to("#f-rpk", { motionPath: null, duration: 0 }, 28.3);\n', "")
 flow_body = flow_body.replace("__RETD__", "M" + " L".join(f"{x} {y}" for x, y in RET))
 scene("flow", FLOW_DUR, flow_body, flow_js, css=flow_css)
