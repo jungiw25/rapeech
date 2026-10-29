@@ -32,7 +32,7 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c091
 <div class="layer vig"></div>
 <svg class="layer" id="main" viewBox="0 0 1920 1080">
   <defs><clipPath id="vennA"><circle cx="820" cy="440" r="240"/></clipPath>
-  <linearGradient id="lensg" x1="860" y1="0" x2="1060" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ff3fcf"/><stop offset="1" stop-color="#6a4dff"/></linearGradient>
+  <linearGradient id="lensg" x1="860" y1="0" x2="1060" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#f7c6ec"/><stop offset="1" stop-color="#d3c9fe"/></linearGradient>
   <radialGradient id="fillA" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff4fd8" stop-opacity=".05"/><stop offset="1" stop-color="#ff4fd8" stop-opacity=".2"/></radialGradient>
   <radialGradient id="fillB" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#5a5cff" stop-opacity=".05"/><stop offset="1" stop-color="#5a5cff" stop-opacity=".22"/></radialGradient></defs>
   <g id="cvG"><circle cx="960" cy="430" r="76" fill="#15102a" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/>
@@ -62,7 +62,7 @@ html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c091
       <text class="vt" x="1202" y="458" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="34" fill="#fff">네트워크</text>
       <text class="vt" x="1202" y="500" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="34" fill="#fff">인프라</text></g></g>
     <circle id="lens" cx="1100" cy="440" r="240" fill="url(#lensg)" clip-path="url(#vennA)"/>
-    <text id="tL" x="960" y="453" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="38" fill="#fff">라피치</text></g>
+  </g>
   <g id="dot"><circle r="14" fill="#fff" opacity=".22"/><circle r="6.5" fill="#fff"/></g>
 </svg>
 <div class="layer"><div class="cwrap" id="cvl" style="left:960px;top:258px"><div class="mono">자체 대화형 AI 플랫폼</div><div class="mono" style="margin-top:10px;font-size:16px;letter-spacing:.12em;color:#8e86a8">조달청 우수조달물품 지정 · 2026</div></div><div style="position:absolute;left:470px;top:398px;width:0;display:flex;justify-content:center"><div class="pill" id="p0">NLU 콜봇</div></div><div style="position:absolute;left:1450px;top:398px;width:0;display:flex;justify-content:center"><div class="pill" id="p1">LLM AI 에이전트</div></div><div style="position:absolute;left:960px;top:598px;width:0;display:flex;justify-content:center"><div class="pill" id="p2">AICC 구축</div></div><div class="cwrap mkl" id="mkl0" style="left:560px;top:504px"><div class="mono">01</div><div class="val">설계</div></div><div class="cwrap mkl" id="mkl1" style="left:880px;top:504px"><div class="mono">02</div><div class="val">구축</div></div><div class="cwrap mkl" id="mkl2" style="left:1200px;top:504px"><div class="mono">03</div><div class="val">보안 · 관제</div></div><div class="cwrap mkl" id="mkl3" style="left:1520px;top:504px"><div class="mono">04</div><div class="val">운영</div></div></div>
@@ -238,7 +238,7 @@ FOUT(["#gd", "#trk", ".mk", ".mkl", ".ic", "#dot"], 21.3, 0.5);
 
 // ── 4. 두 원(AI, NI)이 겹치고, 겹친 자리가 라피치
 FIN("#venn", 21.8, 0.05);
-gsap.set(["#lens", "#tL", ".vt", ".vic"], { opacity: 0 });
+gsap.set(["#lens", ".vt", ".vic"], { opacity: 0 });
 tl.fromTo("#gA", { x: -200, opacity: 0 }, { x: -200, opacity: 1, duration: 0.6, ease: "sine.out", immediateRender: false }, 21.8);
 tl.fromTo("#gB", { x: 200, opacity: 0 }, { x: 200, opacity: 1, duration: 0.6, ease: "sine.out", immediateRender: false }, 21.95);
 gsap.set("#gA", { x: -200 }); gsap.set("#gB", { x: 200 });
@@ -252,13 +252,15 @@ tl.to("#cA", { x: 0, duration: 1.2, ease: "power3.inOut" }, 23.0);
 tl.to("#cB", { x: 0, duration: 1.2, ease: "power3.inOut" }, 23.0);
 tl.to("#gA", { x: 0, duration: 1.2, ease: "power3.inOut" }, 23.0);
 tl.to("#gB", { x: 0, duration: 1.2, ease: "power3.inOut" }, 23.0);
-FIN("#lens", 24.15, 0.6, "sine.out");
-FIN("#tL", 24.35, 0.5);
+// 교집합은 밝고 옅은 분홍·연보라로 칠하고(보라 로고가 묻히지 않게) 그 안에 라피치 심볼이 자리 잡음
+tl.fromTo("#lens", { opacity: 0 }, { opacity: 0.88, duration: 0.6, ease: "sine.out", immediateRender: false }, 24.15);
+tl.fromTo("#symEnd", { opacity: 0, scale: 0.6, y: -100, transformOrigin: "50% 50%" }, { opacity: 1, scale: 0.8, y: -100, duration: 0.7, ease: "power3.out", immediateRender: false }, 24.35);
 CAP("c7", 24.4, 27.0);
-tl.to(["#cA", "#cB", "#tL"], { opacity: 0, duration: 0.45, ease: "sine.in" }, 26.9);
+tl.to(["#cA", "#cB"], { opacity: 0, duration: 0.45, ease: "sine.in" }, 26.9);
 tl.to(["#gA", "#gB"], { opacity: 0, duration: 0.7, ease: "sine.inOut" }, 27.1);
 tl.to("#lens", { scaleX: 0.35, scaleY: 0.42, opacity: 0, svgOrigin: "960 440", duration: 0.8, ease: "power3.inOut" }, 27.3);
-tl.fromTo("#symEnd", { opacity: 0, scale: 0.55, y: -100, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, y: 0, duration: 1.0, ease: "power3.inOut", immediateRender: false }, 27.4);
+// 원과 교집합이 사라지면 심볼만 남아 화면 가운데로 → 아웃트로 첫 화면과 같은 자리·크기
+tl.to("#symEnd", { scale: 1, y: 0, duration: 1.1, ease: "power3.inOut" }, 27.3);
 // ── 5. 어둡게 정리 → 아웃트로
 
 window.__timelines = window.__timelines || {};
