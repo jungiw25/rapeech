@@ -108,7 +108,16 @@ def noodle(name, pts, r0, r1, m):
     return ob
 
 
-def build(pose="hero"):
+# 표정: 눈썹(각도, 높이) · 눈동자(좌우, 위아래, 크기) · 입
+EXPR = {
+    "brave":    dict(brow=((24, 0), (-26, 0)), look=(0.035, 0.0, 1.0), mouth=None),
+    "happy":    dict(brow=((8, 0.07), (-8, 0.07)), look=(0.0, 0.02, 1.0), mouth="smile"),
+    "surprise": dict(brow=((-6, 0.09), (6, 0.09)), look=(0.0, 0.0, 0.72), mouth="o"),
+    "listen":   dict(brow=((10, 0.0), (-20, 0.07)), look=(0.06, 0.03, 1.0), mouth=None),
+}
+
+
+def build(pose="hero", expr="brave"):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     sc = bpy.context.scene
     body_m = principled("Body", ramp=[(0.12, "#ff6fb4"), (0.38, "#8d5cff"), (1.0, "#b39aff")], rough=0.62, sss=0.05)
@@ -133,13 +142,23 @@ def build(pose="hero"):
     tail.modifiers.new("Sub", "SUBSURF").levels = 2
     tail.parent = rig
     # 눈(크고 동그랗게, 앞면 위쪽에 붙어 튀어나옴) + 굵은 눈썹
-    for x, look in ((-0.17, (0.035, 0.0)), (0.19, (0.035, 0.0))):
+    E = EXPR[expr]
+    lx, ly, ps = E["look"]
+    for x in (-0.17, 0.19):
         ball(f"Eye{x}", 0.17, white, (x, -0.4, 0.78), (1, 0.75, 1.08)).parent = rig
-        ball(f"Pupil{x}", 0.085, ink, (x + look[0], -0.53, 0.79), (1, 0.6, 1.22)).parent = rig
-        ball(f"Glint{x}", 0.022, white, (x + look[0] + 0.03, -0.575, 0.83)).parent = rig
-    for x, ang in ((-0.18, 24), (0.2, -26)):   # 안쪽 끝이 내려간 결심한 눈썹
-        b = block(f"Brow{x}", (0.13, 0.04, 0.035), 0.03, ink, (x, -0.47, 1.0), (0, math.radians(ang), 0), seg=4)
+        ball(f"Pupil{x}", 0.085 * ps, ink, (x + lx, -0.53, 0.79 + ly), (1, 0.6, 1.22)).parent = rig
+        ball(f"Glint{x}", 0.022, white, (x + lx + 0.03 * ps, -0.575, 0.83 + ly)).parent = rig
+    for x, (ang, dz) in zip((-0.18, 0.2), E["brow"]):   # brave: 안쪽 끝이 내려간 결심한 눈썹
+        b = block(f"Brow{x}", (0.13, 0.04, 0.035), 0.03, ink, (x, -0.47, 1.0 + dz), (0, math.radians(ang), 0), seg=4)
         b.parent = rig
+    if E["mouth"] == "smile":
+        mo = ball("Mouth", 0.1, ink, (0.01, -0.43, 0.6), (1.15, 0.4, 0.85))   # 아랫부분만 남긴 반달 입(D)
+        bm = bmesh.new(); bm.from_mesh(mo.data)
+        bmesh.ops.delete(bm, geom=[v for v in bm.verts if v.co.z > 0.001], context="VERTS")
+        bm.to_mesh(mo.data); bm.free(); mo.parent = rig
+        ball("Tongue", 0.045, cup_m, (0.01, -0.455, 0.54), (1.2, 0.4, 0.55)).parent = rig
+    elif E["mouth"] == "o":
+        ball("Mouth", 0.045, ink, (0.01, -0.44, 0.55), (0.9, 0.35, 1.15)).parent = rig
     # 헤드셋(오른쪽 귀 하나 + 마이크)
     ball("Cup", 0.13, cup_m, (0.72, -0.02, 0.72), (0.55, 1, 1)).parent = rig
     ball("Pad", 0.1, pad_m, (0.665, -0.02, 0.72), (0.4, 0.85, 0.85)).parent = rig
@@ -214,5 +233,11 @@ def shoot(sc, name, cam_loc, look, w=1600, h=1100, lens=55):
 
 
 if __name__ == "__main__":
-    sc = build("hero")
+    sc = build("hero", "brave")
     shoot(sc, "hero_char", (1.0, -6.4, 0.95), (0.22, 0, 0.98), lens=50)
+    sc = build("stand", "brave")
+    for n, loc in (("front", (0, -5.4, 0.8)), ("side", (5.4, 0, 0.8)), ("back", (0.6, 5.4, 0.9))):
+        shoot(sc, n, loc, (0, 0, 0.72), w=800, h=800, lens=70)
+    for e in ("brave", "happy", "surprise", "listen"):
+        sc = build("stand", e)
+        shoot(sc, f"e_{e}", (0.2, -3.2, 1.05), (0, 0, 0.98), w=700, h=700, lens=75)
