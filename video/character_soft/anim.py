@@ -90,9 +90,9 @@ def main(test=False):
     cam = bpy.data.objects.new("Cam", bpy.data.cameras.new("Cam")); sc.collection.objects.link(cam); sc.camera = cam
     cam.data.lens = 50
     from mathutils import Vector
-    for t, loc in ((0.0, (1.1, -7.2, 1.0)), (SEC, (0.95, -6.2, 0.98))):
+    for t, loc in ((0.0, (1.15, -8.0, 1.2)), (SEC, (1.0, -7.2, 1.18))):   # 말풍선 윗부분까지 들어오게
         cam.location = loc
-        cam.rotation_euler = (Vector((0.22, 0, 0.98)) - Vector(loc)).to_track_quat("-Z", "Y").to_euler()
+        cam.rotation_euler = (Vector((0.3, 0, 1.15)) - Vector(loc)).to_track_quat("-Z", "Y").to_euler()
         cam.keyframe_insert("location", frame=f(t)); cam.keyframe_insert("rotation_euler", frame=f(t))
     sc.render.resolution_x, sc.render.resolution_y = 1280, 720
     sc.cycles.samples = 16
