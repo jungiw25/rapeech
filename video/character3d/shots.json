@@ -1,0 +1,9 @@
+[
+ {"name":"hero","view":"hero","pose":"hero","expr":"happy","w":1400,"h":1400,"bg":true},
+ {"name":"front","view":"front","pose":"stand","expr":"happy","w":900,"h":900,"bg":false},
+ {"name":"side","view":"side","pose":"stand","expr":"happy","w":900,"h":900,"bg":false},
+ {"name":"back","view":"back","pose":"stand","expr":"happy","w":900,"h":900,"bg":false},
+ {"name":"e_brave","view":"bust","pose":"stand","expr":"brave","w":700,"h":700,"bg":false},
+ {"name":"e_listen","view":"bust","pose":"listen","expr":"listen","w":700,"h":700,"bg":false},
+ {"name":"e_think","view":"bust","pose":"think","expr":"think","w":700,"h":700,"bg":false}
+]
