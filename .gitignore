@@ -44,3 +44,5 @@ video/outro-v4/out/
 video/outro-v4/render.log
 video/audio_src/
 video/.venv-bpy/
+video/character_soft/out/frames/
+video/character_soft/out/frames_t/
