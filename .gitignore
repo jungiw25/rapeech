@@ -46,3 +46,5 @@ video/audio_src/
 video/.venv-bpy/
 video/character_soft/out/frames/
 video/character_soft/out/frames_t/
+video/character_soft/out/anim_bg.png
+video/character_soft/out/anim_sfx.wav
