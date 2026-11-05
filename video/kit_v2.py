@@ -10,7 +10,6 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 FILM = REPO / "video" / "brand-film"
-ACC, SURF = "#9d79ff", "#1d1736"   # 1안: 강조는 브랜드 보라 단색 하나, 면은 바탕보다 한 단계 밝은 색
 G = ["#ff03c8", "#e807c3", "#d10bbd", "#ba0fb8", "#a518a4", "#8f1ab8", "#7a1dcc", "#661fdc", "#5422e6", "#4823ee", "#4024f1", "#3c24f3"]
 DARK, LIGHT = "#0c0916", "#faf9fd"
 
@@ -21,35 +20,36 @@ CSS = FONT_CSS + """
 html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0c0916; }
 #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; font-family: "Pretendard", sans-serif; background: #0c0916; }
 .layer { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
-.vig { background: radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,.45)); }
-.bar { position: absolute; width: 12px; height: 220px; margin-top: -110px; border-radius: 6px; }
+.vig { background: radial-gradient(ellipse at 50% 45%, rgba(60,36,243,.10), rgba(0,0,0,0) 55%), radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0) 60%, rgba(0,0,0,.45)); }
+.bar { position: absolute; width: 12px; height: 220px; margin-top: -110px; border-radius: 6px; box-shadow: 0 0 14px currentColor; }
 .who { position: relative; flex: none; height: 40px; padding: 0 18px; border-radius: 20px; font-size: 20px; font-weight: 700; line-height: 40px; white-space: nowrap; }
 .cap { position: absolute; left: 0; top: 790px; width: 1920px; text-align: center; }
 .tag { overflow: hidden; font-size: 20px; font-weight: 600; letter-spacing: 0.24em; color: #b5abd8; padding-bottom: 4px; }
 .ct { overflow: hidden; margin-top: 16px; font-size: 52px; font-weight: 800; color: #fff; letter-spacing: -0.03em; padding-bottom: 8px; white-space: nowrap; }
 .tag span, .ct span.cw { display: inline-block; }
-.g { color: #9d79ff; }
-.mono { font-weight: 600; font-size: 22px; letter-spacing: 0; color: #b5abd8; white-space: nowrap; }
-.dlab { font-family: "Pretendard"; font-weight: 600; font-size: 22px; letter-spacing: 0; fill: #cfc6ec; }
+.g { background: linear-gradient(100deg, #ff4fd8, #b25cff 55%, #7a6bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.mono { font-weight: 600; font-size: 19px; letter-spacing: 0.2em; color: #b5abd8; white-space: nowrap; }
+.dlab { font-family: "Pretendard"; font-weight: 600; font-size: 20px; letter-spacing: 3px; fill: #cfc6ec; }
 .cwrap { position: absolute; width: 0; display: flex; flex-direction: column; align-items: center; }
 .val { font-weight: 700; font-size: 30px; color: #fff; letter-spacing: -0.02em; white-space: nowrap; margin-top: 10px; }
 .pill { position: relative; flex: none; height: 64px; padding: 0 30px; border-radius: 32px; font-size: 28px; font-weight: 700; color: #fff; line-height: 60px; white-space: nowrap;
-  background: #1d1736; }
+  background: rgba(20,15,42,.9); border: 2px solid rgba(157,121,255,.6); }
 """
 
 SVG_DEFS = """<defs>
   <radialGradient id="nodeg" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#2a1f55"/><stop offset="1" stop-color="#140f2a"/></radialGradient>
-  <filter id="gl2" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="0" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <filter id="gl" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="0" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-  <radialGradient id="dotg"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  <filter id="gl2" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <filter id="gl" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  <radialGradient id="dotg"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="#ff8be6" stop-opacity=".8"/><stop offset="1" stop-color="#ff4fd8" stop-opacity="0"/></radialGradient>
 </defs>"""
 
 
 def node(nid, x, y, r, text="", size=34, sub=""):
     """게이지 노드. JS의 GAUGE(nid, t, d)로 게이지를 채우고 반짝인다."""
-    return (f'<g class="node" id="{nid}">'
-            f'<circle cx="{x}" cy="{y}" r="{r}" fill="{SURF}"/>'
-            f'<circle class="ring" id="{nid}-ring" cx="{x}" cy="{y}" r="{r + 10}" fill="none" stroke="{ACC}" stroke-width="4" stroke-linecap="round" transform="rotate(-90 {x} {y})"/>'
+    return (f'<g class="node" id="{nid}"><linearGradient id="{nid}-g" x1="{x - r}" y1="0" x2="{x + r}" y2="0" gradientUnits="userSpaceOnUse">'
+            f'<stop offset="0" stop-color="#ff03c8"/><stop offset=".5" stop-color="#a518a4"/><stop offset="1" stop-color="#3c24f3"/></linearGradient>'
+            f'<circle cx="{x}" cy="{y}" r="{r}" fill="url(#nodeg)" stroke="#fff" stroke-opacity=".25" stroke-width="1.5"/>'
+            f'<circle class="ring" id="{nid}-ring" cx="{x}" cy="{y}" r="{r + 10}" fill="none" stroke="url(#{nid}-g)" stroke-width="4" stroke-linecap="round" transform="rotate(-90 {x} {y})" filter="url(#gl2)"/>'
             f'<circle class="fin" id="{nid}-fin" cx="{x}" cy="{y}" r="{r}" fill="#fff" opacity="0"/>'
             f'<circle class="fring" id="{nid}-fr" cx="{x}" cy="{y}" r="{r + 10}" fill="none" stroke="#fff" stroke-width="2" opacity="0"/>'
             + (f'<text x="{x}" y="{y + size * 0.35:.0f}" text-anchor="middle" font-family="Pretendard" font-weight="800" font-size="{size}" fill="#fff">{text}</text>' if text else "")
@@ -61,7 +61,7 @@ def cap_html(cid, tag, text):
     while "[" in t:
         a, b = t.index("["), t.index("]")
         t = t[:a] + f'<span class="g">{t[a + 1:b]}</span>' + t[b + 1:]
-    # 1안: 자막 위 작은 라벨(tag)은 쓰지 않는다(인자는 기존 호출과 맞추려고 남김)
+    # 자막 위 작은 라벨(tag)은 쓰지 않는다(인자는 기존 호출과 맞추려고 남김)
     return f'<div class="cap" id="{cid}"><div class="ct"><span class="cw {cid}-l">{t}</span></div></div>'
 
 
@@ -99,10 +99,10 @@ const DECOR = (sel, o = {}) => gsap.utils.toArray(sel).forEach((p) => {
   const NS = "http://www.w3.org/2000/svg", L = p.getTotalLength(), a = p.getPointAtLength(0), b = p.getPointAtLength(L), c = p.getPointAtLength(Math.max(0, L - 8));
   const svg = p.ownerSVGElement;
   let defs = svg.querySelector("defs"); if (!defs) { defs = document.createElementNS(NS, "defs"); svg.prepend(defs); }
-  const g = document.createElementNS(NS, "linearGradient"), id = "dg" + (__dg++), end = o.end || "#9d79ff";
+  const g = document.createElementNS(NS, "linearGradient"), id = "dg" + (__dg++), end = o.end || "#ff8be6";
   g.setAttribute("id", id); g.setAttribute("gradientUnits", "userSpaceOnUse");
   g.setAttribute("x1", a.x); g.setAttribute("y1", a.y); g.setAttribute("x2", b.x); g.setAttribute("y2", b.y);
-  g.innerHTML = '<stop offset="0" stop-color="#ffffff" stop-opacity=".25"/><stop offset="1" stop-color="#ffffff" stop-opacity=".7"/>';
+  g.innerHTML = '<stop offset="0" stop-color="#ffffff" stop-opacity=".2"/><stop offset=".55" stop-color="#d9c6ff" stop-opacity=".6"/><stop offset="1" stop-color="' + end + '" stop-opacity=".95"/>';
   defs.appendChild(g);
   p.setAttribute("stroke", "url(#" + id + ")"); p.removeAttribute("stroke-opacity"); p.setAttribute("stroke-linecap", "round");
   if (o.w) p.setAttribute("stroke-width", o.w);

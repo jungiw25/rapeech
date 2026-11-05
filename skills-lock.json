@@ -7,6 +7,42 @@
       "skillPath": "skills/algorithmic-art/SKILL.md",
       "computedHash": "b2ca295de7f9c86c444f1fa21239e22e0eb7013ced1c652169b9402cc96ff744"
     },
+    "blender-asset-qa": {
+      "source": "EL4CTEO/blender-skills",
+      "sourceType": "github",
+      "skillPath": "skills/blender-asset-qa/SKILL.md",
+      "computedHash": "6eb4daa9e994c247f84aa73109ca4f58a217f51dc7f3804c2a7b262f7c3ed21d"
+    },
+    "blender-core": {
+      "source": "EL4CTEO/blender-skills",
+      "sourceType": "github",
+      "skillPath": "skills/blender-core/SKILL.md",
+      "computedHash": "c0ddebe32d104c12994a1c02a8f92e2e7d6721c9d5bc37d8f3a4572edf07de77"
+    },
+    "blender-lighting-lookdev": {
+      "source": "EL4CTEO/blender-skills",
+      "sourceType": "github",
+      "skillPath": "skills/blender-lighting-lookdev/SKILL.md",
+      "computedHash": "d48ad1ca721da6159f0bdbb5f1faa514fc8da0a69fd2337fdc545dbb00fa82d8"
+    },
+    "blender-rendering": {
+      "source": "EL4CTEO/blender-skills",
+      "sourceType": "github",
+      "skillPath": "skills/blender-rendering/SKILL.md",
+      "computedHash": "8d1a55755944126743285c7b393f8d6e1a825c8155be3ce4270d065d3e247b85"
+    },
+    "blender-sculpting": {
+      "source": "EL4CTEO/blender-skills",
+      "sourceType": "github",
+      "skillPath": "skills/blender-sculpting/SKILL.md",
+      "computedHash": "ba542e262bde275776603b077c44063330336ed0d48377485970cb7eb3f6e2a7"
+    },
+    "blender-stylized-npr": {
+      "source": "EL4CTEO/blender-skills",
+      "sourceType": "github",
+      "skillPath": "skills/blender-stylized-npr/SKILL.md",
+      "computedHash": "adc7ba2c53ab4163e33dfacec183562780a0f7aac45d8960dd8ecbd01d6e2de0"
+    },
     "design-taste-frontend": {
       "source": "Leonxlnx/taste-skill",
       "sourceType": "github",

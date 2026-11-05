@@ -42,3 +42,17 @@ video/brand-film-v3b/render.log
 video/outro-v4/assets/
 video/outro-v4/out/
 video/outro-v4/render.log
+video/audio_src/
+video/.venv-bpy/
+video/character_soft/out/frames/
+video/character_soft/out/frames_t/
+video/character_soft/out/anim_bg.png
+video/character_soft/out/anim_sfx.wav
+video/character_v5/out/frames/
+video/character_v5/out/post/
+video/character_v5/out/test_*.png
+video/character_v5/out/sfx.wav
+video/character_v6/out/frames/
+video/character_v6/out/post/
+video/character_v6/out/test_*.png
+video/character_v6/out/sfx.wav

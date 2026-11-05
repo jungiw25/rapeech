@@ -1,0 +1,30 @@
+<svg viewBox="0 0 600 560" xmlns="http://www.w3.org/2000/svg">
+<defs><clipPath id="bc"><path d="M300 178 C392 178 456 230 460 312 C464 394 404 452 300 452 C252 452 214 444 186 426 C176 440 160 452 140 458 C152 442 158 424 158 404 C142 380 138 348 140 314 C144 228 208 178 300 178 Z"/></clipPath></defs>
+<ellipse cx="300" cy="490" rx="130" ry="15" fill="#2b1d55" opacity=".09"/>
+<ellipse cx="256" cy="462" rx="36" ry="20" fill="#7a58ee" stroke="#2b1d55" stroke-width="7"/>
+<ellipse cx="344" cy="462" rx="36" ry="20" fill="#7a58ee" stroke="#2b1d55" stroke-width="7"/>
+<!-- 헤드폰 띠(머리 뒤) -->
+<path d="M152 290 C150 96 450 96 448 290" fill="none" stroke="#2b1d55" stroke-width="22" stroke-linecap="round"/>
+<path d="M152 290 C150 96 450 96 448 290" fill="none" stroke="#ffb3dd" stroke-width="9" stroke-linecap="round"/>
+<!-- 잎 세 가닥(로고 줄무늬를 살짝) -->
+<g stroke="#2b1d55" stroke-width="7" stroke-linejoin="round">
+  <path d="M276 184 C270 160 278 140 292 128 C300 146 296 168 286 184 Z" fill="#ff7cc4"/>
+  <path d="M296 182 C296 152 310 128 330 116 C334 142 324 166 308 182 Z" fill="#ff7cc4"/>
+  <path d="M318 184 C324 162 340 148 358 142 C358 162 346 178 330 188 Z" fill="#ffb3dd"/>
+</g>
+<!-- 몸 -->
+<path d="M300 178 C392 178 456 230 460 312 C464 394 404 452 300 452 C252 452 214 444 186 426 C176 440 160 452 140 458 C152 442 158 424 158 404 C142 380 138 348 140 314 C144 228 208 178 300 178 Z" fill="#7a58ee"/>
+<g clip-path="url(#bc)"><ellipse cx="282" cy="296" rx="176" ry="150" fill="#9a7cff"/></g>
+<path d="M300 178 C392 178 456 230 460 312 C464 394 404 452 300 452 C252 452 214 444 186 426 C176 440 160 452 140 458 C152 442 158 424 158 404 C142 380 138 348 140 314 C144 228 208 178 300 178 Z" fill="none" stroke="#2b1d55" stroke-width="7" stroke-linejoin="round"/>
+<path d="M206 236 Q222 214 248 206" fill="none" stroke="#c4b2ff" stroke-width="12" stroke-linecap="round"/>
+<circle cx="196" cy="258" r="7" fill="#c4b2ff"/>
+<!-- 얼굴 -->
+<ellipse cx="214" cy="336" rx="22" ry="13" fill="#ff9ec4" opacity=".85"/><ellipse cx="386" cy="336" rx="22" ry="13" fill="#ff9ec4" opacity=".85"/>
+<ellipse cx="256" cy="300" rx="15" ry="21" fill="#2b1d55"/><circle cx="261" cy="292" r="5.5" fill="#fff"/><ellipse cx="344" cy="300" rx="15" ry="21" fill="#2b1d55"/><circle cx="349" cy="292" r="5.5" fill="#fff"/><path d="M286 334 Q300 346 314 334" fill="none" stroke="#2b1d55" stroke-width="6" stroke-linecap="round"/>
+<!-- 헤드폰 귀 + 마이크 -->
+<rect x="128" y="262" width="44" height="74" rx="22" fill="#ff7cc4" stroke="#2b1d55" stroke-width="7"/>
+<rect x="428" y="262" width="44" height="74" rx="22" fill="#ff7cc4" stroke="#2b1d55" stroke-width="7"/>
+<path d="M440 330 C430 372 400 384 360 380" fill="none" stroke="#2b1d55" stroke-width="7" stroke-linecap="round"/>
+<circle cx="356" cy="380" r="11" fill="#2b1d55"/>
+<g transform="translate(150 392) rotate(34)"><ellipse cx="0" cy="0" rx="25" ry="34" fill="#9a7cff" stroke="#2b1d55" stroke-width="7"/><path d="M-12 14 Q0 26 12 14" fill="none" stroke="#7a58ee" stroke-width="7" stroke-linecap="round"/></g><g transform="translate(492 236) rotate(-140)"><ellipse cx="0" cy="0" rx="25" ry="34" fill="#9a7cff" stroke="#2b1d55" stroke-width="7"/><path d="M-12 14 Q0 26 12 14" fill="none" stroke="#7a58ee" stroke-width="7" stroke-linecap="round"/></g><path d="M520 182 q14 -6 22 4 M532 214 q14 0 18 12" fill="none" stroke="#2b1d55" stroke-width="5" stroke-linecap="round"/>
+</svg>
