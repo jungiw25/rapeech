@@ -15,7 +15,7 @@ AF.SEGS = [
     (HERE / "full/flow/out/raw.mp4", 0.0, 32.6),
     (HERE / "full/convai/out/raw.mp4", 0.0, 28.0),
     (HERE / "full/rest/out/raw.mp4", 5.6, 29.6),
-    AF.SEGS[4],
+    (HERE / "full/outro/out/raw.mp4", 0.0, 4.5),
 ]
 
 if __name__ == "__main__":

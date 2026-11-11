@@ -205,5 +205,12 @@ def rest():
     return d
 
 
+def outro():
+    d = copy_proj(REPO / "video/outro-v4", "outro")
+    shutil.copy(REPO / "video/outro-v4/assets/outro_sfx.wav", d / "assets/outro_sfx.wav")
+    (d / "index.html").write_text(common((REPO / "video/outro-v4/index.html").read_text()))
+    return d
+
+
 if __name__ == "__main__":
-    print({"flow": flow, "convai": convai, "rest": rest}[sys.argv[1]]())
+    print({"flow": flow, "convai": convai, "rest": rest, "outro": outro}[sys.argv[1]]())
