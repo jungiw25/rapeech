@@ -62,3 +62,4 @@ video/brand-film-hf/*/index.html
 video/brand-film-hf/*/meta.json
 video/brand-film-hf/*/hyperframes.json
 video/brand-film-hf/out/*.wav
+video/brand-film-hf/*/out/
