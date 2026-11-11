@@ -172,7 +172,7 @@ def clay_flow(s, X, Y, W, H):
     O = f'svgOrigin: "{CX:.0f} {BY:.0f}"'
     # ── 움직임 ──
     s = must(s, 'tl.fromTo("#f-av", { opacity: 0, scale: 0.85, transformOrigin: "50% 50%" }, { opacity: 1, scale: 1, duration: 1.1, ease: "power3.out" }, 3.7);',
-             f"""tl.fromTo("#f-av", {{ opacity: 1, y: -620, scaleX: 0.92, scaleY: 1.1, {O} }}, {{ opacity: 1, y: 0, duration: 0.42, ease: "power2.in" }}, 3.75);
+             f"""tl.fromTo("#f-av", {{ y: -620, scaleX: 0.92, scaleY: 1.1, {O} }}, {{ y: 0, duration: 0.42, ease: "power2.in" }}, 3.75);
       gsap.set("#f-av", {{ opacity: 0 }}); tl.set("#f-av", {{ opacity: 1 }}, 3.75);
       tl.to("#f-av", {{ scaleX: 1.12, scaleY: 0.84, {O}, duration: 0.1, ease: "power2.out" }}, 4.17);
       tl.to("#f-av", {{ scaleX: 1, scaleY: 1, {O}, duration: 0.9, ease: "elastic.out(1,0.42)" }}, 4.27);""")
