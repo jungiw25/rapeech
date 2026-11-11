@@ -69,7 +69,7 @@ def cmap(s):
 
 def common(s):
     # 연결선은 흐릿하게 시작하지 않고 처음부터 또렷한 보라 끈
-    s = s.replace('p.setAttribute("stroke", "url(#" + id + ")"); p.removeAttribute("stroke-opacity");', 'p.removeAttribute("stroke-opacity");')
+    s = s.replace('p.setAttribute("stroke", "url(#" + id + ")"); p.removeAttribute("stroke-opacity");', f'if (!p.getAttribute("stroke") || p.getAttribute("stroke") === "#fff" || p.getAttribute("stroke") === "none") p.setAttribute("stroke", "{PUR}"); p.removeAttribute("stroke-opacity");')
     s = s.replace('o.end || "#ff8be6"', f'o.end || "{PUR}"').replace('st.setAttribute("fill", "#fff"); st.setAttribute("fill-opacity", ".6")', f'st.setAttribute("fill", "{PUR}"); st.setAttribute("fill-opacity", "1")')
     s = cmap(s)
     s = re.sub(r"color:\s*#fff\b", f"color: {INK}", s)
