@@ -64,3 +64,6 @@ video/brand-film-hf/*/hyperframes.json
 video/brand-film-hf/out/*.wav
 video/brand-film-hf/*/out/
 video/brand-film-hf/full/
+video/brand-film-hf/banners/preview/
+video/brand-film-hf/banners/*.html
+video/brand-film-hf/banners/assets/
