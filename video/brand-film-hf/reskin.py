@@ -108,7 +108,7 @@ def flow():
     idx = re.sub(r'\s*<div id="s\d\d"[^>]*>\s*</div>', "", idx, flags=re.S)
     idx = idx.replace('data-start="12.00"', 'data-start="0"').replace('data-duration="74.50"', 'data-duration="35"')
     (d / "index.html").write_text(cmap(idx))
-    s = common((src / "compositions/flow.html").read_text())
+    s = common(facts_flow((src / "compositions/flow.html").read_text()))
     # 단추(노드): 연보라 찰흙 공 → 켜지면 진보라 + 주황 심
     s = re.sub(rf'(<circle cx="\d+" cy="\d+" r="(?:30|66)") fill="{LILAC}" stroke="#C9BCF2" stroke-width="3"/>', r'\1 fill="url(#clay-off)" filter="url(#clay-sh)"/>', s)
     s = re.sub(r'(class="f-nfill o" id="f-nf\d" cx="\d+" cy="\d+" r="30") fill="url\(#flow-g\)" filter="url\(#flow-glow\)"', r'\1 fill="url(#clay-on)"', s)
@@ -151,6 +151,37 @@ POP = '''const POP = (sel, t, st = 0, d = 0.8) => { gsap.set(sel, { opacity: 0 }
 def must(s, a, b, n=1):
     assert s.count(a) >= n, a[:70]
     return s.replace(a, b)
+
+
+def say(s, cid, text):
+    """자막 한 줄 교체. [ ] 안은 강조."""
+    ws = []
+    for w in text.split():
+        w = w.replace("[", '<span class="grad">').replace("]", "</span>")
+        ws.append(f'<span class="w {cid}-w">{w}</span>')
+    s, n = re.subn(rf'(<div class="say" id="{cid}-say"[^>]*>).*?</div>', lambda m: m.group(1) + "".join(ws) + "</div>", s, count=1, flags=re.S)
+    assert n == 1, cid
+    return s
+
+
+def card(s, i, label, value):
+    """단계 카드의 제목·내용 교체(글자 하나씩 나타나는 구조 유지, 체크 표시는 그대로)."""
+    sp = "".join(f'<b class="f-c{i}" style="display:inline-block;font-weight:700">{"&nbsp;" if c == " " else c}</b>' for c in value)
+    s, n = re.subn(rf'(id="f-card{i}">\s*<div class="f-cl">)[^<]*(</div>\s*<div class="f-cv">)(?:<b class="f-c{i}"[^>]*>[^<]*</b>)+',
+                   lambda m: m.group(1) + label + m.group(2) + sp, s, count=1)
+    assert n == 1, i
+    return s
+
+
+def facts_flow(s):
+    """콜봇 구조 자료에 맞춤: 듣고(STT) → 이해하고(NLU) → 답하고(업무 시스템 조회·답 만들기) → 말합니다(TTS)."""
+    s = card(s, 1, "의도 파악", "분실 신고")
+    s = card(s, 2, "업무 시스템 조회", "필요한 정보 확인")
+    s = card(s, 3, "답변 만들기", "분실 신고 안내")
+    s = say(s, "fc3", "필요하면 [업무] [시스템을] [조회해]")
+    s = say(s, "fc4", "알맞은 [답을] [만들고]")
+    s = must(s, "본인 확인이 끝나 카드 사용을 정지했어요", "분실 신고를 도와드릴게요")
+    return s
 
 
 def clay_flow(s, X, Y, W, H):
@@ -303,6 +334,9 @@ def convai():
     snap("flow", 32.6, d / "assets/flow_last.png")
     s = (REPO / "video/convai-samples/b/index.html").read_text()
     s = re.sub(r'\s*<audio\b[^>]*></audio>', "", s)
+    # 콜봇 구조 자료에 맞춤: 콜봇의 답은 자료의 예시 문장 그대로
+    s = must(s, "신고 완료됐어요", "분실 신고를 도와드릴게요")
+    s = must(s, '<span class="g">바로 처리</span>하고', '<span class="g">바로 안내</span>하고')
     # 단추: 찰흙 공. 연결선: 굵은 보라 관. 움직이는 점: 주황 구슬
     s = re.sub(r'fill="#1a1233" stroke="#fff" stroke-opacity=".4" stroke-width="1.5"', 'fill="url(#clay-off)" filter="url(#clay-sh)"', s)
     s = s.replace('stroke="#fff" stroke-opacity=".7" stroke-width="2"', f'stroke="{PUR}" stroke-width="7" stroke-linecap="round"')
