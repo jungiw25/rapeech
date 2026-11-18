@@ -18,6 +18,7 @@
 - `/algorithmic-art`: p5.js 생성형 그래픽(배경, 패턴)
 - `/impeccable`: 웹·UI 디자인 설계·검토·다듬기(pbakaus/impeccable, Apache-2.0). 랜딩 페이지, 아티팩트, 화면 디자인에 사용
 - `/design-taste-frontend`: 랜딩·마케팅 사이트 아트 디렉션(Leonxlnx/taste-skill v2, MIT). 계정 스킬 `anthropic-skills:design-taste-frontend`와 이름이 같으므로 프로젝트 것을 우선 사용
+- `/blender-core`, `/blender-stylized-npr` 외 blender-*(EL4CTEO/blender-skills, MIT): 3D 캐릭터·소품을 Blender로 만들고 툰(셀) 셰이딩·외곽선으로 렌더. Blender는 `video/.venv-bpy`(pip `bpy`)에 설치해 쓴다(저장소에는 올리지 않음). 예: `video/character_npr/build.py`
 - 주간 숏츠·카드뉴스는 계속 `engine/`(파이썬 렌더러)를 쓴다. 디자인 규칙이 거기에 맞춰져 있다
 - 외부 스킬의 사용 통계 전송은 `.claude/settings.json`에서 꺼 두었다. 유료 API(HeyGen 등)는 사용자 승인 없이 쓰지 않는다
 - 업데이트: `npx skills update -p`
