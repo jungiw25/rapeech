@@ -2,6 +2,7 @@
 장면·문구·타이밍은 원본 그대로 두고 색·질감·캐릭터 그림만 바꾼다.
 사용법: python3 video/brand-film-hf/reskin.py flow|convai|rest
 """
+import os
 import re
 import shutil
 import subprocess
@@ -14,6 +15,8 @@ from PIL import Image
 HERE = Path(__file__).resolve().parent
 REPO = HERE.parent.parent
 FULL = HERE / "full"
+# VER=A3: 지금 채용 홈페이지에 게재된 버전(콜봇 구조 자료 반영 전 문구). 기본은 자료 반영본(A4)
+FACTS = os.environ.get("VER", "A4") != "A3"
 BG, INK, PUR, PUR_D, PUR_L, LILAC, COR, GREY = "#F6F4F0", "#1B1B1F", "#6A3DE8", "#5630D6", "#8E72F2", "#DCCFFC", "#FF6B55", "#7B6FA6"
 
 CMAP = {
@@ -108,7 +111,8 @@ def flow():
     idx = re.sub(r'\s*<div id="s\d\d"[^>]*>\s*</div>', "", idx, flags=re.S)
     idx = idx.replace('data-start="12.00"', 'data-start="0"').replace('data-duration="74.50"', 'data-duration="35"')
     (d / "index.html").write_text(cmap(idx))
-    s = common(facts_flow((src / "compositions/flow.html").read_text()))
+    s = (src / "compositions/flow.html").read_text()
+    s = common(facts_flow(s) if FACTS else s)
     # 단추(노드): 연보라 찰흙 공 → 켜지면 진보라 + 주황 심
     s = re.sub(rf'(<circle cx="\d+" cy="\d+" r="(?:30|66)") fill="{LILAC}" stroke="#C9BCF2" stroke-width="3"/>', r'\1 fill="url(#clay-off)" filter="url(#clay-sh)"/>', s)
     s = re.sub(r'(class="f-nfill o" id="f-nf\d" cx="\d+" cy="\d+" r="30") fill="url\(#flow-g\)" filter="url\(#flow-glow\)"', r'\1 fill="url(#clay-on)"', s)
@@ -237,6 +241,7 @@ def clay_flow(s, X, Y, W, H):
     # 상담사는 점선이 다 이어진 뒤에 톡 나타남(먼저 보이지 않게)
     s = must(s, 'tl.fromTo("#f-agent", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "sine.inOut" }, 29.4);',
              """gsap.set("#f-branch", { opacity: 0 }); tl.set("#f-branch", { opacity: 1 }, 29.5);
+      gsap.set("#f-agimg", { opacity: 0 });
       tl.fromTo("#f-agimg", { opacity: 0, scale: 0.3, svgOrigin: "3660 900" }, { opacity: 1, scale: 1, duration: 0.8, ease: "elastic.out(1,0.55)", immediateRender: false }, 30.3);
       tl.set("#f-agent", { opacity: 1 }, 29.45);""")
     return s
@@ -335,8 +340,9 @@ def convai():
     s = (REPO / "video/convai-samples/b/index.html").read_text()
     s = re.sub(r'\s*<audio\b[^>]*></audio>', "", s)
     # 콜봇 구조 자료에 맞춤: 콜봇의 답은 자료의 예시 문장 그대로
-    s = must(s, "신고 완료됐어요", "분실 신고를 도와드릴게요")
-    s = must(s, '<span class="g">바로 처리</span>하고', '<span class="g">바로 안내</span>하고')
+    if FACTS:
+        s = must(s, "신고 완료됐어요", "분실 신고를 도와드릴게요")
+        s = must(s, '<span class="g">바로 처리</span>하고', '<span class="g">바로 안내</span>하고')
     # 단추: 찰흙 공. 연결선: 굵은 보라 관. 움직이는 점: 주황 구슬
     s = re.sub(r'fill="#1a1233" stroke="#fff" stroke-opacity=".4" stroke-width="1.5"', 'fill="url(#clay-off)" filter="url(#clay-sh)"', s)
     s = s.replace('stroke="#fff" stroke-opacity=".7" stroke-width="2"', f'stroke="{PUR}" stroke-width="7" stroke-linecap="round"')
